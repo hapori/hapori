@@ -4,18 +4,8 @@
 var db = require('../db');
 
 
-var knex = require('knex')({
-  client: 'pg',
-  connection: {
-    host     : 'localhost',
-    user     : 'roland',
-    password : 'postgres',
-    database : 'BitcoinReddit',
-    charset  : 'utf8'
-  }
-});
 
-var bookshelf = require('bookshelf')(knex);
+var bookshelf = require('../bookshelf.js');
 
 var User = bookshelf.Model.extend({
   tableName: 'users'
