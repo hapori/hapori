@@ -1,8 +1,6 @@
 var User = require('../../models/user.js');
-// var should = require('chai').should();
-var should = require('should');
-var cole = require('../../db/co_log_err.js').cole;
-
+var should = require('chai').should();
+var expect = require('chai').expect;
 
 describe.only('test user', function() {
 
@@ -18,54 +16,43 @@ describe.only('test user', function() {
   };
 
   it('create', function(done) {
-    User.forge(user).save().then(function(){
+    User.forge(user).save().then(function() {
       done();
     });
   });
 
-  //
   it('findByAddress', function(done) {
-
 
     User.where({
         address: user.address
       })
       .fetch()
-      .then(function(user) {
+      .then(function(_user) {
 
-        // user.attributes.should.have.properties({
-        //   username: 'usertestuser'
-          // email: 'usertestuser@test.com',
-          // passwordHash: 'testpassword',
-          // salt: 'salt',
-          // key: 'some bitcoin key',
-          // address: '15U4eEyfEET9GqTSF4JpFRHAD8YGpYLbCE',
-          // balance: 1000,
-          // joined: '1827369128'
-        // });
+        _user = _user.attributes;
+        expect(_user.username).to.equal(user.username);
 
-        console.log(user.attributes);
         done();
 
       }).catch(function(err) {
-        // should.not.exist(err);
-        // done();
+        throw err;
       });
-
-    // cole(function* () {
-    //   var foundUser = yield User.findByAddress(user.address);
-    //   done();
-    // })
-
   });
-  //
-  // after(function(done){
-  //   cole(function* () {
-  //     yield User.remove({ username: user.username });
-  //     done();
-  //   })
-  // })
 
+  after(function(done) {
 
+    User.where({
+        address: user.address
+      })
+      .fetch()
+      .then(function(_user) {
+        _user.destroy();
 
+        done();
+
+      }).catch(function(err) {
+        should.not.exist(err);
+        throw err;
+      });
+  });
 });
