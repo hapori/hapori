@@ -13,7 +13,7 @@ exports.getConnection = function () {
 				console.error('error fetching client from pool'+err);
 			} else {
 				resolve({ client:client, done:done });
-			}		
+			}
 		});
 	});
 }
@@ -38,7 +38,7 @@ exports.query = function (sql, values, client)  {
 			});
 		});
 
-	// otherwise we fetch a new client 
+	// otherwise we fetch a new client
 	// and return it to the pool immidiately
 	} else {
 		return new Promise(function(resolve, reject) {
@@ -56,7 +56,7 @@ exports.query = function (sql, values, client)  {
 							resolve(result.rows);
 						}
 					});
-				}		
+				}
 			});
 		});
 	}
@@ -65,8 +65,8 @@ exports.query = function (sql, values, client)  {
 
 
 exports.find = function(table, query, client) {
-	var where = queryToWhere(query)	
-	return this.query("SELECT * FROM "+table+" WHERE "+where.clause+";", where.values, client)	
+	var where = queryToWhere(query)
+	return this.query("SELECT * FROM "+table+" WHERE "+where.clause+";", where.values, client)
 }
 
 
@@ -77,19 +77,19 @@ exports.findWhereIn = function(table, att, list, client) {
 	for(var i = 0; i < list.length; i++)
 		string += '?,'
     string = (string.slice(0, - 1))+')'
-	return this.query("SELECT * FROM "+table+" WHERE "+att+" IN "+string+";", list, client)	
+	return this.query("SELECT * FROM "+table+" WHERE "+att+" IN "+string+";", list, client)
 */
 	// if the list of values is empty, we return the empty set
 	if(list.length == 0)
 		return new Promise(function(resolve, reject) { resolve([]); })
 	else
-		return this.query("SELECT * FROM "+table+" WHERE "+att+" IN ("+list.toString()+");", [], client)	
+		return this.query("SELECT * FROM "+table+" WHERE "+att+" IN ("+list.toString()+");", [], client)
 }
 
 
 exports.remove = function(table, query, client) {
-	var where = queryToWhere(query)	
-	return this.query("DELETE FROM "+table+" WHERE "+where.clause+";", where.values, client)	
+	var where = queryToWhere(query)
+	return this.query("DELETE FROM "+table+" WHERE "+where.clause+";", where.values, client)
 }
 
 
@@ -148,22 +148,6 @@ function queryToWhere(query) {
 		  	where += '"'+key+'"=$'+(i++)+' AND '
 		    values.push(query[key])
 		  }
-		return { clause:where.slice(0, - 5), values:values }				
+		return { clause:where.slice(0, - 5), values:values }
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -31,7 +31,7 @@ module.exports = function(req, res, next) {
 
 					investors[investorIndex].balance += Math.floor(process.env.VOTE_COST / previousVotes.length)
 					yield User.update(investors[investorIndex], 'id') // this can be optimized if a user can vote multiple times
-				
+
 				}
 			}
 		}
@@ -50,6 +50,6 @@ module.exports = function(req, res, next) {
 			investment: post.investment,
 			investors: post.investors
 		});
-		
+
 	});
 };

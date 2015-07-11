@@ -24,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
 
+
   // look for token in a cookie
   var token = req.cookies.token
 
@@ -33,20 +34,20 @@ app.use(function(req, res, next) {
     jwt.verify(token, 'SuperSecret', function(err, user) {
 
       // if everything is good, save to request for use in other routes
-      if (user) req.user = user; 
+      if (user) req.user = user;
       // if token has been messed with we show a failiure message
-      else return res.json({ success: false, message: 'Failed to authenticate token.' });    
-      
-      next();    
- 
+      else return res.json({ success: false, message: 'Failed to authenticate token.' });
+
+      next();
+
     });
   } else {
 
-    next();    
+    next();
 
   }
-  
-  
+
+
 });
 
 
