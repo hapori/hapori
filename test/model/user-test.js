@@ -18,7 +18,9 @@ describe.only('test user', function() {
   };
 
   it('create', function(done) {
-    User.forge(user).save().then(done);
+    User.forge(user).save().then(function(){
+      done();
+    });
   });
 
   //
