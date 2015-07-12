@@ -4,7 +4,6 @@ var cole = require('../../db/co_log_err.js').cole;
 
 
 describe('test post', function() {
-
   var post = {
     title: 'A Title',
     text: 'text text text text text text text text text text text text text text text text text text ',
@@ -23,28 +22,4 @@ describe('test post', function() {
         done();
     });
   });
-
-
-  // it('findAll', function(done) {
-  //
-  //   cole(function* () {
-  //     var res = yield Post.findAll();
-  //     res[0].text.should.eql(post.text);
-  //     done();
-  //   })
-  //
-  // });
-  //
-  //
-  //
-  // it('findById', function(done) {
-  //
-  //   cole(function* () {
-  //     var res = yield Post.findById(1);
-  //     //res[0].text.should.eql(post.text);
-  //     done();
-  //   })
-  //
-  // });
-
 });
