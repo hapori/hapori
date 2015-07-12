@@ -1,7 +1,4 @@
-// consider using brianc/node-pg-query
-// https://github.com/brianc/node-pg-query
-
-var db = require('../db');
+// var db = require('../db');
 
 var bookshelf = require('../bookshelf');
 

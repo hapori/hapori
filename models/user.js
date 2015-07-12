@@ -1,9 +1,4 @@
-// consider using brianc/node-pg-query
-// https://github.com/brianc/node-pg-query
-
 var db = require('../db');
-
-
 
 var bookshelf = require('../bookshelf.js');
 
@@ -45,9 +40,9 @@ module.exports = User;
 //     return db.findWhereIn('users', 'id', ids,  client)
 // };
 //
-exports.findByAddress = function (address, client) {
-    return db.find('users', { address:address },  client)
-};
+// exports.findByAddress = function (address, client) {
+//     return db.find('users', { address:address },  client)
+// };
 //
 // exports.findByName = function (username, client) {
 //     return db.find('users', { username:username },  client)
@@ -57,7 +52,7 @@ exports.findByAddress = function (address, client) {
 //     return db.find('users', { username:username },  client)
 // };
 //
-// exports.remove = function (query, client) {
+// User.remove = function (query, client) {
 //     return db.remove('users', query, client)
 // };
 //

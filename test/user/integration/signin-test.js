@@ -1,10 +1,10 @@
-var app = require('../../app');
+var app = require('../../../app');
 var request = require('supertest')(app);
 var should = require('chai').should();
-var cole = require('../../db/co_log_err.js').cole;
+var cole = require('../../../db/co_log_err.js').cole;
 var crypto = require('crypto');
 
-var db = require('../../db');
+var db = require('../../../db');
 
 describe('User: signin', function() {
 

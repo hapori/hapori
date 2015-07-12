@@ -1,6 +1,6 @@
-var Post = require('../../models/post.js');
+var Post = require('../../../models/post');
 var should = require('chai').should();
-var cole = require('../../db/co_log_err.js').cole;
+var cole = require('../../../db/co_log_err.js').cole;
 
 
 describe('test post', function() {

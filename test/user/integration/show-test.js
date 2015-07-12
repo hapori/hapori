@@ -1,10 +1,10 @@
-var app = require('../../app');
+var app = require('../../../app');
 var request = require('supertest')(app);
 var should = require('chai').should();
-var User = require('../../models/user');
-var fixtures = require('../fixtures.js');
+var User = require('../../../models/user');
+var fixtures = require('../../fixtures.js');
 
-describe.only('User: show', function() {
+describe('User: show', function() {
 
   var user = fixtures.user.default;
 

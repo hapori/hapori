@@ -7,8 +7,10 @@ exports.cole = function(callback) {
       	return yield callback();
 
       } catch(err) {
-        console.error(err);
+        console.error('CO error:', err);
       }
-    }).catch(console.error)
+    }).catch(function(err){
+      console.error('CO catch error:', err);
+    })
 
-}
+};
