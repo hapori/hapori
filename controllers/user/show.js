@@ -2,16 +2,22 @@ User = require('../../models/user');
 
 module.exports = function show(req, res, next) {
 
-    var userId = req.params.userId;
+  var username = req.params.username;
 
-    User.findById(userId, function(err, user) {
-        if (err) {
-            return next(err);
-        }
+  User.forge({ username: username })
+    .fetch()
+    .then(function(user) {
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          message: 'User not found'
+        });
+      }
 
-        res.json(user);
+      user = user.attributes;
+      res.json(user);
 
+    }).catch(function(err) {
+      next(err);
     });
-
-
 };
