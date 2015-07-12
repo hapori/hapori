@@ -1,11 +1,11 @@
-// 
-//
-// // Before each test, load the fixture data to ensure consistent tests.
-// var fixtures = require('./fixtures');
-//
-// beforeEach(function beforeEachTest(done) {
-//     // drop db then load fixtures
-//
-//     done();
-//
-// });
+var db = require('../db');
+var cole = require('../db/co_log_err.js').cole;
+before(function beforeEachTest(done) {
+
+  cole(function*() {
+    // remove users before tests
+    yield db.remove('users', {});
+
+    done();
+  });
+});
