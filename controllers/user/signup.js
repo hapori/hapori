@@ -17,7 +17,8 @@ module.exports = function(req, res, next) {
 
     if (!username || !email || !password) {
       return res.status(401).send({
-        type: 'Missing Fields'
+        success: false,
+        message: 'Missing Fields'
       });
     }
 

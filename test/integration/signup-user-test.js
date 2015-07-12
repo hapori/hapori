@@ -6,7 +6,7 @@ var User = require('../../models/user.js');
 
 var db = require('../../db');
 
-describe('User: signup', function() {
+describe.only('User: signup', function() {
 
   before(function(done) {
     cole(function*() {
@@ -45,13 +45,27 @@ describe('User: signup', function() {
       .expect('Content-Type', /json/)
       .expect(201, function(err, res) {
 
-        console.log(err, res.body);
-
         should.not.exist(err);
         res.body.should.have.property('success', true);
         // res.body.should.have.property('message', 'Welcome signupUser');
         //        res.body.should.have.property('token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNpZ251cFVzZXIiLCJwYXNzd29yZEhhc2giOiJ1bzdoWjNadDk3TFc0QUJSWGZ6dXBJcGIwaGJHYVJVem9qOEJBaGx2eGVNPSIsInNhbHQiOiIxMjQzY2MyNWMxZDg2OTE5MzdiZWEyYTAiLCJlbWFpbCI6InNpZ251cFVzZXJAdGVzdC5jb20iLCJiYWxhbmNlIjowLCJrZXkiOiIwNTI3OTQzZjZjZDVhODE5NDg3OWE2NGFmYTZlODM5NTEwOGE0ODM2OTYyYzc0YWNhNzZjMTUyNWU5NTcxOGY2IiwiYWRkcmVzcyI6IjFISmVpcXllQ2ZhS2E1dUFmRzJSYUF3QW5BVEg3QmJKd1AiLCJqb2luZWQiOjE0MzUzMzA1MTg2NDQsImlhdCI6MTQzNTMzMDUxOCwiZXhwIjoxNDM1NDE2OTE4fQ.zObc-GTO4r-lw4YmzXeKBky_54AE1JG5foYHOM9OeRs');
+        done();
+      });
+  });
 
+  it('should fail correctly if signup posed with missing field', function(done) {
+
+    request.post('/signup')
+      .send({
+        // missing fields
+      })
+      .set('Accept', 'application/json') // another test that accepts html
+      .expect('Content-Type', /json/)
+      .expect(401, function(err, res) {
+
+        should.not.exist(err);
+        res.body.should.have.property('success', false);
+        res.body.should.have.property('message', 'Missing Fields');
         done();
       });
   });
