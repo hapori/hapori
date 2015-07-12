@@ -15,17 +15,23 @@ module.exports = function(req, res, next) {
     var password = req.body.password;
     var email = req.body.email;
 
-    var userByUsername = yield User.where({ username: username }).fetch();
-    if (userByUsername) {
+    if (!username || !email || !password) {
+      return res.status(401).send({
+        type: 'Missing Fields'
+      });
+    }
+
+    var usernameExists = yield User.where({ username: username }).fetch();
+    if (usernameExists){
       return res.status(200).json({
         success: false,
         message: 'Username taken'
       });
     }
-    // I kind of like how reddit doesn't require a password
-    // are we requiring email to recover bitcoin wallets?
-    var userByEmail = yield User.where({ email: email }).fetch();
-    if (userByEmail) {
+    // I think a lot of people like how reddit doesn't require a password
+    // are we requiring email to recover bitcoin wallets? ~ Roland
+    var emailExists = yield User.where({ email: email }).fetch();
+    if (emailExists) {
       return res.status(200).json({
         success: false,
         message: 'Email taken'

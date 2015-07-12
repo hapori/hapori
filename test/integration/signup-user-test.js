@@ -2,8 +2,9 @@ var app = require('../../app');
 var request = require('supertest')(app);
 var should = require('chai').should();
 var cole = require('../../db/co_log_err.js').cole;
+var User = require('../../models/user.js');
 
-
+var db = require('../../db');
 
 describe('User: signup', function() {
 
@@ -21,13 +22,12 @@ describe('User: signup', function() {
         joined: '1827369128'
       };
 
-      yield User.remove({});
-      yield User.create(user);
+      yield db.remove('users', {}); // placeholder while I figure out how to empty a table with bookshelf
+      yield User.forge(user).save();
       done();
-    })
-  })
 
-
+    });
+  });
 
   it('should signup a new user', function(done) {
 
@@ -56,8 +56,7 @@ describe('User: signup', function() {
       });
   });
 
-
-  xit('should not create a new user bc username exists', function(done) {
+  it('should not create a new user with existing username', function(done) {
 
     var username = 'existingUser';
     var email = 'existingUser123@test.com';
@@ -71,22 +70,19 @@ describe('User: signup', function() {
       })
       .set('Accept', 'application/json') // another test that accepts html
       .expect('Content-Type', /json/)
-      .expect(500, function(err, res) {
-        // we should probably be expecting a different http response for existing username
-        // maybe a 400 DuplicateValueError ~ Roland
-        console.log(err, res.body);
-        // should.not.exist(err);
+      .expect(200, function(err, res) {
+        should.not.exist(err);
         res.body.should.have.property('success', false);
+        res.body.should.have.property('message', 'Username taken');
         //res.body.should.have.property('command', 'INSERT');
         //res.body.should.have.property('rowCount', 1);
-
         // todo check passwordHash
         done();
       });
   });
 
 
-  xit('should not create a new user bc password exists', function(done) {
+  it('should not create a new user bc password exists', function(done) {
 
     var username = 'existingUser123';
     var email = 'existingUser@test.com';
@@ -100,8 +96,10 @@ describe('User: signup', function() {
       })
       .set('Accept', 'application/json') // another test that accepts html
       .expect('Content-Type', /json/)
-      .expect(500, function(err, res) {
+      .expect(200, function(err, res) {
         should.not.exist(err);
+        res.body.should.have.property('success', false);
+        res.body.should.have.property('message', 'Email taken');
         //res.body.should.have.property('command', 'INSERT');
         //res.body.should.have.property('rowCount', 1);
 
@@ -109,22 +107,6 @@ describe('User: signup', function() {
         done();
       });
   });
-
-
-  after(function(done) {
-    cole(function*() {
-      yield User.remove({
-        username: 'existingUser'
-      });
-      yield User.remove({
-        username: 'signupUser'
-      });
-      done();
-    })
-  })
-
-
-
 
   //
   // xit('should render a new user in HTML', function(done) {
