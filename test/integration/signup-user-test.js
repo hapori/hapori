@@ -6,7 +6,7 @@ var User = require('../../models/user.js');
 
 var db = require('../../db');
 
-describe.only('User: signup', function() {
+describe('User: signup', function() {
 
   before(function(done) {
     cole(function*() {

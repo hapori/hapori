@@ -4,32 +4,32 @@ var should = require('chai').should();
 var cole = require('../../db/co_log_err.js').cole;
 var crypto = require('crypto');
 
+var db = require('../../db');
 
+describe.only('User: signin', function() {
 
-describe('User: signin', function() {
+  before(function(done) {
+    cole(function*() {
+      // remove all users before tests so that we can check db after if need be.
+      yield db.remove('users', {}); // placeholder while I figure out how to empty a table with bookshelf
 
+      var password = 'testpassword'
+      var salt = 'salt'
+      var user = {
+        username: 'existingUser',
+        email: 'existingUser@test.com',
+        passwordHash: crypto.createHash('sha256').update(salt + ':' + password).digest('base64'),
+        salt: salt,
+        balance: 1000,
+        key: 'some bitcoin key',
+        address: '15U4eEyfEET9GqTSF4JpFRHAD8YGpYLbCE',
+        joined: '1827369128'
+      };
 
-  before(function(done){
-    cole(function* () {
-
-    var password = 'testpassword'
-    var salt = 'salt'
-		var user = {
-			username: 'existingUser',
-			email: 'existingUser@test.com',
-			passwordHash: crypto.createHash('sha256').update(salt+':'+password).digest('base64'),
-			salt: salt,
-			balance: 1000,
-			key: 'some bitcoin key',
-			address: '15U4eEyfEET9GqTSF4JpFRHAD8YGpYLbCE',
-			joined: '1827369128'
-		};
-
-		yield User.create(user);
-		done();
-    })
-  })
-
+      yield User.forge(user).save();
+      done();
+    });
+  });
 
   it('should signin a user', function(done) {
 
@@ -54,7 +54,7 @@ describe('User: signin', function() {
 
   it('should return user not found', function(done) {
 
-    var username = 'existingUser1';
+    var username = 'nonExistantUser';
     var password = 'testpassword';
 
     request.post('/signin')
@@ -63,10 +63,10 @@ describe('User: signin', function() {
         password: password
       })
       .set('Accept', 'application/json') // another test that accepts html
-      //.expect('Content-Type', /json/)
-      .expect(500, function(err, res) {
+      .expect(200, function(err, res) { // perhaps we should be returning 404 notFound http status
         should.not.exist(err);
-        //res.body.should.have.property('success', true);
+        res.body.should.have.property('success', false);
+        res.body.should.have.property('message', 'Authentication failed. User password combination not found. (user not found)');
 
         done();
       });
@@ -76,7 +76,7 @@ describe('User: signin', function() {
   it('should return user not found', function(done) {
 
     var username = 'existingUser';
-    var password = 'testpassword1';
+    var password = 'nonExistantPassword';
 
     request.post('/signin')
       .send({
@@ -85,24 +85,14 @@ describe('User: signin', function() {
       })
       .set('Accept', 'application/json') // another test that accepts html
       .expect('Content-Type', /json/)
-      .expect(500, function(err, res) {
+      .expect(200, function(err, res) {
         should.not.exist(err);
-        //res.body.should.have.property('success', true);
+        res.body.should.have.property('success', false);
+        res.body.should.have.property('message', 'Authentication failed. User password combination not found. (pwd not found)');
 
         done();
       });
   });
-
-
-
-
-  after(function(done){
-    cole(function* () {
-      yield User.remove({ username:'existingUser' });
-      //yield User.remove({ username:'signupUser' });
-      done();
-    })
-  })
 
 
   //

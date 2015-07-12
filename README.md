@@ -1,4 +1,4 @@
-# node-bitcoin-reddit
+# hapori
 
 A Node.js/Express reddit-like forum that uses Bitcoin instead of karma.
 
