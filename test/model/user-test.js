@@ -2,7 +2,7 @@ var User = require('../../models/user.js');
 var should = require('chai').should();
 var expect = require('chai').expect;
 
-describe.only('test user', function() {
+describe('test user', function() {
 
   var user = {
     username: 'usertestuser',

@@ -6,7 +6,7 @@ var crypto = require('crypto');
 
 var db = require('../../db');
 
-describe.only('User: signin', function() {
+describe('User: signin', function() {
 
   before(function(done) {
     cole(function*() {
