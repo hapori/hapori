@@ -17,11 +17,11 @@ module.exports = function(req, res, next) {
 			username: req.user.username,
 		};
 
-		yield Post.create(post)
-
+		yield Post.forge(post).save();
+    
 		res.json({
 			success: true,
 		});
-		
+
 	});
 };
