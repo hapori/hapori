@@ -29,7 +29,7 @@ module.exports = function(req, res, next) {
         message: 'Username taken'
       });
     }
-    // I think a lot of people like how reddit doesn't require a password
+    // A lot of people like how reddit doesn't require a email
     // are we requiring email to recover bitcoin wallets? ~ Roland
     var emailExists = yield User.where({ email: email }).fetch();
     if (emailExists) {
