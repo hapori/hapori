@@ -25,11 +25,11 @@ module.exports = function(req, res, next) {
 		user.set('balance', user.get('balance')-process.env.VOTE_COST)
 		yield user.save()
 
-				console.log('previousVotes', previousVotes, 'investors', investors)
+				//console.log('previousVotes', previousVotes, 'investors', investors)
 
 
-		_.each(previousVotes.toJSON(), function(vote) {
-			_.each(investors.toJSON(), function(investor) {
+		_.each(previousVotes, function(vote) {
+			_.each(investors, function(investor) {
 				console.log('vote', vote, 'investor', investor)
 			})
 		})
