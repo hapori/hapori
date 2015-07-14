@@ -1,3 +1,10 @@
+var bookshelf = require('../bookshelf.js');
+var User = bookshelf.Model.extend({ tableName: 'votes' }, {});
+module.exports = User;
+
+
+/*
+
 var db = require('../db');
 var query = db.query;
 
@@ -24,3 +31,4 @@ exports.findByPostId = function (postId, client) {
     return db.find('votes', { postId:postId },  client)
 };
 
+*/

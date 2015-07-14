@@ -10,11 +10,8 @@ module.exports = function show(req, res, next) {
   cole(function*() {
 
     // fetch all posts and forums
-    var posts = yield Post.forge().fetch();
-    var forums = yield Forum.forge().fetch();
-
-    if (posts) posts = posts.attributes;
-    if (forums) forums = forums.attributes;
+    var posts = (yield Post.forge().fetchAll()).toJSON();
+    var forums = (yield Forum.forge().fetchAll()).toJSON();
 
     res.render('layout', {
       title: 'Express',
