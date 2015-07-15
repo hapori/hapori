@@ -25,32 +25,22 @@ module.exports = function(req, res, next) {
 		user.set('balance', user.get('balance')-process.env.VOTE_COST)
 		yield user.save()
 
-				//console.log('previousVotes', previousVotes, 'investors', investors)
-
-
-		_.each(previousVotes, function(vote) {
-			_.each(investors, function(investor) {
-				console.log('vote', vote, 'investor', investor)
+		_.each(previousVotes.models, function(vote) {
+			_.each(investors.models, function(investor) {
+				if(vote.get('userId') == investor.get('id')) {
+					investor.set('balance', investor.get('balance') + Math.floor(process.env.VOTE_COST / previousVotes.length))
+					user.save()
+					console.log('adding '+Math.floor(process.env.VOTE_COST / previousVotes.length)+' to '+investor.get('username'))
+				}
 			})
 		})
-/*
-		// increase balance of investors
-		for(var voteIndex = 0; voteIndex < previousVotes.toJSON().length; voteIndex++) {
-			for(var investorIndex = 0; investorIndex < investors.toJSON().length; investorIndex++) {
-				if(previousVotes[voteIndex].userId === investors[investorIndex].id) {
 
-					investors[investorIndex].balance += Math.floor(process.env.VOTE_COST / previousVotes.length)
-					yield User.update(investors[investorIndex], 'id') // this can be optimized if a user can vote multiple times
-
-				}
-			}
-		}
 
 		// increase investment in the post, add new investor, and save
-		post.investment += parseInt(process.env.VOTE_COST)
-		post.investors.push(user.username)
-		yield Post.update(post, 'id')
-
+		post.set('investment', post.get('investment') + parseInt(process.env.VOTE_COST))
+		post.set('investors', post.get('investors').push(user.username))
+		//post.save()
+/*
 		yield Vote.create({postId: postId, userId: userId, timestamp: new Date().getTime()})
 
 		res.json({
