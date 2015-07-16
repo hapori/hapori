@@ -23,15 +23,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use(function(req, res, next) {
-
-
-  // look for token in a cookie
+  // find token in a cookie
   var token = req.cookies.token
 
   // if we find a token we try and verify it
   if (token) {
+
     // verifies secret and checks exp
-    jwt.verify(token, 'SuperSecret', function(err, user) {
+    jwt.verify(token, process.env.JWT_SECRET, function(err, user) {
 
       // if everything is good, save to request for use in other routes
       if (user) req.user = user;
@@ -42,15 +41,9 @@ app.use(function(req, res, next) {
 
     });
   } else {
-
     next();
-
   }
-
-
 });
-
-
 
 
 

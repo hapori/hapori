@@ -21,12 +21,10 @@ module.exports = function(req, res, next) {
       });
     }
 
-    user = user.attributes;
-
-    var passwordHash = crypto.createHash('sha256').update(user.salt + ':' + password).digest('base64');
+    var passwordHash = crypto.createHash('sha256').update(user.get('salt') + ':' + password).digest('base64');
 
     // check if password matches
-    if (user.passwordHash != passwordHash) {
+    if (user.get('passwordHash') != passwordHash) {
       return res.status(200).json({
         success: false,
         message: 'Authentication failed. User password combination not found. (pwd not found)'
@@ -34,12 +32,8 @@ module.exports = function(req, res, next) {
     }
 
     // if user is found and password is right
-    // create a token
-    var token = jwt.sign(user, 'SuperSecret', {
-      expiresInMinutes: 1440 // expires in 24 hours
-    });
-
-    // return the information including token as JSON
+    // create a token and store it in a cookie
+    var token = jwt.sign(user.toJSON(), process.env.JWT_SECRET, { expiresInMinutes: 60*48 });
     res.cookie('token', token, { httpOnly: true });
     res.status(200);
     res.json({ success: true });

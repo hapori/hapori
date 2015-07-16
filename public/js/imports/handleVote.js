@@ -1,4 +1,5 @@
 var $ = require('jquery');
+var _ = require('underscore');
 
 module.exports = function() {
 	$('.vote-box').click(function(event) {
@@ -12,11 +13,44 @@ module.exports = function() {
 		}).done(function(data) {
 			if(data.success) {
 				$('#'+data.postId+'>.vote-number').html(data.investment)
-				$('#'+data.postId).next().children().eq(1).html('Investors '+data.investors.toString(0))
-				//$('#balance').html(data.balance)
+				$('#'+data.postId).next().children().eq(1).html('Investors '+formatInvestors(data.investors))
+				$('#balance').text(data.balance)
 			} else {
-				alert(data.message)
+				alert(data.message) // todo
 			}
 		});
 	});
+}
+
+
+
+
+// todo: remove code duplication here & in controllers/home/show.js
+// todo: replace 100 by constant
+var formatInvestors = function(list) {
+
+  // compute profit for each individual node
+  var investors = list.map(function(name) { return {name:name, profit: -100}})
+  for (var i = 1; i <= list.length; i++)
+    for (var j = 0; j < i; j++)
+      investors[j].profit += Math.floor(100 / i)
+
+  console.log(investors)
+
+  return _.chain(investors)
+
+    // group together by investor name
+    .groupBy(function(element){ return element.name; })
+
+    // sum up the profit for each investor
+    .map(function(investor, investorName) {
+      return { 
+          name: investorName, 
+          profit: _.reduce(investor, function(acc, curr) { return acc+curr.profit }, 0)}
+    })
+
+    // format
+    .reduce(function(acc, pair) {
+      return acc+" "+pair.name+"("+pair.profit+") ";
+    }, '');
 }

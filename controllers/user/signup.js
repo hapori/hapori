@@ -55,47 +55,26 @@ module.exports = function(req, res, next) {
       passwordHash: passwordHash,
       salt: salt,
       email: email,
-      balance: 0,
+      balance: process.env.DEFAULT_BALANCE,
       key: key.toString(),
       address: address.toString(),
       joined: new Date().getTime()
     };
 
-    // create new user tuple and store the id in object
-    var idObj = yield User.forge(user).save();
+    // store user tuple in the db
+    var user = yield User.forge(user).save();
+
     // What's this user.id being used for? ~ Roland
-    user.id = idObj.id
+    // @Roland: I changed stuff around here: we now sore the userId in the token so that we can identify the user on subsequent requests
+    //user.id = idObj.id
 
-    // create a token
-    var token = jwt.sign(user, 'SuperSecret', {
-      expiresInMinutes: 1440 // expires in 24 hours
-    });
-
-    // store token in a cookie
-    res.cookie('token', token, {
-      httpOnly: true
-    });
+    // create a token and store it in a cookie
+    var token = jwt.sign(user.toJSON(), process.env.JWT_SECRET, { expiresInMinutes: 60*48 });
+    res.cookie('token', token, { httpOnly: true });
     res.status(201)
     res.json({
       success: true,
-      //token: token
     });
-
-    /*
-                res.format({
-                    'text/html': function() {
-                        res.redirect('/')
-                    },
-                    'application/json': function() {
-                        res.json({
-                            success: true,
-                            message: 'Welcome '+user.username,
-                            token: token
-                        });
-                    }
-                });
-    */
-
 
   })
 };
