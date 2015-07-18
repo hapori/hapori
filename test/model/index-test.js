@@ -4,12 +4,7 @@ var db = require('../../db');
 var co = require('co')
 var cole = require('../../db/co_log_err.js').cole;
 
-
-
-
-
 describe('test index', function() {
-
 
   var post = {
     title: 'A New Title',
@@ -19,10 +14,6 @@ describe('test index', function() {
     forum: 'main',
     username: 'John'
   };
-
-
-
-
 
   it('test query with insert statement', function(done) {
 
@@ -61,7 +52,7 @@ describe('test index', function() {
       }
     }).catch(console.error)
 
-  }); 
+  });
 
 
   it('test query with select statement, explicit client', function(done) {
@@ -80,7 +71,7 @@ describe('test index', function() {
       }
     }).catch(console.error)
 
-  }); 
+  });
 
 
   it('test insert', function(done) {
@@ -101,8 +92,6 @@ describe('test index', function() {
 
   });
 
-
-
   it('test co_log_err', function(done) {
 
     cole(function* () {
@@ -111,8 +100,7 @@ describe('test index', function() {
 	    done();
     })
 
-  }); 
-
+  });
 
   it('test co_log_err with explicit client', function(done) {
 
@@ -123,26 +111,5 @@ describe('test index', function() {
         conn.done()
 	    done();
     })
-
-  }); 
-
-
+  });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
