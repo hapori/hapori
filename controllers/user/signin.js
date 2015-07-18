@@ -8,10 +8,9 @@ var errors = require('../../lib/errors');
 
 module.exports = function signin(req, res, next) {
 
-  var username = req.body.username;
-  var password = req.body.password;
-
-  User.signin(username, password).then(function then(user) {
+  User
+    .signin(req.body.username, req.body.password)
+    .then(function then(user) {
 
       // if user is found and password is right
       // create a token and store it in a cookie
@@ -20,5 +19,6 @@ module.exports = function signin(req, res, next) {
 
       res.json({ success: true });
 
-    }).catch(next);
+    })
+    .catch(next);
 };
