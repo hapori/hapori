@@ -4,11 +4,11 @@ module.exports = function authenticate(req, res, next) {
   // find token in a cookie
   var token = req.cookies.token
 
-  // if we find a token we try and verify it
   if (!token) {
     return next();
   }
 
+  // else if we find a token we try and verify it
   // verifies secret and checks exp
   jwt.verify(token, process.env.JWT_SECRET, function(err, user) {
     // if token has been messed with we show a failiure message
