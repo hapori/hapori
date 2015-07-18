@@ -5,7 +5,7 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('crypto-comment-on:server');
+var debug = require('debug')('hapori:server');
 var http = require('http');
 
 socketioJwt =  require('socketio-jwt')
@@ -123,7 +123,3 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
-
-
-
-
