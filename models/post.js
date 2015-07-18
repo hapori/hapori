@@ -1,5 +1,3 @@
-//var db = require('../db');
-
 var bookshelf = require('hapori-bookshelf');
 
 var Post = bookshelf.Model.extend({
@@ -9,23 +7,3 @@ var Post = bookshelf.Model.extend({
 });
 
 module.exports = Post;
-//
-// exports.create = function (post, client) {
-//     return db.insert('posts', post, client)
-// };
-//
-// exports.find = function (query, client) {
-//     return db.find('posts', query,  client)
-// };
-//
-// exports.findAll = function (client) {
-//     return db.find('posts', {}, client)
-// };
-//
-// exports.findById = function (id, client) {
-//     return db.find('posts', { id:id },  client)
-// };
-//
-// exports.update = function (post, dbKey, client) {
-//     return db.update('posts', post, dbKey, client)
-// };
