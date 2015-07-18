@@ -1,5 +1,5 @@
 var Promise = require('bluebird');
-var bookshelf = require('../bookshelf.js');
+var bookshelf = require('hapori-bookshelf');
 var crypto = require('crypto');
 var errors = require('hapori-errors');
 

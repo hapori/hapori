@@ -1,4 +1,4 @@
-var bookshelf = require('../bookshelf');
+var bookshelf = require('hapori-bookshelf');
 
 var Forum = bookshelf.Model.extend({
     tableName: 'forums'
