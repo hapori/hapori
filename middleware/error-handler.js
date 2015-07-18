@@ -1,4 +1,4 @@
-var errors = require('./');
+var errors = require('../lib/errors');
 
 module.exports = errorHandler;
 

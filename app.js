@@ -57,7 +57,7 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-app.use(require('./lib/errors/handler'));
+app.use(require('./middleware/error-handler'));
 
 process.addListener('uncaughtException', function(err) {
     console.error('Uncaught error in server.js', {
