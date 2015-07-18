@@ -45,15 +45,9 @@ app.use(function(req, res, next) {
   }
 });
 
-
-
 app.use('/', require('./routes/index'));
 app.use('/u', require('./routes/user'));
 app.use('/p', require('./routes/post'));
-
-
-
-
 
 
 // catch 404 and forward to error handler
@@ -63,29 +57,7 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
-});
+app.use(require('./lib/errors/handler'));
 
 process.addListener('uncaughtException', function(err) {
     console.error('Uncaught error in server.js', {
@@ -93,7 +65,7 @@ process.addListener('uncaughtException', function(err) {
         stack: err.stack
     });
     // TODO some sort of notification
-    // process.exit(1);
+    process.exit(1);
 });
 
 module.exports = app;

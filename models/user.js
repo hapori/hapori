@@ -1,15 +1,7 @@
 var Promise = require('bluebird');
 var bookshelf = require('../bookshelf.js');
 var crypto = require('crypto');
-
-var errors = require('errors');
-
-errors.create({
-  name: 'AuthenticationError',
-  success: false,
-  status: 200
-});
-// console.log(new errors.RuntimeError().toString());
+var errors = require('../lib/errors');
 
 var User = bookshelf.Model.extend({
   tableName: 'users'

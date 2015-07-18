@@ -4,22 +4,14 @@ var User = require('../../models/user');
 var cole = require('../../db/co_log_err.js').cole;
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
-
-var errors = require('errors');
-
-errors.create({
-  name: 'AuthenticationError',
-  success: false,
-  status: 200
-});
+var errors = require('../../lib/errors');
 
 module.exports = function signin(req, res, next) {
 
   var username = req.body.username;
   var password = req.body.password;
 
-  User
-    .signin(username, password).then(function then(user) {
+  User.signin(username, password).then(function then(user) {
 
       // if user is found and password is right
       // create a token and store it in a cookie
@@ -28,8 +20,10 @@ module.exports = function signin(req, res, next) {
 
       res.json({ success: true });
 
-    }).catch(function catch(err){
+    }).catch(function (err){
 
-      res.json(err)
+      next(err);
+
+      // res.json(err)
     });
 };
