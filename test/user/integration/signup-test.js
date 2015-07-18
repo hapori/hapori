@@ -2,7 +2,7 @@ var app = require('../../../app');
 var request = require('supertest')(app);
 var should = require('chai').should();
 var cole = require('../../../db/co_log_err.js').cole;
-var User = require('../../../models/user.js');
+var User = require('../../../models/user');
 
 var db = require('../../../db');
 
