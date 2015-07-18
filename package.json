@@ -20,7 +20,7 @@
     "debug": "~2.2.0",
     "dotenv": "^1.2.0",
     "ejs": "^2.3.1",
-    "errors": "^0.3.0",
+    "hapori-errors": "./lib/hapori-errors",
     "express": "~4.12.4",
     "jquery": "^2.1.4",
     "jsonwebtoken": "^5.0.2",

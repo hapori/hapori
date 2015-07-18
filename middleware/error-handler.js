@@ -1,4 +1,4 @@
-var errors = require('../lib/errors');
+var errors = require('hapori-errors');
 
 module.exports = errorHandler;
 

@@ -1,7 +1,7 @@
 var Promise = require('bluebird');
 var bookshelf = require('../bookshelf.js');
 var crypto = require('crypto');
-var errors = require('../lib/errors');
+var errors = require('hapori-errors');
 
 var User = bookshelf.Model.extend({
   tableName: 'users'
