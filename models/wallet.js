@@ -1,6 +1,9 @@
-var db = require('../db');
+var bookshelf = require('hapori-bookshelf');
 
+var Wallet = bookshelf.Model.extend({
+    tableName: 'wallet' // why singular?
+}, {
 
-exports.create = function (wallet, client) {
-    return db.insert('wallet', wallet, client)
-};
+});
+
+module.exports = Wallet;
