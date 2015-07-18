@@ -13,13 +13,13 @@ errors.create({
   status: 200
 });
 
-module.exports = function(req, res, next) {
+module.exports = function signin(req, res, next) {
 
   var username = req.body.username;
   var password = req.body.password;
 
   User
-    .login(username, password).then(function(user) {
+    .signin(username, password).then(function then(user) {
 
       // if user is found and password is right
       // create a token and store it in a cookie
@@ -28,7 +28,7 @@ module.exports = function(req, res, next) {
 
       res.json({ success: true });
 
-    }).catch(function(err){
+    }).catch(function catch(err){
 
       res.json(err)
     });

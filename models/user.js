@@ -15,7 +15,7 @@ var User = bookshelf.Model.extend({
   tableName: 'users'
 }, {
 
-  login: function(username, password) {
+  signin: function signin(username, password) {
     var user;
     var self = this;
 
@@ -41,7 +41,7 @@ var User = bookshelf.Model.extend({
         return user.get('passwordHash') === crypto.createHash('sha256').update(user.get('salt') + ':' + password).digest('base64')
 
       })
-      .then(function(matched) {
+      .then(function then(matched) {
 
         if (!matched) {
           return Promise.reject(new errors.AuthenticationError({
