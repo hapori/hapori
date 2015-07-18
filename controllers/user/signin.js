@@ -20,8 +20,5 @@ module.exports = function signin(req, res, next) {
 
       res.json({ success: true });
 
-    }).catch(function (err){
-
-      next(err);
-    });
+    }).catch(next);
 };
