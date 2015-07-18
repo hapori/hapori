@@ -1,3 +1,1 @@
-module.exports = {
-  create: require('./create')
-};
+module.exports = require('require-directory')(module);

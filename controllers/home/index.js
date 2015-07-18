@@ -1,3 +1,1 @@
-module.exports = {
-  show: require('./show')
-};
+module.exports = require('require-directory')(module);

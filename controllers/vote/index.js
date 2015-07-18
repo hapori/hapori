@@ -1,3 +1,1 @@
-module.exports = {
-  submit: require('./submit')
-};
+module.exports = require('require-directory')(module);
