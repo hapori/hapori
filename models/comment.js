@@ -1,11 +1,9 @@
-var db = require('../db');
-var query = db.query;
+var bookshelf = require('hapori-bookshelf');
 
+var Wallet = bookshelf.Model.extend({
+    tableName: 'comments'
+}, {
 
+});
 
-exports.create = function (comment, client) {
-    return db.insert('comments', comment, client)
-};
-
-
-
+module.exports = Wallet;
