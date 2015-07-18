@@ -1,10 +1,7 @@
 // https://github.com/scotch-io/node-token-authentication/blob/master/server.js
-
 var User = require('../../models/user');
-var cole = require('../../db/co_log_err.js').cole;
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
-var errors = require('../../lib/errors');
 
 module.exports = function signin(req, res, next) {
 
