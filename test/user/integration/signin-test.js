@@ -64,7 +64,8 @@ describe('User: signin', function() {
       })
       .set('Accept', 'application/json') // another test that accepts html
       .expect(200, function(err, res) { // perhaps we should be returning 404 notFound http status
-        should.not.exist(err);
+        // should.not.exist(err);
+        console.log(err, res.body, 'end');
         res.body.should.have.property('success', false);
         res.body.should.have.property('message', 'Authentication failed. User password combination not found. (user not found)');
 
@@ -73,7 +74,7 @@ describe('User: signin', function() {
   });
 
 
-  it('should return user not found', function(done) {
+  it('should return user not foundx', function(done) {
 
     var username = 'existingUser';
     var password = 'nonExistantPassword';
@@ -87,6 +88,7 @@ describe('User: signin', function() {
       .expect('Content-Type', /json/)
       .expect(200, function(err, res) {
         should.not.exist(err);
+        // console.log(res.body);
         res.body.should.have.property('success', false);
         res.body.should.have.property('message', 'Authentication failed. User password combination not found. (pwd not found)');
 

@@ -1,61 +1,58 @@
-//var db = require('../db');
-
+var Promise = require('bluebird');
 var bookshelf = require('../bookshelf.js');
+var crypto = require('crypto');
+
+var errors = require('errors');
+
+errors.create({
+  name: 'AuthenticationError',
+  success: false,
+  status: 200
+});
+// console.log(new errors.RuntimeError().toString());
 
 var User = bookshelf.Model.extend({
   tableName: 'users'
 }, {
 
+  login: function(username, password) {
+    var user;
+    var self = this;
 
- //  login: Promise.method(function(email, password) {
- //   if (!email || !password) throw new Error('Email and password are both required');
- //   return new this({email: email.toLowerCase().trim()}).fetch({require: true}).tap(function(customer) {
- //     return bcrypt.compareAsync(customer.get('password'), password);
- //   });
- // })
+    if (!username || !password) {
+      return Promise.reject(new errors.AuthenticationError('no username or password')); //TODO write a proper missing field error
+    }
 
+    return self.forge({
+        username: username
+      })
+      .fetch()
+      .then(function then(_user) {
 
+        user = _user;
+
+        if (!user) {
+          return Promise.reject(new errors.AuthenticationError({
+            success: false,
+            message: 'Authentication failed. User password combination not found. (user not found)'
+          }));
+        }
+
+        return user.get('passwordHash') === crypto.createHash('sha256').update(user.get('salt') + ':' + password).digest('base64')
+
+      })
+      .then(function(matched) {
+
+        if (!matched) {
+          return Promise.reject(new errors.AuthenticationError({
+            success: false,
+            message: 'Authentication failed. User password combination not found. (pwd not found)'
+          }));
+        }
+
+        return user;
+      })
+  }
 });
 
 module.exports = User;
-
-//
-// exports.create = function (user, client) {
-//     return db.insert('users', user, client)
-// };
-//
-// exports.find = function (query, client) {
-//     return db.find('users', query,  client)
-// };
-//
-// exports.findAll = function (client) {
-//     return db.find('users', {}, client)
-// };
-//
-// exports.findById = function (id, client) {
-//     return db.find('users', { id:id },  client)
-// };
-//
-// exports.findByIds = function (ids, client) {
-//     return db.findWhereIn('users', 'id', ids,  client)
-// };
-//
-// exports.findByAddress = function (address, client) {
-//     return db.find('users', { address:address },  client)
-// };
-//
-// exports.findByName = function (username, client) {
-//     return db.find('users', { username:username },  client)
-// };
-//
-// exports.findByEmail = function (username, client) {
-//     return db.find('users', { username:username },  client)
-// };
-//
-// User.remove = function (query, client) {
-//     return db.remove('users', query, client)
-// };
-//
-// exports.update = function (user, dbKey, client) {
-//     return db.update('users', user, dbKey, client)
-// };
