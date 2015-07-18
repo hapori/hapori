@@ -19,11 +19,12 @@
     "debug": "~2.2.0",
     "dotenv": "^1.2.0",
     "ejs": "^2.3.1",
+    "express": "~4.12.4",
     "hapori-bookshelf": "./lib/hapori-bookshelf",
     "hapori-errors": "./lib/hapori-errors",
-    "express": "~4.12.4",
     "jquery": "^2.1.4",
     "jsonwebtoken": "^5.0.2",
+    "lodash": "^3.10.0",
     "morgan": "~1.5.3",
     "passport-local": "^1.0.0",
     "pg": "^4.4.0",
@@ -31,8 +32,7 @@
     "serve-favicon": "~2.2.1",
     "socket.io": "^1.3.5",
     "socket.io-client": "^1.3.5",
-    "socketio-jwt": "^4.2.0",
-    "underscore": "^1.8.3"
+    "socketio-jwt": "^4.2.0"
   },
   "description": "A Node.js/Express reddit-like forum that uses Bitcoin instead of karma.",
   "main": "app.js",

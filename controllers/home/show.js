@@ -2,16 +2,14 @@ var Post = require('../../models/post');
 var Forum = require('../../models/forum');
 var User = require('../../models/user');
 var cole = require('../../db/co_log_err.js').cole;
-var _ = require('underscore');
-
-
+var _ = require('lodash');
 
 var formatInvestors = function(list) {
   // compute profit for each individual node
   var investors = list.map(function(name) { return {name:name, profit: -process.env.VOTE_COST}})
   for (var i = 1; i <= list.length; i++)
     for (var j = 0; j < i; j++)
-      investors[j].profit += Math.floor(process.env.VOTE_COST / i)      
+      investors[j].profit += Math.floor(process.env.VOTE_COST / i)
 
   return _.chain(investors)
 
@@ -20,8 +18,8 @@ var formatInvestors = function(list) {
 
     // sum up the profit for each investor
     .map(function(investor, investorName) {
-      return { 
-          name: investorName, 
+      return {
+          name: investorName,
           profit: _.reduce(investor, function(acc, curr) { return acc+curr.profit }, 0)}
     })
 

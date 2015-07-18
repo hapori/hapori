@@ -2,7 +2,7 @@ var Vote = require('../../models/vote');
 var Post = require('../../models/post');
 var User = require('../../models/user');
 var cole = require('../../db/co_log_err.js').cole;
-var _ = require('underscore')
+var _ = require('lodash');
 var jwt = require('jsonwebtoken');
 
 module.exports = function(req, res, next) {
