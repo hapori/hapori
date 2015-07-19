@@ -26,8 +26,8 @@ before('bedfore', function(t) {
   };
 
   User.fetchAll().then(function(users) {
-    // actually I think we can just use async.series and do this in parallel
-    async.eachSeries(users.models, function iterator(_user, next) {
+
+    async.each(users.models, function iterator(_user, next) {
       // a stupid hack to empty the users table before test
       _user.destroy().then(function() {
         next(null);
@@ -35,7 +35,7 @@ before('bedfore', function(t) {
 
     }, function(err) {
       // create test user
-      User.forge(user).save().then(function(_user) {
+      User.forge(user).save().then(function(__user) {
         t.end();
       });
     });
@@ -56,8 +56,8 @@ test('should signin a user', function(t) {
     .expect('Content-Type', /json/)
     .expect(200, function(err, res) {
 
-      t.notOk(err);
-      t.equal(res.body.success, true);
+      t.notOk(err, 'should not error');
+      t.equal(res.body.success, true, 'sussess should equal true');
 
       t.end();
     });
@@ -76,8 +76,9 @@ test('should return user not found', function(t) {
     .set('Accept', 'application/json') // another test that accepts html
     .expect(200, function(err, res) { // perhaps we should be returning 404 notFound http status
 
-      res.body.should.have.property('success', false);
-      res.body.should.have.property('message', 'Authentication failed. User password combination not found. (user not found)');
+      t.notOk(err, 'should not error');
+      t.equal(res.body.success, false, 'sussess should equal false');
+      t.equal(res.body.message, 'Authentication failed. User password combination not found. (user not found)', 'should return correct error message');
 
       t.end();
     });
