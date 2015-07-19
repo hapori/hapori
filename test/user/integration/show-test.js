@@ -9,7 +9,7 @@ const after = test;
 
 var user = fixtures.user.default;
 
-before('bedfore', function(t) {
+before('setup for `show user test`', function(t) {
   // truncate user table TODO
   User.forge(user).save().then(function(thing) {
     t.end();

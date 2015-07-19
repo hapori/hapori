@@ -13,7 +13,7 @@ require('./user');
 
 var test = require('tape');
 
-test('fin', function(t){
+test('fin.', function(t){
   t.end();
   process.exit();
 });
