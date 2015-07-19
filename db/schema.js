@@ -61,6 +61,7 @@ var db = {
     }
 };
 
+// example validations
 // function isPost(jsonData) {
 //     return jsonData.hasOwnProperty('html') && jsonData.hasOwnProperty('markdown') &&
 //            jsonData.hasOwnProperty('title') && jsonData.hasOwnProperty('slug');
