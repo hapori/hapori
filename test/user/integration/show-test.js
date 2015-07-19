@@ -1,45 +1,56 @@
-var app = require('../../../app');
+var app = require('../../../app.js');
 var request = require('supertest')(app);
 var should = require('chai').should();
 var User = require('../../../models/user');
-var fixtures = require('../../fixtures.js');
+var fixtures = require('../../fixtures');
 
-describe('User: show', function() {
+var db = require('../../../db/index');
+var co = require('co');
 
-  var user = fixtures.user.default;
+var test = require('tap').test
 
-  before(function(done) {
-    User.forge(user).save().then(function(user) {
-      done();
-    });
-  });
 
-  it('should show existing user', function(done) {
+var user = fixtures.user.default;
 
-    var username = user.username;
-    request.get('/u/' + username)
-      .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(200, function(err, res) {
-        should.not.exist(err);
-        res.body.should.have.property('username', username);
+test('before', function(t) {
 
-        done();
-      });
-  });
+  co(function*() {
+    // remove users before tests
+    // yield db.remove('users', {});
 
-  it('should NOT show nonExistantUser', function(done) {
+    // yield User.forge(user).save();
 
-    var username = 'nonExistantUsersss';
-
-    request.get('/u/' + username)
-      .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(404, function(err, res) {
-        should.not.exist(err);
-        res.body.should.have.property('message', 'User not found');
-
-        done();
-      });
+    t.end();
   });
 });
+
+
+// test('my favorite assert lib', function(t) {
+//
+//   var username = user.username;
+//   request.get('/u/' + username)
+//     .set('Accept', 'application/json')
+//     .expect('Content-Type', /json/)
+//     .expect(200, function(err, res) {
+//
+//       should.not.exist(err);
+//       res.body.should.have.property('username', username);
+//
+//       t.end();
+//     });
+// });
+//
+// test('my favorite assert lib', function(t) {
+//
+//   var username = 'nonExistantUsersss';
+//
+//   request.get('/u/' + username)
+//     .set('Accept', 'application/json')
+//     .expect('Content-Type', /json/)
+//     .expect(404, function(err, res) {
+//       should.not.exist(err);
+//       res.body.should.have.property('message', 'User not found');
+//
+//       t.end();
+//     });
+// });

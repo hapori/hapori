@@ -6,7 +6,8 @@
     "prestart": "browserify public/js/home.js -o public/js/build/home.js; lessc public/css/home.less > public/css/build/home.css; browserify public/js/join.js -o public/js/build/join.js; lessc public/css/join.less > public/css/build/join.css; browserify public/js/submit.js -o public/js/build/submit.js; lessc public/css/submit.less > public/css/build/submit.css; browserify public/js/create.js -o public/js/build/create.js; lessc public/css/create.less > public/css/build/create.css;",
     "watch-js": "watchify public/js/home.js -o public/js/build/home.js -v; watchify public/js/join.js -o public/js/build/join.js -v",
     "start": "node --harmony ./bin/www",
-    "test": "mocha --harmony test test/**/**/*-test.js"
+    "test": "mocha --harmony test test/**/**/*-test.js",
+    "tap-test": "node --harmony test/user/integration/show-test.js"
   },
   "dependencies": {
     "bitcore": "^0.12.8",
