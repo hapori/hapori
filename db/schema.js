@@ -33,7 +33,7 @@ var db = {
         passwordHash: {type: 'string', maxlength: 44, nullable: false}, // nullable?
         salt: {type: 'string', maxlength: 24, nullable: false},
         key: {type: 'string', maxlength: 64, nullable: false}, // private_key ?
-        address: {type: 'string', maxlength: 35, nullable: false} // bitcoin_address ?
+        address: {type: 'string', maxlength: 35, nullable: false}, // bitcoin_address ?
         balance: {type: 'integer', nullable: false},
         joined: {type: 'dateTime', nullable: false}
     },
@@ -51,7 +51,7 @@ var db = {
         kind: {type: 'string', maxlength: 24},
         timestamp: {type: 'dateTime', nullable: false}
     },
-    wallet: { // payments ?
+    wallet: { // wallets ?
         id: {type: 'increments', nullable: false, primary: true},
         key: {type: 'string', maxlength: 64, nullable: false},
         address: {type: 'string', maxlength: 35, nullable: false},
@@ -61,7 +61,7 @@ var db = {
     }
 };
 
-// example validations
+// example checks
 // function isPost(jsonData) {
 //     return jsonData.hasOwnProperty('html') && jsonData.hasOwnProperty('markdown') &&
 //            jsonData.hasOwnProperty('title') && jsonData.hasOwnProperty('slug');
