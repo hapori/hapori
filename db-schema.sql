@@ -79,10 +79,7 @@ CREATE TABLE Wallet (
   "id" SERIAL,
   "key" varchar(64) NOT NULL,
   "address" varchar(35) NOT NULL,
-  "balance" int NOT NULL,  
+  "balance" int NOT NULL,
   "username" varchar(24),
   PRIMARY KEY ("id")
 );
-
-
-
