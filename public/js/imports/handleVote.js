@@ -1,5 +1,5 @@
 var $ = require('jquery');
-var _ = require('underscore');
+var _ = require('lodash');
 
 module.exports = function() {
 	$('.vote-box').click(function(event) {
@@ -44,8 +44,8 @@ var formatInvestors = function(list) {
 
     // sum up the profit for each investor
     .map(function(investor, investorName) {
-      return { 
-          name: investorName, 
+      return {
+          name: investorName,
           profit: _.reduce(investor, function(acc, curr) { return acc+curr.profit }, 0)}
     })
 

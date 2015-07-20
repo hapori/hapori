@@ -1,3 +1,10 @@
 var bookshelf = require('hapori-bookshelf');
-var User = bookshelf.Model.extend({ tableName: 'votes' }, {});
-module.exports = User;
+
+var Vote = bookshelf.Model.extend({
+  tableName: 'votes'
+
+}, {
+  
+});
+
+module.exports = Vote;

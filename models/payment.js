@@ -1,4 +1,4 @@
-var db = require('../db');
+// var db = require('../db');
 
 /*
 exports.create = function (payment, callback) {
@@ -20,21 +20,21 @@ exports.createDeposit = function (payload, username, callback) {
 */
 
 
-exports.create = function (payment, client) {
-    return db.insert(payment, 'payment', client)
-};
-
-exports.createDeposit = function (payload, username, client) {
-
-    var payment = {
-        amount: payload.received,
-        transactionHash: payload.transaction_hash,
-        username: username,
-        kind: 'deposit',
-        timestamp: new Date().getTime()
-    }
-
-    return this.create(payment, client)
-};
-
-
+// exports.create = function (payment, client) {
+//     return db.insert(payment, 'payment', client)
+// };
+//
+// exports.createDeposit = function (payload, username, client) {
+//
+//     var payment = {
+//         amount: payload.received,
+//         transactionHash: payload.transaction_hash,
+//         username: username,
+//         kind: 'deposit',
+//         timestamp: new Date().getTime()
+//     }
+//
+//     return this.create(payment, client)
+// };
+//
+//
