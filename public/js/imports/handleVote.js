@@ -30,27 +30,27 @@ module.exports = function() {
 var formatInvestors = function(list) {
 
   // compute profit for each individual node
-  var investors = list.map(function(name) { return {name:name, profit: -100}})
+  var investors = list.map(function(name) { return {name:name, profit: -100, investment: 100}})
   for (var i = 1; i <= list.length; i++)
     for (var j = 0; j < i; j++)
       investors[j].profit += Math.floor(100 / i)
-
-  console.log(investors)
 
   return _.chain(investors)
 
     // group together by investor name
     .groupBy(function(element){ return element.name; })
 
-    // sum up the profit for each investor
+    // sum up the profit & investment for each investor
     .map(function(investor, investorName) {
       return {
           name: investorName,
-          profit: _.reduce(investor, function(acc, curr) { return acc+curr.profit }, 0)}
+          profit: _.reduce(investor, function(acc, curr) { return acc+curr.profit }, 0),
+          investment: _.reduce(investor, function(acc, curr) { return acc+curr.investment }, 0)
+        }
     })
 
     // format
     .reduce(function(acc, pair) {
-      return acc+" "+pair.name+"("+pair.profit+") ";
+      return acc+" "+pair.name+" "+pair.investment+"("+(pair.profit>=0 ? "+"+pair.profit : pair.profit)+"); ";
     }, '');
 }
