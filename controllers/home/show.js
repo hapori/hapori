@@ -51,16 +51,18 @@ module.exports = function show(req, res, next) {
 var formatInvestors = function(list) {
   // compute profit for each individual node
 
+  const VOTE_COST = parseInt(process.env.VOTE_COST)
   var investors = list.map(function(name) {
     return {
       name: name,
-      profit: -process.env.VOTE_COST
+      profit: -VOTE_COST,
+      investment: VOTE_COST,
     }
   })
 
   for (var i = 1; i <= list.length; i++)
     for (var j = 0; j < i; j++)
-      investors[j].profit += Math.floor(process.env.VOTE_COST / i)
+      investors[j].profit += Math.floor(VOTE_COST / i)
 
   return _.chain(investors)
 
@@ -75,12 +77,16 @@ var formatInvestors = function(list) {
       name: investorName,
       profit: _.reduce(investor, function(acc, curr) {
         return acc + curr.profit
-      }, 0)
+      }, 0),
+      investment: _.reduce(investor, function(acc, curr) {
+        return acc + curr.investment
+      }, 0),
     }
   })
 
   // format
   .reduce(function(acc, pair) {
-    return acc + " " + pair.name + "(" + pair.profit + ") ";
+    var formattedProfit = pair.profit>0 ? "+"+pair.profit : pair.profit
+    return acc + " " + pair.name + " "+ pair.investment+"(" + formattedProfit + "); ";
   }, '');
 }

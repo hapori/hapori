@@ -27,30 +27,46 @@ module.exports = function() {
 
 // todo: remove code duplication here & in controllers/home/show.js
 // todo: replace 100 by constant
-var formatInvestors = function(list) {
 
+var formatInvestors = function(list) {
   // compute profit for each individual node
-  var investors = list.map(function(name) { return {name:name, profit: -100}})
+
+  const VOTE_COST = 100
+  var investors = list.map(function(name) {
+    return {
+      name: name,
+      profit: -VOTE_COST,
+      investment: VOTE_COST,
+    }
+  })
+
   for (var i = 1; i <= list.length; i++)
     for (var j = 0; j < i; j++)
-      investors[j].profit += Math.floor(100 / i)
-
-  console.log(investors)
+      investors[j].profit += Math.floor(VOTE_COST / i)
 
   return _.chain(investors)
 
-    // group together by investor name
-    .groupBy(function(element){ return element.name; })
+  // group together by investor name
+  .groupBy(function(element) {
+    return element.name;
+  })
 
-    // sum up the profit for each investor
-    .map(function(investor, investorName) {
-      return {
-          name: investorName,
-          profit: _.reduce(investor, function(acc, curr) { return acc+curr.profit }, 0)}
-    })
+  // sum up the profit for each investor
+  .map(function(investor, investorName) {
+    return {
+      name: investorName,
+      profit: _.reduce(investor, function(acc, curr) {
+        return acc + curr.profit
+      }, 0),
+      investment: _.reduce(investor, function(acc, curr) {
+        return acc + curr.investment
+      }, 0),
+    }
+  })
 
-    // format
-    .reduce(function(acc, pair) {
-      return acc+" "+pair.name+"("+pair.profit+") ";
-    }, '');
+  // format
+  .reduce(function(acc, pair) {
+    var formattedProfit = pair.profit>0 ? "+"+pair.profit : pair.profit
+    return acc + " " + pair.name + " "+ pair.investment+"(" + formattedProfit + "); ";
+  }, '');
 }
