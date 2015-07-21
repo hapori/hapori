@@ -1,0 +1,22 @@
+commit:
+
+git status
+git add ...
+git commit -m 'msg'
+git push origin clemens
+
+
+
+checkout:
+
+//checkout master->git pull->checkout my branch->git merge master
+git checkout master
+git pull
+git checkout clemens
+git merge master -m ''
+
+
+build:
+
+npm install -g react-tools --save
+jsx --watch ./public/scripts/ ./public/build/ &

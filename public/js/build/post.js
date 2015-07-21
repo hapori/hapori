@@ -21567,20 +21567,6 @@ return jQuery;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],3:[function(require,module,exports){
 var $ = require('jquery');
-var handleForm = require('./imports/handleForm.js');
-var handleVote = require('./imports/handleVote.js');
-
-
-$(function(){
-	handleForm($('#form-signin'))
-	handleForm($('#form-signup'))
-	handleForm($('#form-submit'))
-	handleForm($('#form-create'))
-
-	handleVote()
-});
-},{"./imports/handleForm.js":4,"./imports/handleVote.js":5,"jquery":1}],4:[function(require,module,exports){
-var $ = require('jquery');
 
 module.exports = function(form) {
 	$(form).submit(function(event) {
@@ -21602,7 +21588,7 @@ module.exports = function(form) {
 		});
 	});
 }
-},{"jquery":1}],5:[function(require,module,exports){
+},{"jquery":1}],4:[function(require,module,exports){
 var $ = require('jquery');
 var _ = require('lodash');
 
@@ -21632,4 +21618,18 @@ module.exports = function() {
 
 
 
-},{"jquery":1,"lodash":2}]},{},[3]);
+},{"jquery":1,"lodash":2}],5:[function(require,module,exports){
+var $ = require('jquery');
+var handleForm = require('./imports/handleForm.js');
+var handleVote = require('./imports/handleVote.js');
+
+
+$(function(){
+	handleForm($('#form-signin'))
+	handleForm($('#form-signup'))
+	handleForm($('#form-submit'))
+	handleForm($('#form-create'))
+
+	handleVote()
+});
+},{"./imports/handleForm.js":3,"./imports/handleVote.js":4,"jquery":1}]},{},[5]);

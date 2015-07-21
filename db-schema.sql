@@ -1,10 +1,12 @@
 DROP TABLE IF EXISTS Comments;
 CREATE TABLE Comments (
   "id" SERIAL,
+  "commentKey" text NOT NULL,
+  "postKey" varchar(10) NOT NULL,
   "text" varchar(1000) NOT NULL,
-  "forum" varchar(50) NOT NULL,
+  "investors" text[],
+  "investment" int NOT NULL,
   "username" varchar(24) NOT NULL,
-  "parent" int NOT NULL,
   "timestamp" bigint NOT NULL,
   PRIMARY KEY ("id")
 );
@@ -21,6 +23,7 @@ CREATE TABLE Posts (
   "investors" text[],
   "investment" int NOT NULL,
   "username" varchar(24) NOT NULL,
+  "commentCount" int NOT NULL,
   "timestamp" bigint NOT NULL,
   PRIMARY KEY ("id")
 );

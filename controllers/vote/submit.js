@@ -4,6 +4,9 @@ var User = require('../../models/user');
 var cole = require('../../db/co_log_err.js').cole;
 var _ = require('lodash');
 var jwt = require('jsonwebtoken');
+var format = require('hapori-format');
+
+
 
 module.exports = function(req, res, next) {
     cole(function* () {
@@ -16,9 +19,6 @@ module.exports = function(req, res, next) {
 		var userId = req.user.id
 		var user = yield User.where({id: userId}).fetch()
 
-//		console.log('dbuser', user.toJSON())
-//		console.log('socketuser', req.user)
-
 		// if the user is broke respond with an error
 		if(user.get('balance') < process.env.VOTE_COST) {
 			return res.json({
@@ -26,8 +26,8 @@ module.exports = function(req, res, next) {
 				message: 'Sorry mate, you can\'t vote, you\'re broke'
 			});
 		}
-		// if user isn't broke, allow the user to vote
 
+		// if user isn't broke, allow the user to vote
 		// decrease balance of voting user and save to db
 		user.set('balance', user.get('balance')-process.env.VOTE_COST)
 		yield user.save()
@@ -77,7 +77,7 @@ module.exports = function(req, res, next) {
 			postId: postId,
 			balance: user.get('balance'),
 			investment: post.get('investment'),
-			investors: post.get('investors')
+			investors: format.investorList(post.get('investors')),
 		});
 
 	});
