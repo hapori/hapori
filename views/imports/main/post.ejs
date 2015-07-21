@@ -1,1 +1,12 @@
 <%- include('../postRow.ejs', {post: post}) %>
+
+
+
+
+
+	<form id="form-create" action="/create" method="post">
+		<strong>Comment</strong><br />
+		<textarea rows="4" name="description" placeholder="Description"></textarea><br />
+		<input type="hidden" name="administrator" value="<%= user.username %>">
+		<button type="submit">Submit Comment</button>
+	</form>
