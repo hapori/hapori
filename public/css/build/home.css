@@ -112,6 +112,12 @@ body {
   overflow: hidden;
   margin: 0px 0px 25px;
 }
+.comment-row {
+  height: auto;
+  overflow: hidden;
+  margin: 0px 0px 25px;
+  margin-left: 60px;
+}
 .vote-box {
   width: 40px;
   float: left;

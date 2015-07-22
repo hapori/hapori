@@ -1,12 +1,17 @@
 <%- include('../postRow.ejs', {post: post}) %>
 
 
+<form class="comment-form" action="/submitComment" method="post" id="">
+	<textarea rows="2" name="text" placeholder=""></textarea><br />
+	<input type="hidden" name="parentKey" value="<%= post.postKey %>">
+	<input type="hidden" name="postKey" value="<%= post.postKey %>">
+	<button type="submit" name="a">Reply</button>
+</form>
+
+
+<% for(var i=0; i<comments.length; i++) { %>
+	<%- include('../commentRow.ejs', {comment: comments[i]}) %>
+<% } %>
 
 
 
-	<form id="form-create" action="/create" method="post">
-		<strong>Comment</strong><br />
-		<textarea rows="4" name="description" placeholder="Description"></textarea><br />
-		<input type="hidden" name="administrator" value="<%= user.username %>">
-		<button type="submit">Submit Comment</button>
-	</form>

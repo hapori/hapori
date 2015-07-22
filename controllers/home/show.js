@@ -40,7 +40,7 @@ module.exports = function show(req, res, next) {
 
     res.render('layout', {
       title: 'Express',
-      main: 'imports/main/homeFeed',
+      main: 'imports/main/home',
       sidebar: 'imports/sidebar/homeSidebar',
       name: 'home',
       user: user || null,

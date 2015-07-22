@@ -21566,9 +21566,11 @@ return jQuery;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],3:[function(require,module,exports){
+require('./imports/default.js');
+},{"./imports/default.js":4}],4:[function(require,module,exports){
 var $ = require('jquery');
-var handleForm = require('./imports/handleForm.js');
-var handleVote = require('./imports/handleVote.js');
+var handleForm = require('./handleForm.js');
+var handleVote = require('./handleVote.js');
 
 
 $(function(){
@@ -21579,38 +21581,38 @@ $(function(){
 
 	handleVote()
 });
-},{"./imports/handleForm.js":4,"./imports/handleVote.js":5,"jquery":1}],4:[function(require,module,exports){
+},{"./handleForm.js":5,"./handleVote.js":6,"jquery":1}],5:[function(require,module,exports){
 var $ = require('jquery');
 
-module.exports = function(form) {
+module.exports = function(form, success, failure) {
 	$(form).submit(function(event) {
 		// Stop the browser from submitting the form.
 		event.preventDefault();
 
 		// Submit the form using AJAX.
+		// note that we need $(this) below 
+		// to fetch the data from the form that emmited the event
 		$.ajax({
 		    type: 'POST',
-		    url: $(form).attr('action'),
-		    data: $(form).serializeArray()
+		    url: $(this).attr('action'),
+		    data: $(this).serializeArray()
 		}).done(function(data) {
-
-			console.log(data)
 			if(data.success)
-				window.location.href = '/'
+				if(success) success(data)
+				else window.location.href = '/'
 			else
-				alert(data.message)
+				if(failure) failure(data)
+				else alert(data.message)
 		});
 	});
 }
-},{"jquery":1}],5:[function(require,module,exports){
+},{"jquery":1}],6:[function(require,module,exports){
 var $ = require('jquery');
 var _ = require('lodash');
 
 module.exports = function() {
 	$('.vote-box').click(function(event) {
-
 		event.preventDefault();
-
 		$.ajax({
 		    type: 'POST',
 		    url: '/vote',

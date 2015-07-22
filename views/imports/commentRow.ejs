@@ -1,0 +1,25 @@
+<div class="comment-row">
+	<a id="<%= comment.id %>" class="vote-box">
+		<div class="vote-arrow">&utrif;</div> 
+		<div class="vote-number"><%= comment.investment %></div> 
+		<div class="vote-satoshi">satoshi</div> 
+	</a>
+	<div class="post-box">
+		<div class="post-text"><%= comment.text %></div>
+		<div class="post-info">
+			<span id="<%= comment.id %>-investors">
+				Investors <%= formatInvestorList(comment.investors) %> 
+			</span>
+		</div>
+	</div>
+
+	<form class="comment-form" action="/submitComment" method="post" id="<%= comment.commentKey %>">
+		<textarea rows="2" name="text" placeholder=""></textarea><br />
+		<input type="hidden" name="parentKey" value="<%= comment.commentKey %>">
+		<input type="hidden" name="postKey" value="<%= comment.postKey %>">
+		<button type="submit" name="a">Reply</button>
+	</form>
+
+
+</div>
+

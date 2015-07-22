@@ -3,9 +3,7 @@ var _ = require('lodash');
 
 module.exports = function() {
 	$('.vote-box').click(function(event) {
-
 		event.preventDefault();
-
 		$.ajax({
 		    type: 'POST',
 		    url: '/vote',

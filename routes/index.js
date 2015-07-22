@@ -11,7 +11,8 @@ router.post('/signup', controller.user.signup);
 router.post('/signin', controller.user.signin);
 router.get('/logout', controller.user.logout);     // this should be a post (todo)
 router.post('/deposit', controller.payment.createDeposit);
-router.post('/submit', controller.post.create);
+router.post('/submitPost', controller.post.create);
+router.post('/submitComment', controller.comment.create);
 router.post('/create', controller.forum.create);
 router.post('/vote', controller.vote.submit);
 

@@ -20,9 +20,8 @@ module.exports = function show(req, res, next) {
 
     // fetch all comments
     try {
-      var comments = yield Comments.where({ postKey: req.params.postKey }).fetch();
-      if(comments)
-        comments = comments.toJSON();
+      var comments = yield Comments.where({ postKey: req.params.postKey }).fetchAll();
+      if(comments) comments = comments.toJSON();
     } catch (e) {
       return console.log(e, 'could not fetch Comments');
     }
