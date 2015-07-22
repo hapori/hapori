@@ -1,6 +1,6 @@
 var Post = require('../../models/post');
 var Vote = require('../../models/vote');
-var random = require('hapori-random');
+var random = require('../../helpers/random');
 var cole = require('../../db/co_log_err.js').cole;
 
 

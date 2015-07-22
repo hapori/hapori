@@ -23,7 +23,6 @@
     "hapori-bookshelf": "./lib/hapori-bookshelf",
     "hapori-errors": "./lib/hapori-errors",
     "hapori-random": "./lib/hapori-random",
-    "hapori-format": "./lib/hapori-format",
     "jquery": "^2.1.4",
     "jsonwebtoken": "^5.0.2",
     "lodash": "^3.10.0",

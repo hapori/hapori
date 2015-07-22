@@ -3,7 +3,7 @@ var Comments = require('../../models/comment');
 var User = require('../../models/user');
 
 var cole = require('../../db/co_log_err.js').cole;
-var format = require('hapori-format');
+var format = require('../../helpers/format');
 
 
 

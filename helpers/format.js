@@ -1,13 +1,9 @@
 var _ = require('lodash');
 
 
-// todo: remove code duplication here & in controllers/home/show.js
-// todo: replace 100 by constant
-
-
 exports.investorList = function(list) {
+	
   // compute profit for each individual node
-
   const VOTE_COST = parseInt(process.env.VOTE_COST)
   var investors = list.map(function(name) {
     return {

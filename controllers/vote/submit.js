@@ -4,7 +4,7 @@ var User = require('../../models/user');
 var cole = require('../../db/co_log_err.js').cole;
 var _ = require('lodash');
 var jwt = require('jsonwebtoken');
-var format = require('hapori-format');
+var format = require('../../helpers/format');
 
 
 
