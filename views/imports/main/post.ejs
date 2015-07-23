@@ -1,9 +1,4 @@
 
-<pre>
-<%= JSON.stringify(comments, null, 2) %>
-
-<%= JSON.stringify(formatComments(comments), null, 2) %>
-</pre>
 
 
 <%- include('../postRow.ejs', {post: post}) %>
@@ -26,3 +21,14 @@
 </div>
 
 
+
+<h2>Stuff below is only for development</h2>
+<h3>Database Dump</h3>
+<pre>
+<%= JSON.stringify(comments, null, 2) %>
+</pre>
+
+<h3>Turning the dump into threaded comments</h3>
+<pre>
+<%= JSON.stringify(formatComments(comments), null, 2) %>
+</pre>
