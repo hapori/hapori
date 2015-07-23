@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "prestart": "browserify public/js/home.js -o public/js/build/home.js; lessc public/css/home.less > public/css/build/home.css; browserify public/js/post.js -o public/js/build/post.js; lessc public/css/post.less > public/css/build/post.css; browserify public/js/submit.js -o public/js/build/submit.js; lessc public/css/submit.less > public/css/build/submit.css; browserify public/js/create.js -o public/js/build/create.js; lessc public/css/create.less > public/css/build/create.css;",
+    "prestart": "browserify public/js/home.js -o public/js/build/home.js; lessc public/css/home.less > public/css/build/home.css; browserify public/js/post.js -o public/js/build/post.js; lessc public/css/post.less > public/css/build/post.css;",
     "watch-js": "watchify public/js/home.js -o public/js/build/home.js -v; watchify public/js/join.js -o public/js/build/join.js -v",
     "start": "node --harmony ./bin/www",
     "test": "node --harmony test | tap-spec"

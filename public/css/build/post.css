@@ -107,11 +107,6 @@ body {
   margin: 0 auto;
 }
 */
-.post-row {
-  height: auto;
-  overflow: hidden;
-  margin: 0px 0px 25px;
-}
 .comment-row {
   height: auto;
   overflow: hidden;
@@ -143,7 +138,6 @@ body {
 .post-text {
   color: #333;
 }
-button,
 input,
 select,
 optgroup,
@@ -155,12 +149,6 @@ textarea {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-}
-button,
-input,
-select,
-optgroup {
-  height: 30px;
 }
 textarea {
   border-color: #EEEEEE;

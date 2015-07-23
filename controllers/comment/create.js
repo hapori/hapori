@@ -6,11 +6,8 @@ var cole = require('../../db/co_log_err.js').cole;
 module.exports = function(req, res, next) {
     cole(function* () {
 
-
-console.log('req.body', req.body)
-
 		var comment = {
-			commentKey: req.body.parentKey+random.generate(4),
+			commentKey: req.body.parentKey+"."+random.generate(4),
 			postKey: req.body.postKey,
 			text: req.body.text,
 			investors: [req.user.username],

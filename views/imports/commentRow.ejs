@@ -10,6 +10,7 @@
 			<span id="<%= comment.id %>-investors">
 				Investors <%= formatInvestorList(comment.investors) %> 
 			</span>
+			<a>reply</a>
 		</div>
 	</div>
 
@@ -19,7 +20,5 @@
 		<input type="hidden" name="postKey" value="<%= comment.postKey %>">
 		<button type="submit" name="a">Reply</button>
 	</form>
-
-
 </div>
 

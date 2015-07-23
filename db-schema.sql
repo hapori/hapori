@@ -1,7 +1,9 @@
+CREATE EXTENSION ltree;
+
 DROP TABLE IF EXISTS Comments;
 CREATE TABLE Comments (
   "id" SERIAL,
-  "commentKey" text NOT NULL,
+  "commentKey" ltree NOT NULL,
   "postKey" varchar(10) NOT NULL,
   "text" varchar(1000) NOT NULL,
   "investors" text[],

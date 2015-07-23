@@ -20,7 +20,11 @@ module.exports = function show(req, res, next) {
 
     // fetch all comments
     try {
-      var comments = yield Comments.where({ postKey: req.params.postKey }).fetchAll();
+      //var comments = yield Comments.where({ postKey: req.params.postKey }).fetchAll();
+      var comments = yield Comments.query(function(qb) {
+                      qb.where({ postKey: req.params.postKey }).orderBy('commentKey', 'asc')
+;
+                    }).fetchAll();
       if(comments) comments = comments.toJSON();
     } catch (e) {
       return console.log(e, 'could not fetch Comments');
@@ -43,6 +47,7 @@ module.exports = function show(req, res, next) {
       post: post || null,
       comments: comments || null,
       formatInvestorList: format.investorList,
+      formatComments: format.comments,
       user: user || null,
     });
   });

@@ -1,6 +1,15 @@
+
+<pre>
+<%= JSON.stringify(comments, null, 2) %>
+
+<%= JSON.stringify(formatComments(comments), null, 2) %>
+</pre>
+
+
 <%- include('../postRow.ejs', {post: post}) %>
 
 
+<h2>Comments</h2>
 <form class="comment-form" action="/submitComment" method="post" id="">
 	<textarea rows="2" name="text" placeholder=""></textarea><br />
 	<input type="hidden" name="parentKey" value="<%= post.postKey %>">
@@ -9,9 +18,11 @@
 </form>
 
 
-<% for(var i=0; i<comments.length; i++) { %>
-	<%- include('../commentRow.ejs', {comment: comments[i]}) %>
-<% } %>
 
+<div id="comment-container">
+	<% for(var i=0; i<comments.length; i++) { %>
+		<%- include('../commentRow.ejs', {comment: comments[i]}) %>
+	<% } %>
+</div>
 
 
