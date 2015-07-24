@@ -13,12 +13,18 @@ module.exports = function(form, success, failure) {
 		    url: $(this).attr('action'),
 		    data: $(this).serializeArray()
 		}).done(function(data) {
+
+
+			location.reload();
+/*
 			if(data.success)
 				if(success) success(data)
 				else window.location.href = '/'
 			else
 				if(failure) failure(data)
 				else alert(data.message)
+*/
 		});
+		return false;
 	});
 }
