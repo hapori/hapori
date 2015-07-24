@@ -4,13 +4,17 @@
 		<div class="vote-number"><%= comment.investment %></div> 
 		<div class="vote-satoshi">satoshi</div> 
 	</a>
+
 	<div class="post-box">
+		<div class="post-info">
+			<a><%= comment.username %></a>
+		</div>
 		<div class="post-text"><%= comment.text %></div>
 		<div class="post-info">
 			<span id="<%= comment.id %>-investors">
 				Investors <%= formatInvestorList(comment.investors) %> 
 			</span>
-			<a>reply</a>
+			<a class="reply-button" id="<%= comment.commentKey %>-button">reply</a>
 		</div>
 	</div>
 
@@ -18,7 +22,8 @@
 		<textarea rows="2" name="text" placeholder=""></textarea><br />
 		<input type="hidden" name="parentKey" value="<%= comment.commentKey %>">
 		<input type="hidden" name="postKey" value="<%= comment.postKey %>">
-		<button type="submit" name="a">Reply</button>
+		<button type="submit" name="a">reply</button>
+		<button class="cancel-button" id="<%= comment.commentKey %>-cancel">cancel</button>
 	</form>
 
 	<%- include('./commentTree.ejs', {tree: tree }) %>
