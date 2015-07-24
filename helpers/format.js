@@ -48,17 +48,17 @@ exports.investorList = function(list) {
 
 
 
+
+
 exports.comments = function(array) {
 
   // this function takes an array of comments
-  // and returns an object where all comments are grouped together 
-  // if they have the same id on level i
+  // and returns an tree where all comments are grouped together 
+  // if they have the same id on level i and below
   function f(arr, i) {
 
-    //console.log('i',i,'arr',arr)
-
-    var grouped = _.chain(arr)
-      // groupt together all comments that have the same id on level i
+    // group together all comments that have the same id on level i
+    var grouped = _(arr)
       .groupBy(function(e) {
         return e.commentKey.split('.')[i]
       })
@@ -69,21 +69,14 @@ exports.comments = function(array) {
       .toJSON();
 
 
-
-
+    // we now call f recursively for all nodes on level i+1
     return _.mapValues(grouped, function(group, key){
 
-
-    console.log('i',i,'key',key,'group',group)
-    console.log()
-    console.log()
-
-      // partition the group into elements where the current key 
-      // is equal to the end of their commentKey
-      // these elements (partition[0]) are the comment on this level
-      // partition[1] contains all descendant of the current comment
+      // we do not want to call f recursively on leaves of the tree
+      // thus we partition into nodes on level i and below 
       var partition = _.partition(group, function(e) {
-                        return _.last(e.commentKey.split('.')) == key
+                        //return _.last(e.commentKey.split('.')) == key
+                        return e.commentKey.split('.').length == i+1
                       })
 
       return { comment: partition[0], children: f(partition[1],i+1) }
@@ -91,6 +84,6 @@ exports.comments = function(array) {
 
   }
 
-  return f(array, 0)
+  return f(array, 1)
 
 }

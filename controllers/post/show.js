@@ -4,6 +4,7 @@ var User = require('../../models/user');
 
 var cole = require('../../db/co_log_err.js').cole;
 var format = require('../../helpers/format');
+var _ = require('lodash');
 
 
 
@@ -48,6 +49,7 @@ module.exports = function show(req, res, next) {
       comments: comments || null,
       formatInvestorList: format.investorList,
       formatComments: format.comments,
+      _: _,
       user: user || null,
     });
   });

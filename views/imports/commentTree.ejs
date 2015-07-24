@@ -1,0 +1,4 @@
+
+<% _(tree).forEach(function(node,commentIdEnd) { %>
+	<%- include('./commentRow.ejs', {comment: node.comment[0], tree: node.children }) %>
+<% }).value(); %>

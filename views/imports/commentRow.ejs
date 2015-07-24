@@ -20,5 +20,7 @@
 		<input type="hidden" name="postKey" value="<%= comment.postKey %>">
 		<button type="submit" name="a">Reply</button>
 	</form>
+
+	<%- include('./commentTree.ejs', {tree: tree }) %>
 </div>
 

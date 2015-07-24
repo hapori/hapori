@@ -16,6 +16,8 @@ module.exports = function(req, res, next) {
 			timestamp: new Date().getTime(),
 		};
 
+console.log(comment)
+
 		var comment = yield Comment.forge(comment).save()
 
 		res.json({

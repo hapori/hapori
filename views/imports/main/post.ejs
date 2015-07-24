@@ -1,10 +1,7 @@
-
-
-
 <%- include('../postRow.ejs', {post: post}) %>
 
 
-<h2>Comments</h2>
+<h3>Comments</h3>
 <form class="comment-form" action="/submitComment" method="post" id="">
 	<textarea rows="2" name="text" placeholder=""></textarea><br />
 	<input type="hidden" name="parentKey" value="<%= post.postKey %>">
@@ -14,21 +11,9 @@
 
 
 
+
 <div id="comment-container">
-	<% for(var i=0; i<comments.length; i++) { %>
-		<%- include('../commentRow.ejs', {comment: comments[i]}) %>
-	<% } %>
+	<%- include('../commentTree.ejs', {tree: formatComments(comments), _:_}) %>
 </div>
 
 
-
-<h2>Stuff below is only for development</h2>
-<h3>Database Dump</h3>
-<pre>
-<%= JSON.stringify(comments, null, 2) %>
-</pre>
-
-<h3>Turning the dump into threaded comments</h3>
-<pre>
-<%= JSON.stringify(formatComments(comments), null, 2) %>
-</pre>
