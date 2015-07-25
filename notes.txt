@@ -6,6 +6,9 @@ git commit -m 'msg'
 git push origin clemens
 
 
+git commit -m ‘some message’
+git push && git push heroku master
+
 
 checkout:
 
@@ -20,3 +23,8 @@ build:
 
 npm install -g react-tools --save
 jsx --watch ./public/scripts/ ./public/build/ &
+
+
+heroku
+
+heroku pg:psql
