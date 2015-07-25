@@ -4,6 +4,9 @@
 		<div class="vote-number"><%= post.investment %></div> 
 		<div class="vote-satoshi">satoshi</div> 
 	</a>
+	<% if(name == 'home'){ %>
+		<img src="<%= post.thumbnail %>" width=150>
+	<% } %>
 	<div class="post-box">
 		<div class="post-title"><a href="<%= post.url %>"><%= post.title %></a></div>
 		<div class="post-info">

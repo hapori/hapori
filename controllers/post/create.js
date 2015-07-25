@@ -39,7 +39,6 @@ module.exports = function(req, res, next) {
 		}
 		Vote.forge(vote).save()
 
-
 		res.json({
 			success: true,
 		});
