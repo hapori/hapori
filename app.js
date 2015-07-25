@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var app = express();
-// require('dotenv').load();
+require('dotenv').load();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
