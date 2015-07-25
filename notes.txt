@@ -1,12 +1,8 @@
 commit:
 
 git status
-git add ...
-git commit -m 'msg'
-git push origin clemens
-
-
-git commit -m ‘some message’
+git add 'someFile'
+git commit -m 'some message'
 git push && git push heroku master
 
 
@@ -28,3 +24,5 @@ jsx --watch ./public/scripts/ ./public/build/ &
 heroku
 
 heroku pg:psql
+
+ `heroku restart` to restart the server

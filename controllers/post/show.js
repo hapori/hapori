@@ -5,6 +5,9 @@ var User = require('../../models/user');
 var cole = require('../../db/co_log_err.js').cole;
 var format = require('../../helpers/format');
 var _ = require('lodash');
+var request = require('superagent');
+var Promise = this.Promise || require('promise');
+var agent = require('superagent-promise')(require('superagent'), Promise);
 
 
 
@@ -23,8 +26,7 @@ module.exports = function show(req, res, next) {
     try {
       //var comments = yield Comments.where({ postKey: req.params.postKey }).fetchAll();
       var comments = yield Comments.query(function(qb) {
-                      qb.where({ postKey: req.params.postKey }).orderBy('commentKey', 'asc')
-;
+                      qb.where({ postKey: req.params.postKey }).orderBy('commentKey', 'asc');
                     }).fetchAll();
       if(comments) comments = comments.toJSON();
     } catch (e) {
@@ -40,6 +42,10 @@ module.exports = function show(req, res, next) {
       return console.log(e, 'could not fetch current user');
     }
 
+    var noembed = yield agent('GET', 'http://noembed.com/embed?url='+post.url);
+
+
+
     res.render('layout', {
       title: 'Express',
       main: 'imports/main/post',
@@ -49,12 +55,19 @@ module.exports = function show(req, res, next) {
       comments: comments || null,
       formatInvestorList: format.investorList,
       formatComments: format.comments,
+      noembed: JSON.parse(noembed.res.text).html,
       _: _,
       user: user || null,
     });
   });
 
 };
+
+
+function parse(unsafe) {
+    return unsafe.toJSON()
+
+}
 
 
 
