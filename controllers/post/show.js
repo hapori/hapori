@@ -44,8 +44,6 @@ module.exports = function show(req, res, next) {
 
     var noembed = yield agent('GET', 'http://noembed.com/embed?url='+post.url);
 
-
-
     res.render('layout', {
       title: 'Express',
       main: 'imports/main/post',
