@@ -19,7 +19,7 @@ CREATE TABLE Posts (
   "id" SERIAL,
   "postKey" varchar(10) NOT NULL,
   "title" varchar(150) NOT NULL,
-  "text" varchar(1000) NOT NULL,
+  "text" text NOT NULL,
   "url" varchar(250) NOT NULL,
   "forum" varchar(50) NOT NULL,
   "investors" text[],
@@ -27,7 +27,7 @@ CREATE TABLE Posts (
   "username" varchar(24) NOT NULL,
   "commentCount" int NOT NULL,
   "html" text NOT NULL,
-  "thumbnail" varchar(80) NOT NULL,
+  "thumbnail" varchar(120) NOT NULL,
   "timestamp" bigint NOT NULL,
   PRIMARY KEY ("id")
 );
