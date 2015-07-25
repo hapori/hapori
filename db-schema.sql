@@ -26,8 +26,8 @@ CREATE TABLE Posts (
   "investment" int NOT NULL,
   "username" varchar(24) NOT NULL,
   "commentCount" int NOT NULL,
-  "html" text NOT NULL,
-  "thumbnail" varchar(120) NOT NULL,
+  "html" text,
+  "thumbnail" varchar(120),
   "timestamp" bigint NOT NULL,
   PRIMARY KEY ("id")
 );
