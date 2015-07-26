@@ -6,6 +6,16 @@ var bitcore = require('bitcore');
 var crypto = require('crypto');
 var cole = require('../../db/co_log_err.js').cole;
 var jwt = require('jsonwebtoken');
+var validator = require("email-validator");
+var owasp = require('owasp-password-strength-test');
+owasp.config({
+  allowPassphrases       : true,
+  maxLength              : 128,
+  minLength              : 8,
+  minPhraseLength        : 20,
+  minOptionalTestsToPass : 2,
+});
+
 
 module.exports = function(req, res, next) {
 
@@ -18,7 +28,7 @@ module.exports = function(req, res, next) {
     if (!username || !email || !password) {
       return res.status(401).send({
         success: false,
-        message: 'Missing Fields'
+        message: 'Please fill in all fields'
       });
     }
 
@@ -26,7 +36,7 @@ module.exports = function(req, res, next) {
     if (usernameExists){
       return res.status(200).json({
         success: false,
-        message: 'Username taken'
+        message: 'Sorry my friend, that username is taken.'
       });
     }
     // A lot of people like how reddit doesn't require a email
@@ -35,8 +45,24 @@ module.exports = function(req, res, next) {
     if (emailExists) {
       return res.status(200).json({
         success: false,
-        message: 'Email taken'
+        message: 'That email exists in our db. Try logging in perhaps?'
       });
+    }
+
+    if(!validator.validate(email)) {
+      return res.status(200).json({
+        success: false,
+        message: 'Please provide a valid email address.'
+      });      
+    }
+
+
+    var passwordStrength = owasp.test(password)
+    if(passwordStrength.errors) {
+      return res.status(200).json({
+        success: false,
+        message: passwordStrength.errors.join(' ')
+      });      
     }
 
     // generate new key address pair for that user

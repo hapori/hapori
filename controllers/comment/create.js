@@ -1,4 +1,5 @@
 var Comment = require('../../models/comment');
+var Post = require('../../models/post');
 var random = require('../../helpers/random');
 var cole = require('../../db/co_log_err.js').cole;
 
@@ -16,7 +17,11 @@ module.exports = function(req, res, next) {
 			timestamp: new Date().getTime(),
 		};
 
-		var comment = yield Comment.forge(comment).save()
+		yield Comment.forge(comment).save()
+
+		var post = yield Post.where({ postKey: req.body.postKey }).fetch();
+		post.set('commentCount', post.get('commentCount') + 1)
+		yield post.save()
 
 		res.json({
 			success: true,

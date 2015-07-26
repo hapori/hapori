@@ -21596,10 +21596,10 @@ module.exports = function(form, success, failure) {
 		    data: $(this).serializeArray()
 		}).done(function(data) {
 
-//			location.reload();
+			
 			if(data.success)
 				if(success) success(data)
-				else window.location.href = '/'
+				else location.reload();
 			else
 				if(failure) failure(data)
 				else alert(data.message)
