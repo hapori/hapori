@@ -18,7 +18,9 @@ module.exports = function show(req, res, next) {
       //var posts = yield Post.forge().fetchAll();
 
       var posts = yield Post.forge().query(function(qb){
-          qb.orderByRaw('log(investment/'+process.env.VOTE_COST+') + timestamp/45000000 DESC'); 
+          qb
+          .orderByRaw('log(investment/'+process.env.VOTE_COST+') + timestamp/45000000 DESC')
+          .limit(25); 
       }).fetchAll();
       posts = posts.toJSON();
 
