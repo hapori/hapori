@@ -15,8 +15,14 @@ module.exports = function show(req, res, next) {
 
     // fetch all posts and forums
     try {
-      var posts = yield Post.forge().fetchAll();
+      //var posts = yield Post.forge().fetchAll();
+
+      var posts = yield Post.forge().query(function(qb){
+          qb.orderByRaw('log(investment/'+process.env.VOTE_COST+') + timestamp/45000000 DESC'); 
+      }).fetchAll();
       posts = posts.toJSON();
+
+
 
     } catch (e) {
       return console.log(e, 'could not fetch all Posts');

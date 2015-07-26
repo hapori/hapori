@@ -23,6 +23,7 @@ a {
   -webkit-flex-flow: row wrap;
   flex-flow: row wrap;
   font-size: 10px;
+  margin: 0 2px 0;
 }
 #menu-left {
   flex: 1 auto;

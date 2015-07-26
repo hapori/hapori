@@ -13,7 +13,7 @@ module.exports = function(req, res, next) {
 			timestamp: new Date().getTime(),
 		};
 
-		yield Forum.create(forum)
+		yield Forum.forge(forum).save()
 		
 		res.json({
 			success: true,
