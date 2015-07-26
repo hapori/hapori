@@ -1,7 +1,9 @@
 // https://codedaily.vn/flex/
+// http://stackoverflow.com/questions/23794713/flexbox-two-fixed-width-columns-one-flexible
 
 @import "html.less";
 @import "navbar.less";
+@import "footer.less";
 
 
 
@@ -20,90 +22,25 @@
 }
 
 .layout-container .body {
-  display: flex;
-  flex-direction: row;
-  min-height: 500px;
+    display: flex;
+    x-justify-content: space-around;
+    x-align-items: stretch;
+    max-width: 1200px;
 }
 
 .layout-container .body .main {
-  flex-grow: 1;
+    border-left: 1px solid #eee;
   padding: 10px;
+
 }
 
 .layout-container .body .sidebar {
-  flex-basis: @sidebarWidth;
+    width: 230px;
+    flex: 0 0 230px;
   padding: 10px;
+
 }
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-.navbar-static-top {
-  margin-bottom: 19px;
-}
-
-body {
-  padding-top: 40px;
-  padding-bottom: 40px;
-  background-color: #eee;
-}
-
-.form-signin {
-  max-width: 330px;
-  padding: 15px;
-  margin: 0 auto;
-}
-.form-signin .form-signin-heading,
-.form-signin .checkbox {
-  margin-bottom: 10px;
-}
-.form-signin .checkbox {
-  font-weight: normal;
-}
-.form-signin .form-control {
-  position: relative;
-  height: auto;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-  padding: 10px;
-  font-size: 16px;
-}
-.form-signin .form-control:focus {
-  z-index: 2;
-}
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
-
-.form-submit {
-  max-width: 330px;
-  padding: 15px;
-  margin: 0 auto;
-}
-*/

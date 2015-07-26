@@ -4,19 +4,20 @@
 		<div class="vote-number"><%= post.investment %></div> 
 		<div class="vote-satoshi">satoshi</div> 
 	</a>
+
+	<div class="post-box">
 	<% if(name == 'home'){ %>
 		<a href="/p/<%= post.postKey %>">
 			<img src="<%= post.thumbnail %>" width=150>
 		</a>
-	<% } %>
-	<div class="post-box">
+	<% } %>	
 		<div class="post-title"><a href="<%= post.url %>"><%= post.title %></a></div>
 		<div class="post-info">
 			<span id="<%= post.id %>-investors">
 				Investors <%= formatInvestorList(post.investors) %> 
 			</span>
 			-
-			<a href="/p/<%= post.postKey %>"><%= post.commentCount %> Comments</a> - <a>tweet</a>
+			<a href="/p/<%= post.postKey %>"><%= post.commentCount %> comments</a> - <a>tweet</a>
 			</div>
 		<div class="post-text"><%= post.text %></div>
 	</div>

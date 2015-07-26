@@ -11,6 +11,7 @@
       <div class="header">
 	    <% include ./imports/navbar %>
       </div>
+
       <div class="body">
         <div class="main">
         	<%- include(main, {user: user}) %>
@@ -19,7 +20,10 @@
         	<%- include(sidebar, {user: user}) %>
         </div>
       </div>
-      <div class="footer">Footer</div>
+
+      <div id="footer">
+        <% include ./imports/footer  %>
+      </div>
     </div>
 
   </body>
