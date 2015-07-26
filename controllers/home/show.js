@@ -3,6 +3,7 @@ var Forum = require('../../models/forum');
 var User = require('../../models/user');
 var cole = require('../../db/co_log_err.js').cole;
 var format = require('../../helpers/format.js');
+var _ = require('lodash');
 
 
 
@@ -55,6 +56,7 @@ module.exports = function show(req, res, next) {
       posts: posts || null,
       forums: forums || null,
       formatInvestorList: format.investorList,
+      _: _,
     });
   });
 

@@ -6,11 +6,19 @@
 
 	<br /><br />
 
+
     <form id="form-submit" action="/submitPost" method="post">
       <strong>Submit a post</strong><br />
       <input type="text" name="title" placeholder="Title" required autofocus><br />
       <input type="text" name="url" placeholder="Url"><br />
       <textarea rows="4" name="text" placeholder="Text" class="boxsizingBorder"></textarea><br />
+
+      <select size="3">
+      <% _.forEach(forums, function(forum) { %>
+          <option><%= forum.name %></option>
+      <% }) %>
+      </select>
+
       <button type="submit">Submit post</button>
     </form>
 
@@ -20,7 +28,7 @@
 		<strong>Create a community</strong><br />
 		<input type="text" name="name" placeholder="Name" required autofocus><br />
 		<textarea rows="4" name="description" placeholder="Description"></textarea><br />
-		<textarea rows="4" name="rules" placeholder="Rules"></textarea><br /><br />
+		<textarea rows="4" name="rules" placeholder="Rules"></textarea><br />
 		<input type="hidden" name="administrator" value="<%= user.username %>">
 		<button type="submit">Create forum</button>
 	</form>
@@ -28,23 +36,23 @@
 
 <% } else { %>
 
-    <form id="form-signup" action="/signup" method="post">
-      <strong>Sign up</strong><br />
-      <input type="text" name="username" placeholder="Username" required autofocus><br />
-      <input type="text" name="email" placeholder="Email" ><br />
-      <input type="text" name="password" placeholder="Password" ><br />
-      <button type="submit">Sign up</button>
-    </form>
 
+  <form id="form-signup" action="/signup" method="post">
+    <strong>Sign up</strong><br />
+    <input type="text" name="username" placeholder="Username" required autofocus><br />
+    <input type="text" name="email" placeholder="Email" ><br />
+    <input type="text" name="password" placeholder="Password" ><br />
+    <button type="submit">Sign up</button>
+  </form>
 
-	<br /><br />
-	
-    <form id="form-signin" action="/signin" method="post">
-      <strong>Sign in</strong><br />
-      <input type="text" name="username" placeholder="Username" required autofocus><br />
-      <input type="text" name="password" placeholder="Password"><br />
-      <button type="submit">Sign in</button>
-    </form>
+  <br /><br />
+
+  <form id="form-signin" action="/signin" method="post">
+    <strong>Sign in</strong><br />
+    <input type="text" name="username" placeholder="Username" required autofocus><br />
+    <input type="text" name="password" placeholder="Password"><br />
+    <button type="submit">Sign in</button>
+  </form>
 
 
 <% } %>
