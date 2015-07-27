@@ -1,6 +1,7 @@
 var Post = require('../../models/post');
 var Forum = require('../../models/forum');
 var User = require('../../models/user');
+
 var cole = require('../../db/co_log_err.js').cole;
 var format = require('../../helpers/format.js');
 var _ = require('lodash');
@@ -10,23 +11,16 @@ var _ = require('lodash');
 
 
 module.exports = function show(req, res, next) {
-
-
   cole(function*() {
 
     // fetch all posts and forums
     try {
-      //var posts = yield Post.forge().fetchAll();
-
       var posts = yield Post.forge().query(function(qb){
           qb
           .orderByRaw('log(investment/'+process.env.VOTE_COST+') + timestamp/45000000 DESC')
           .limit(25); 
       }).fetchAll();
       posts = posts.toJSON();
-
-
-
     } catch (e) {
       return console.log(e, 'could not fetch all Posts');
     }
@@ -48,7 +42,7 @@ module.exports = function show(req, res, next) {
     }
 
     res.render('layout', {
-      title: 'Express',
+      title: 'hapori',
       main: 'imports/main/home',
       sidebar: 'imports/sidebar/homeSidebar',
       name: 'home',

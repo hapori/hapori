@@ -1,5 +1,4 @@
 var Post = require('../../models/post');
-var Forum = require('../../models/forum');
 var Comments = require('../../models/comment');
 var User = require('../../models/user');
 
@@ -33,13 +32,6 @@ module.exports = function show(req, res, next) {
     }
 
     try {
-      var forums = yield Forum.forge().fetchAll();
-      forums = forums.toJSON();
-    } catch (e) {
-      return console.log(e, 'could not fetch all forums');
-    }
-
-    try {
       if (req.user) {
         var user = yield User.where({ id: req.user.id }).fetch();
         user = user.toJSON();
@@ -48,24 +40,30 @@ module.exports = function show(req, res, next) {
       return console.log(e, 'could not fetch current user');
     }
 
+
     res.render('layout', {
       title: 'Express',
       main: 'imports/main/post',
       sidebar: 'imports/sidebar/homeSidebar',
       name: 'post',
-      user: user || null,
       post: post || null,
-      forums: forums || null,
       comments: comments || null,
       formatInvestorList: format.investorList,
       formatComments: format.comments,
+//      noembed: JSON.parse(noembed.res.text).html,
+//      embedly: embedly.body.html,
       _: _,
+      user: user || null,
     });
   });
 
 };
 
 
+function parse(unsafe) {
+    return unsafe.toJSON()
+
+}
 
 
 

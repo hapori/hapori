@@ -24,6 +24,7 @@ app.use(require('./middleware/authenticate'));
 app.use('/', require('./routes/index'));
 app.use('/u', require('./routes/user'));
 app.use('/p', require('./routes/post'));
+//app.use('/h', require('./routes/forum'));
 
 app.use(require('./middleware/error-handler'));
 
