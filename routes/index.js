@@ -17,8 +17,7 @@ router.post('/create', controller.forum.create);
 router.post('/vote', controller.vote.submit);
 
 
-
-/* submit post */
+/*
 router.get('/submit', function(req, res, next) {
     res.render('submit', {
         title: 'submit',
@@ -27,7 +26,6 @@ router.get('/submit', function(req, res, next) {
     });
 });
 
-/* create forum */
 router.get('/create', function(req, res, next) {
     res.render('create', {
         title: 'create',
@@ -36,7 +34,6 @@ router.get('/create', function(req, res, next) {
     });
 });
 
-/* sign in or sign up */
 router.get('/join', function(req, res, next) {
     res.render('join', {
         title: 'users',
@@ -46,7 +43,7 @@ router.get('/join', function(req, res, next) {
     });
 });
 
-
+*/
 
 
 

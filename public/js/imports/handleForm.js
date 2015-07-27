@@ -14,7 +14,8 @@ module.exports = function(form, success, failure) {
 		    data: $(this).serializeArray()
 		}).done(function(data) {
 
-			
+			console.log(data)
+
 			if(data.success)
 				if(success) success(data)
 				else location.reload();

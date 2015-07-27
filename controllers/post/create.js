@@ -7,12 +7,52 @@ var request = require('superagent');
 var Promise = this.Promise || require('promise');
 var agent = require('superagent-promise')(require('superagent'), Promise);
 
+var validUrl = require('valid-url');
+
 module.exports = function(req, res, next) {
     cole(function* () {
 
     	var now = new Date().getTime()
 
-	    var embedly = yield agent('GET', 'http://api.embed.ly/1/oembed?key='+process.env.EMBEDLY_KEY+'&url='+req.body.url);
+
+		if (req.body.title.length < 3 || req.body.title.length > 150) {
+			return res.status(200).send({
+				success: false,
+				message: 'Please enter a title with 3 to 150 charachters.'
+			});
+		}
+
+		// users do not have to provide an url, but if they do it must be valid
+		if (req.body.url && !validUrl.isWebUri(req.body.url)) {
+			return res.status(200).send({
+				success: false,
+				message: 'Please enter a valid url (try to copy it from another browser window).'
+			});
+		}
+
+		if (req.body.text.length > 1000) {
+			return res.status(200).send({
+				success: false,
+				message: 'Please enter a text with at most 1000 charachters. The one you entered had '+req.body.text.lenght+' charrachters.'
+			});
+		}
+
+		if (!req.body.forum) {
+			return res.status(200).send({
+				success: false,
+				message: 'Please select a community to post in.'
+			});
+		}		
+
+		try {
+			var embedly = yield agent('GET', 'http://api.embed.ly/1/oembed?key='+process.env.EMBEDLY_KEY+'&url='+req.body.url);
+			var html = embedly.body.html
+			var thumbnail = embedly.body.thumbnail_url
+		} catch (e) {
+			var html = ''
+			var thumbnail = '' // todo add link to default img here
+			console.log('embedly error on post submission', e.response.res.text)
+		}
 
     	// create post
 		var post = {
@@ -21,12 +61,12 @@ module.exports = function(req, res, next) {
 			text: req.body.text,
 			url: req.body.url,
 			timestamp: now,
-			forum: 'TODO',
+			forum: req.body.forum,
 			investors: [req.user.username],
 			investment: process.env.VOTE_COST,
 			username: req.user.username,
-			html: embedly.body.html,
-			thumbnail: embedly.body.thumbnail_url,
+			html: html,
+			thumbnail: thumbnail,
 			commentCount: 0,
 		};
 		var post = yield Post.forge(post).save()
