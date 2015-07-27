@@ -119,7 +119,7 @@ a {
   font-size: 8px;
 }
 iframe {
-  width: 100%;
+  min-width: 100%;
 }
 input,
 select,

@@ -17,7 +17,7 @@ module.exports = function signin(username, password) {
       if (!_user) {
         return Promise.reject(new errors.AuthenticationError({
           success: false,
-          message: 'Authentication failed. User password combination not found. (user not found)'
+          message: 'Authentication failed. User/password combination not found.'
         }));
       }
 
@@ -29,7 +29,7 @@ module.exports = function signin(username, password) {
       if (!matched) {
         return Promise.reject(new errors.AuthenticationError({
           success: false,
-          message: 'Authentication failed. User password combination not found. (pwd not found)'
+          message: 'Authentication failed. User/password combination not found.'
         }));
       }
 

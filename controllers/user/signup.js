@@ -56,12 +56,20 @@ module.exports = function(req, res, next) {
       });      
     }
 
-
+/*
     var passwordStrength = owasp.test(password)
     if(passwordStrength.errors) {
       return res.status(200).json({
         success: false,
         message: passwordStrength.errors.join(' ')
+      });      
+    }
+*/
+
+    if(password.length < 8) {
+      return res.status(200).json({
+        success: false,
+        message: 'Please use a password with at least 8 charachters.'
       });      
     }
 
