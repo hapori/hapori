@@ -108,6 +108,7 @@ a {
   float: left;
 }
 .html-close {
+  position: relative;
   left: 5px;
   top: -6px;
   cursor: pointer;
