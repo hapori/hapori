@@ -17,8 +17,7 @@ module.exports = function(form, success, failure) {
 			console.log(data)
 
 			if(data.success)
-				if(success) success(data)
-				else location.reload();
+				location.reload();
 			else
 				if(failure) failure(data)
 				else alert(data.message)
