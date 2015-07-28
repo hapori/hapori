@@ -6,7 +6,7 @@
 	</a>
 
 	<div class="post-box">
-	<% if(name == 'home'){ %>
+	<% if(name == 'home' && post.thumbnail){ %>
 		<a href="/p/<%= post.postKey %>">
 			<img src="<%= post.thumbnail %>" width=150>
 		</a>
