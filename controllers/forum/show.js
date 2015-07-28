@@ -1,10 +1,11 @@
 var Post = require('../../models/post');
-var Comments = require('../../models/comment');
+var Forum = require('../../models/forum');
 var User = require('../../models/user');
 
 var cole = require('../../db/co_log_err.js').cole;
-var format = require('../../helpers/format');
+var format = require('../../helpers/format.js');
 var _ = require('lodash');
+
 
 
 
@@ -12,23 +13,40 @@ var _ = require('lodash');
 module.exports = function show(req, res, next) {
   cole(function*() {
 
-    // fetch all posts and forums
+    // fetch all posts
     try {
-      var post = yield Post.where({ postKey: req.params.postKey }).fetch();
-      post = post.toJSON();
+
+      // if we are on the homepage
+      if(!req.params) {
+        var forumName = null
+        var posts = yield Post.forge().query(function(qb){
+            qb
+            .orderByRaw('log(investment/'+process.env.VOTE_COST+') + timestamp/45000000 DESC')
+            .limit(25); 
+        }).fetchAll();
+
+      // otherwise we are in a forum
+      } else {
+        var forumName = req.params.forumName
+        var posts = yield Post.forge().query(function(qb){
+            qb
+            .where('forum', forumName)
+            .orderByRaw('log(investment/'+process.env.VOTE_COST+') + timestamp/45000000 DESC')
+            .limit(25); 
+        }).fetchAll();        
+      }
+
+      posts = posts.toJSON();
     } catch (e) {
-      return console.log(e, 'could not fetch Post');
+      return console.log(e, 'could not fetch all Posts');
     }
 
-    // fetch all comments
+    // fetch all foums
     try {
-      //var comments = yield Comments.where({ postKey: req.params.postKey }).fetchAll();
-      var comments = yield Comments.query(function(qb) {
-                      qb.where({ postKey: req.params.postKey }).orderBy('commentKey', 'asc');
-                    }).fetchAll();
-      if(comments) comments = comments.toJSON();
+      var forums = yield Forum.forge().fetchAll();
+      forums = forums.toJSON();
     } catch (e) {
-      return console.log(e, 'could not fetch Comments');
+      return console.log(e, 'could not fetch all forums');
     }
 
     try {
@@ -40,30 +58,22 @@ module.exports = function show(req, res, next) {
       return console.log(e, 'could not fetch current user');
     }
 
-
     res.render('layout', {
-      title: 'Express',
-      main: 'imports/main/post',
-      sidebar: 'imports/sidebar/homeSidebar',
-      name: 'post',
-      post: post || null,
-      comments: comments || null,
-      formatInvestorList: format.investorList,
-      formatComments: format.comments,
-//      noembed: JSON.parse(noembed.res.text).html,
-//      embedly: embedly.body.html,
-      _: _,
+      title: 'hapori',
+      main: 'imports/main/forum',
+      sidebar: 'imports/sidebar/forumSidebar',
+      page: 'forum',
+      name: 'home', // deprecated
       user: user || null,
+      posts: posts || null,
+      forums: forums || null,
+      forumName: forumName,
+      formatInvestorList: format.investorList,
+      _: _,
     });
   });
 
 };
-
-
-function parse(unsafe) {
-    return unsafe.toJSON()
-
-}
 
 
 

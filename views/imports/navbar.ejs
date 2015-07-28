@@ -6,8 +6,11 @@
 
 		<% if(locals.forums) { %>
 			<% for(var i=0; i<forums.length; i++) { %>
-				| <a href="#"><%= forums[i].name %></a>
-
+				| 
+				<% console.log(forums.name, forumName) %>
+				<%- forums[i].name == forumName ? '<strong>' : '' %>
+					<a href="/h/<%= forums[i].name %>"><%= forums[i].name %></a>
+				<%- forums[i].name == forumName ? '</strong>' : '' %>
 			<% } %>
 		<% } %>
 	</div>

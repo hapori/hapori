@@ -51,8 +51,9 @@ module.exports = function show(req, res, next) {
     res.render('layout', {
       title: 'Express',
       main: 'imports/main/post',
-      sidebar: 'imports/sidebar/homeSidebar',
-      name: 'post',
+      sidebar: 'imports/sidebar/forumSidebar',
+      name: 'post', // deprecated
+      page: 'post',
       user: user || null,
       post: post || null,
       forums: forums || null,

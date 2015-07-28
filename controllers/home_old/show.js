@@ -43,9 +43,10 @@ module.exports = function show(req, res, next) {
 
     res.render('layout', {
       title: 'hapori',
-      main: 'imports/main/home',
-      sidebar: 'imports/sidebar/homeSidebar',
-      name: 'home',
+      main: 'imports/main/forum',
+      sidebar: 'imports/sidebar/forumSidebar',
+      page: 'forum',
+      name: 'home', // deprecated
       user: user || null,
       posts: posts || null,
       forums: forums || null,

@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var app = express();
-require('dotenv').load();
+//require('dotenv').load();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,7 +24,7 @@ app.use(require('./middleware/authenticate'));
 app.use('/', require('./routes/index'));
 app.use('/u', require('./routes/user'));
 app.use('/p', require('./routes/post'));
-//app.use('/h', require('./routes/forum'));
+app.use('/h', require('./routes/forum'));
 
 app.use(require('./middleware/error-handler'));
 
