@@ -1,7 +1,11 @@
+/* ---- FONT SIZES ---- */
+/* ---- COLORS ---- */
+/* ---- SIZES ---- */
 body {
   padding: 0;
   margin: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  color: #333333;
 }
 a {
   color: #00b7ff;
@@ -11,9 +15,6 @@ a {
 .container {
   margin: 50px;
 }
-/* ---- FONT SIZES ---- */
-/* ---- COLORS ---- */
-/* ---- SIZES ---- */
 #menu {
   display: -webkit-box;
   display: -moz-box;

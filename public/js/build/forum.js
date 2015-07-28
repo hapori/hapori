@@ -21567,7 +21567,47 @@ return jQuery;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],3:[function(require,module,exports){
 require('./imports/default.js');
-},{"./imports/default.js":4}],4:[function(require,module,exports){
+
+// http://jsfiddle.net/cGDuV/
+
+var $ = require('jquery');
+
+
+
+
+$(function() {
+
+	// prevent iframes form loading on page load
+	$('iframe').each(function() {
+		var src = $(this).attr('src');
+		$(this).data('src', src).attr('src', '');
+	});
+
+	// load iframes when thumb is clicked
+	$('.thumb-link').click(function(event) {
+		event.preventDefault()
+		var postId = $(this).attr('id').slice(0,-6)
+		$('#'+postId+'-thumb').hide()
+		$('#'+postId+'-html').show()
+		$('#'+postId+'-html>iframe').attr('src', function() {
+			return $(this).data('src');
+		});
+	})
+
+	// close iframes close is clicked
+	// also unload the iframe
+	$('.html-close').click(function(event) {
+		event.preventDefault()
+		var postId = $(this).attr('id').slice(0,-6)
+		$('#'+postId+'-thumb').show()
+		$('#'+postId+'-html').hide()
+		// unload iframe
+		$('#'+postId+'-html>iframe').html('')
+	})
+
+})
+
+},{"./imports/default.js":4,"jquery":1}],4:[function(require,module,exports){
 var $ = require('jquery');
 var handleForm = require('./handleForm.js');
 var handleVote = require('./handleVote.js');

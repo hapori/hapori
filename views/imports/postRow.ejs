@@ -7,11 +7,22 @@
 
 
 	<div class="post-box">
-	<% if(name == 'home' && post.thumbnail){ %>
-		<a href="/p/<%= post.postKey %>">
-			<img src="<%= post.thumbnail %>" width=150>
-		</a>
-	<% } %>	
+		<!-- thumbnail -->
+		<% if(name == 'home' && post.thumbnail){ %>
+			<a href="#" id="<%= post.postKey %>-thumb" class="thumb-link">
+				<img src="<%= post.thumbnail %>" width=150>
+			</a>
+		<% } %>	
+
+		<!-- embed -->
+		<div id="<%= post.postKey %>-html" class="html">
+			<%- post.html %>
+			<div id="<%= post.postKey %>-close" class="html-close">
+				x
+			</div>
+		</div>
+
+		<!-- text -->
 		<div class="post-title"><a href="<%= post.url %>"><%= post.title %></a></div>
 		<div class="post-info">
 			<span id="<%= post.id %>-investors">

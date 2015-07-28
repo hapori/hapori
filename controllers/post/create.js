@@ -48,9 +48,6 @@ module.exports = function(req, res, next) {
 			var embedly = yield agent('GET', 'http://api.embed.ly/1/oembed?key='+process.env.EMBEDLY_KEY+'&url='+req.body.url);
 			var html = embedly.body.html
 			var thumbnail = embedly.body.thumbnail_url
-		
-console.log('embedly', embedly)
-
 		} catch (e) {
 			var html = ''
 			var thumbnail = '' // todo add link to default img here

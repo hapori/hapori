@@ -1,3 +1,6 @@
+@import "consts.less";
+
+
 .post-row {
 	height: auto;
 	overflow: hidden;
@@ -29,16 +32,37 @@
 }
 
 .post-info {
-	color: #999;
+	color: @lightFontColor;
 	font-size: 10px;
 	line-height: 20px;
 }
 
 .post-text {
-	color: #333;
+	color: @fontColor;
 }
 
 .post-row img {
 	float: left;
 	margin: 0 10px 0 0;
 }
+
+
+.html {
+	display: none;
+	margin: 0 0 10px;
+	overflow: auto;
+}
+
+.html>iframe {
+	float: left;
+}
+
+
+.html-close {
+	left: 5px;
+	top: -6px;
+	cursor: pointer;
+	color: @lightFontColor;
+}
+
+
