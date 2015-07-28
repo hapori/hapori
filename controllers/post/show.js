@@ -57,6 +57,7 @@ module.exports = function show(req, res, next) {
       user: user || null,
       post: post || null,
       forums: forums || null,
+      forumName: null,
       comments: comments || null,
       formatInvestorList: format.investorList,
       formatComments: format.comments,

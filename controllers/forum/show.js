@@ -15,6 +15,7 @@ module.exports = function show(req, res, next) {
 
     // fetch all posts
     try {
+
       // if we are on the homepage
       if(!req.params.forumName) {
         var forumName = null
