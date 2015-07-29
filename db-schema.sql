@@ -17,7 +17,7 @@ CREATE TABLE Comments (
 DROP TABLE IF EXISTS Posts;
 CREATE TABLE Posts (
   "id" SERIAL,
-  "postKey" varchar(10) NOT NULL,
+  "postKey" ltree NOT NULL,
   "title" varchar(150) NOT NULL,
   "text" text NOT NULL,
   "url" varchar(250) NOT NULL,
