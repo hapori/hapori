@@ -1,14 +1,23 @@
 <% if (user) { %>
 
-    <strong>Hi <%= user.username %></strong><br />
- 		Your balance is <span id="balance"><%= user.balance %></span> satoshi<br />
- 		<a href='/logout'>Logout</a>
+    <h4>Hi <%= user.username %></h4>
+    <p>
+ 		Your balance is <span id="balance"><%= user.balance %></span> satoshi
+    </p>
 
-	<br /><br />
+    
+    <h4>Deposit bitcoin</h4>
+    <div id="deposit-address">
+      <%= user.address %>
+    </div>
+    <p>
+      Warning: The payment system is still under development. Your deposit address is a testnet address, so you cannot send any bitcoins there.
+    </p>
 
 
+    <h4>Submit a post</h4>
     <form id="form-submit" action="/submitPost" method="post">
-      <strong>Submit a post</strong><br />
+    <p>
       <input type="text" name="title" placeholder="Title" required autofocus><br />
       <input type="text" name="url" placeholder="Url"><br />
       <textarea rows="4" name="text" placeholder="Text" class="boxsizingBorder"></textarea><br />
@@ -20,38 +29,44 @@
       </select>
 
       <button type="submit">Submit post</button>
+      </p>
     </form>
+  
 
-	<br /><br />
-
-	<form id="form-create" action="/create" method="post">
-		<strong>Create a community</strong><br />
-		<input type="text" name="name" placeholder="Name" required autofocus><br />
-		<textarea rows="4" name="description" placeholder="Description"></textarea><br />
-		<textarea rows="4" name="rules" placeholder="Rules"></textarea><br />
-		<input type="hidden" name="administrator" value="<%= user.username %>">
-		<button type="submit">Create forum</button>
-	</form>
+    <h4>Create a community</h4>
+  	<form id="form-create" action="/create" method="post">
+      <p>
+  		<input type="text" name="name" placeholder="Name" required autofocus><br />
+  		<textarea rows="4" name="description" placeholder="Description"></textarea><br />
+  		<textarea rows="4" name="rules" placeholder="Rules"></textarea><br />
+  		<input type="hidden" name="administrator" value="<%= user.username %>">
+  		<button type="submit">Create forum</button>
+      </p>
+  	</form>
 
 
 <% } else { %>
 
 
+  <h4>Sign up</h4>
   <form id="form-signup" action="/signup" method="post">
-    <strong>Sign up</strong><br />
+    <p>
     <input type="text" name="username" placeholder="Username" required autofocus><br />
     <input type="text" name="email" placeholder="Email" ><br />
     <input type="text" name="password" placeholder="Password" ><br />
     <button type="submit">Sign up</button>
+    </p>
   </form>
 
   <br /><br />
 
+  <h4>Sign in</h4>
   <form id="form-signin" action="/signin" method="post">
-    <strong>Sign in</strong><br />
+    <p>
     <input type="text" name="username" placeholder="Username" required autofocus><br />
     <input type="text" name="password" placeholder="Password"><br />
     <button type="submit">Sign in</button>
+    </p>
   </form>
 
 

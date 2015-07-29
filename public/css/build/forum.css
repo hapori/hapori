@@ -1,6 +1,3 @@
-/* ---- FONT SIZES ---- */
-/* ---- COLORS ---- */
-/* ---- SIZES ---- */
 body {
   padding: 0;
   margin: 0;
@@ -14,6 +11,9 @@ a {
 }
 .container {
   margin: 50px;
+}
+h4 {
+  margin: 0;
 }
 #menu {
   display: -webkit-box;
@@ -37,27 +37,27 @@ a {
   font-size: 10px;
   text-align: center;
 }
-.layout-container {
+#layout-container {
   display: flex;
   flex-direction: column;
 }
-.layout-container .header {
+#layout-container #header {
   height: 50px;
 }
-.layout-container .footer {
+#layout-container #footer {
   height: 50px;
 }
-.layout-container .body {
+#layout-container #body {
   display: flex;
   x-justify-content: space-around;
   x-align-items: stretch;
   max-width: 1200px;
   margin: 0 auto;
 }
-.layout-container .body .main {
+#layout-container #body #main {
   padding: 10px;
 }
-.layout-container .body .sidebar {
+#layout-container #body #sidebar {
   width: 230px;
   flex: 0 0 230px;
   padding: 10px;
@@ -132,4 +132,21 @@ select {
 }
 form button {
   margin: 5px 0 0;
+}
+/* ---- FONT SIZES ---- */
+/* ---- COLORS ---- */
+/* ---- SIZES ---- */
+#deposit-address {
+  font-size: 10px;
+  color: #999999;
+  text-align: center;
+  margin: 10px 0 10px;
+}
+#deposit-address:hover {
+  color: #333333;
+}
+#sidebar p {
+  font-size: 10px;
+  color: #999999;
+  margin: 2px 0 25px;
 }

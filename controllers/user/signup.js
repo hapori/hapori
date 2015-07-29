@@ -2,11 +2,11 @@ var User = require('../../models/user');
 var Wallet = require('../../models/wallet');
 var Chain = require('chain-node');
 var chain = new Chain('c217818c8c0b31e012775aa8b5ebb318'); // todo: move to dot env
-var bitcore = require('bitcore');
 var crypto = require('crypto');
 var cole = require('../../db/co_log_err.js').cole;
 var jwt = require('jsonwebtoken');
 var validator = require("email-validator");
+
 var owasp = require('owasp-password-strength-test');
 owasp.config({
   allowPassphrases       : true,
@@ -15,6 +15,9 @@ owasp.config({
   minPhraseLength        : 20,
   minOptionalTestsToPass : 2,
 });
+
+var bitcore = require('bitcore');
+bitcore.Networks.defaultNetwork = bitcore.Networks.testnet;
 
 
 module.exports = function(req, res, next) {
@@ -98,9 +101,6 @@ module.exports = function(req, res, next) {
     // store user tuple in the db
     var user = yield User.forge(user).save();
 
-    // What's this user.id being used for? ~ Roland
-    // @Roland: I changed stuff around here: we now sore the userId in the token so that we can identify the user on subsequent requests
-    //user.id = idObj.id
 
     // create a token and store it in a cookie
     var token = jwt.sign(user.toJSON(), process.env.JWT_SECRET, { expiresInMinutes: 60*48 });

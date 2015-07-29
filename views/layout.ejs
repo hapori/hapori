@@ -7,16 +7,16 @@
 
   <body>
 
-    <div class="layout-container">
-      <div class="header">
-	    <% include ./imports/navbar %>
+    <div id="layout-container">
+      <div id="header">
+      <%- include('./imports/navbar', {user: user}) %>
       </div>
 
-      <div class="body">
-        <div class="main">
+      <div id="body">
+        <div id="main">
         	<%- include(main, {user: user}) %>
         </div>
-        <div class="sidebar">
+        <div id="sidebar">
         	<%- include(sidebar, {user: user}) %>
         </div>
       </div>
