@@ -73,7 +73,6 @@ console.log('embedly.text', embedly.text)
 			text: req.body.text,
 			url: req.body.url,
 			timestamp: now,
-			forum: req.body.parentKey,  // todo: remove this
 			investors: [req.user.username],
 			investment: process.env.VOTE_COST,
 			username: req.user.username,
