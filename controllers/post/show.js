@@ -53,6 +53,7 @@ module.exports = function show(req, res, next) {
       posts: posts || null,
       postKey: postKey || null,
       forums: forums || null,
+      forumName: null,
       formatInvestorList: format.investorList,
       formatComments: format.comments,
       _: _,
