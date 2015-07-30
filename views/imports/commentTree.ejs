@@ -1,4 +1,43 @@
+<% 
+_(tree).forEach(function(node, commentIdEnd) { 
+	var post = node.post;
+	var tree = node.tree;
+%>
 
-<% _(tree).forEach(function(node,commentIdEnd) { %>
-	<%- include('./commentRow.ejs', {comment: node.comment[0], tree: node.children }) %>
-<% }).value(); %>
+	<div class="comment-row">
+		<a id="<%= post.id %>" class="vote-box">
+			<div class="vote-arrow">&utrif;</div> 
+			<div class="vote-number"><%= post.investment %></div> 
+			<div class="vote-satoshi">satoshi</div> 
+		</a>
+
+		<div class="post-box">
+			<div class="post-info">
+				<a><%= post.username %></a>
+			</div>
+			<div class="post-text"><%= post.text %></div>
+			<div class="post-info">
+				<span id="<%= post.id %>-investors">
+					Investors <%= formatInvestorList(post.investors) %> 
+				</span>
+				<a class="reply-button" id="<%= post.postKey %>-button">reply</a>
+				- <a href="/<%= post.postKey.replace(/\./g, '/') %>">permalink</a>
+			</div>
+		</div>
+
+		<form class="comment-form" action="/submitPost" method="post" id="<%= post.postKey %>">
+			<textarea rows="2" name="text" placeholder=""></textarea><br />
+			<input type="hidden" name="parentKey" value="<%= post.postKey %>">
+			<input type="hidden" name="postKey" value="<%= post.postKey %>">
+			<input type="hidden" name="title" value="">
+			<input type="hidden" name="url" value="">
+			<button type="submit" name="a">reply</button>
+			<button class="cancel-button" id="<%= post.postKey %>-cancel">cancel</button>
+		</form>
+
+		<%- include('./commentTree.ejs', {tree: tree }) %>
+	</div>
+
+<% 
+}).value(); 
+%>

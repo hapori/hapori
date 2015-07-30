@@ -27,8 +27,8 @@
 			<span id="<%= post.id %>-investors">
 				Investors <%= formatInvestorList(post.investors) %> 
 			</span>
-			-
-			<a href="/p/<%= post.postKey %>"><%= post.commentCount %> comments</a> - <a>tweet</a>
+			- <a href="/<%= post.postKey.replace(/\./g, '/') %>"><%= post.commentCount %> comments</a> 
+			- <a>tweet</a>
 			</div>
 		<div class="post-text"><%= post.text %></div>
 	</div>

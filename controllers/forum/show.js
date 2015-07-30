@@ -16,25 +16,19 @@ module.exports = function show(req, res, next) {
     // fetch all posts
     try {
 
-      // if we are on the homepage
-      if(!req.params.forumName) {
-        var forumName = null
-        var posts = yield Post.forge().query(function(qb){
-            qb
-            .orderByRaw('log(investment/'+process.env.VOTE_COST+') + timestamp/45000000 DESC')
-            .limit(25); 
-        }).fetchAll();
+      // if no forum name is provided, then we are on the homepage 
+      // and we select posts from all forums
+      var forumName = req.params.forumName || '*'
 
-      // otherwise we are in a forum
-      } else {
-        var forumName = req.params.forumName
-        var posts = yield Post.forge().query(function(qb){
-            qb
-            .where('forum', forumName)
-            .orderByRaw('log(investment/'+process.env.VOTE_COST+') + timestamp/45000000 DESC')
-            .limit(25); 
-        }).fetchAll();        
-      }
+      // select all posts with a postKey of lenght 2
+      // this is what we need bc postKey is of the form "forumName.postId"
+      var posts = yield Post.forge().query(function(qb){
+          qb
+          .whereRaw('"postKey" ~ \'*{2}\'')               // postKeys of length 2
+          .whereRaw('"postKey" ~ \''+forumName+'.*\'')    // that start with forumName
+          .orderByRaw('log(investment/'+process.env.VOTE_COST+') + timestamp/45000000 DESC')
+          .limit(25); 
+      }).fetchAll();
 
       posts = posts.toJSON();
     } catch (e) {

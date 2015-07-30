@@ -14,8 +14,7 @@ module.exports = function(req, res, next) {
 
     	var now = new Date().getTime()
 
-
-		if (req.body.title.length < 3 || req.body.title.length > 150) {
+		if (req.body.title && (req.body.title.length < 3 || req.body.title.length > 150)) {
 			return res.status(200).send({
 				success: false,
 				message: 'Please enter a title with 3 to 150 charachters.'
@@ -33,11 +32,12 @@ module.exports = function(req, res, next) {
 		if (req.body.text.length > 1000) {
 			return res.status(200).send({
 				success: false,
-				message: 'Please enter a text with at most 1000 charachters. The one you entered had '+req.body.text.lenght+' charrachters.'
+				message: 'Please enter a text with at most 1000 characters. The one you entered had '+req.body.text.lenght+' characters.'
 			});
 		}
 
-		if (!req.body.forum) {
+		// the partentkey is the forum name for posts
+		if (!req.body.parentKey) {
 			return res.status(200).send({
 				success: false,
 				message: 'Please select a community to post in.'
@@ -68,12 +68,12 @@ console.log('embedly.text', embedly.text)
 
     	// create post
 		var post = {
-			postKey: random.generate(), // random 10 char string
+			postKey: req.body.parentKey+"."+random.generate(10), // random 10 char string
 			title: req.body.title,
 			text: req.body.text,
 			url: req.body.url,
 			timestamp: now,
-			forum: req.body.forum,
+			forum: req.body.parentKey,  // todo: remove this
 			investors: [req.user.username],
 			investment: process.env.VOTE_COST,
 			username: req.user.username,

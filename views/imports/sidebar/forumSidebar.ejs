@@ -22,7 +22,7 @@
       <input type="text" name="url" placeholder="Url"><br />
       <textarea rows="4" name="text" placeholder="Text" class="boxsizingBorder"></textarea><br />
 
-      <select size="3" name="forum">
+      <select size="3" name="parentKey">
       <% _.forEach(forums, function(forum) { %>
           <option value="<%= forum.name %>"><%= forum.name %></option>
       <% }) %>

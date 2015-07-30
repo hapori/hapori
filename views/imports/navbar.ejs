@@ -6,7 +6,7 @@
 			<% for(var i=0; i<forums.length; i++) { %>
 				| 
 				<%- forums[i].name == forumName ? '<strong>' : '' %>
-					<a href="/h/<%= forums[i].name %>"><%= forums[i].name %></a>
+					<a href="/<%= forums[i].name %>"><%= forums[i].name %></a>
 				<%- forums[i].name == forumName ? '</strong>' : '' %>
 			<% } %>
 		<% } %>

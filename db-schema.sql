@@ -1,18 +1,5 @@
 CREATE EXTENSION ltree;
 
-DROP TABLE IF EXISTS Comments;
-CREATE TABLE Comments (
-  "id" SERIAL,
-  "commentKey" ltree NOT NULL,
-  "postKey" varchar(10) NOT NULL,
-  "text" varchar(1000) NOT NULL,
-  "investors" text[],
-  "investment" int NOT NULL,
-  "username" varchar(24) NOT NULL,
-  "timestamp" bigint NOT NULL,
-  PRIMARY KEY ("id")
-);
-
 
 DROP TABLE IF EXISTS Posts;
 CREATE TABLE Posts (
@@ -21,13 +8,22 @@ CREATE TABLE Posts (
   "title" varchar(150) NOT NULL,
   "text" text NOT NULL,
   "url" varchar(250) NOT NULL,
-  "forum" varchar(50) NOT NULL,
   "investors" text[],
   "investment" int NOT NULL,
   "username" varchar(24) NOT NULL,
   "commentCount" int NOT NULL,
   "html" text,
   "thumbnail" varchar(120),
+  "timestamp" bigint NOT NULL,
+  PRIMARY KEY ("id")
+);
+
+
+DROP TABLE IF EXISTS Votes;
+CREATE TABLE Votes (
+  "id" SERIAL,
+  "userId" int NOT NULL,
+  "postOrCommentId" ltree NOT NULL,
   "timestamp" bigint NOT NULL,
   PRIMARY KEY ("id")
 );
@@ -60,14 +56,6 @@ CREATE TABLE Users (
 );
 
 
-DROP TABLE IF EXISTS Votes;
-CREATE TABLE Votes (
-  "id" SERIAL,
-  "userId" int NOT NULL,
-  "postId" int NOT NULL,
-  "timestamp" bigint NOT NULL,
-  PRIMARY KEY ("id")
-);
 
 
 DROP TABLE IF EXISTS Payment;

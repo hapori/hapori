@@ -13,23 +13,18 @@ var _ = require('lodash');
 module.exports = function show(req, res, next) {
   cole(function*() {
 
-    // fetch all posts and forums
-    try {
-      var post = yield Post.where({ postKey: req.params.postKey }).fetch();
-      post = post.toJSON();
-    } catch (e) {
-      return console.log(e, 'could not fetch Post');
-    }
+    // we translate req.params[0] of the form /a/b/c
+    // into a postKey of the form be a.b.c
+    var postKey = req.params[0].replace(/\//g, '.').substr(1)
 
-    // fetch all comments
+    // select all descendants of req.params.postKey
     try {
-      //var comments = yield Comments.where({ postKey: req.params.postKey }).fetchAll();
-      var comments = yield Comments.query(function(qb) {
-                      qb.where({ postKey: req.params.postKey }).orderBy('commentKey', 'asc');
-                    }).fetchAll();
-      if(comments) comments = comments.toJSON();
+      var posts = yield Post.forge().query(function(qb){
+          qb.whereRaw('"postKey" ~ \''+postKey+'.*\'')               // postKeys of length 2
+      }).fetchAll();
+      posts = posts.toJSON()
     } catch (e) {
-      return console.log(e, 'could not fetch Comments');
+      return console.log(e, 'could not fetch all posts');
     }
 
     try {
@@ -55,10 +50,9 @@ module.exports = function show(req, res, next) {
       name: 'post', // deprecated
       page: 'post',
       user: user || null,
-      post: post || null,
+      posts: posts || null,
+      postKey: postKey || null,
       forums: forums || null,
-      forumName: null,
-      comments: comments || null,
       formatInvestorList: format.investorList,
       formatComments: format.comments,
       _: _,

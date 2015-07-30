@@ -3,8 +3,7 @@ var router = express.Router();
 var controller = require('../controllers');
 
 
-/* home page */
-router.get('/', controller.forum.show);
+
 
 /* auth */
 router.post('/signup', controller.user.signup);
@@ -16,9 +15,15 @@ router.post('/deposit', controller.payment.createDeposit);
 
 /* submit stuff */
 router.post('/submitPost', controller.post.create);
-router.post('/submitComment', controller.comment.create);
+//router.post('/submitComment', controller.comment.create);
 router.post('/create', controller.forum.create);
 router.post('/vote', controller.vote.submit);
 
+/* home page */
+router.get('/', controller.forum.show);
+router.get('/:forumName', controller.forum.show)
+
+
+router.get('*?', controller.post.show);
 
 module.exports = router;

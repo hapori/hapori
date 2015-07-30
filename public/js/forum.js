@@ -19,6 +19,7 @@ $(function() {
 	$('.thumb-link').click(function(event) {
 		event.preventDefault()
 		var postId = $(this).attr('id').slice(0,-6)
+		postId = postId.replace(/\./g, "\\.")
 		$('#'+postId+'-thumb').hide()
 		$('#'+postId+'-html').show()
 		$('#'+postId+'-html>iframe').attr('src', function() {
@@ -31,9 +32,10 @@ $(function() {
 	$('.html-close').click(function(event) {
 		event.preventDefault()
 		var postId = $(this).attr('id').slice(0,-6)
+		postId = postId.replace(/\./g, "\\.")
 		$('#'+postId+'-thumb').show()
 		$('#'+postId+'-html').hide()
-		// unload iframe
+		// unload iframe (todo fix this)
 		$('#'+postId+'-html>iframe').html('')
 	})
 
