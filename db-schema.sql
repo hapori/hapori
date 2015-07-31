@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS Votes;
 CREATE TABLE Votes (
   "id" SERIAL,
   "userId" int NOT NULL,
-  "postOrCommentId" ltree NOT NULL,
+  "postId" ltree NOT NULL,
   "timestamp" bigint NOT NULL,
   PRIMARY KEY ("id")
 );
@@ -41,6 +41,8 @@ CREATE TABLE Forums (
 );
 
 
+CREATE TYPE mood AS ENUM ('newbie', 'hero');
+CREATE TYPE status AS ENUM ('user', 'mod', 'admin');
 DROP TABLE IF EXISTS Users;
 CREATE TABLE Users (
   "id" SERIAL,
@@ -52,6 +54,8 @@ CREATE TABLE Users (
   "address" varchar(35) NOT NULL,
   "balance" int NOT NULL,
   "joined" bigint NOT NULL,
+  "rank" rank,
+  "status" status,
   PRIMARY KEY ("id")
 );
 

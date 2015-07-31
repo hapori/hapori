@@ -68,7 +68,7 @@ console.log('embedly.text', embedly.text)
 
     	// create post
 		var post = {
-			postKey: req.body.parentKey+"."+random.generate(10), // random 10 char string
+			postKey: req.body.parentKey+"."+random.generate(5), // random 10 char string
 			title: req.body.title,
 			text: req.body.text,
 			url: req.body.url,

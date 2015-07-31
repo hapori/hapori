@@ -95,7 +95,9 @@ module.exports = function(req, res, next) {
       balance: process.env.DEFAULT_BALANCE,
       key: key.toString(),
       address: address.toString(),
-      joined: new Date().getTime()
+      joined: new Date().getTime(),
+      rank: "newbie",
+      status: "user",
     };
 
     // store user tuple in the db

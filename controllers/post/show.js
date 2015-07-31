@@ -44,7 +44,7 @@ module.exports = function show(req, res, next) {
     }
 
     res.render('layout', {
-      title: 'Express',
+      title: 'hapori',
       main: 'imports/main/post',
       sidebar: 'imports/sidebar/forumSidebar',
       name: 'post', // deprecated
