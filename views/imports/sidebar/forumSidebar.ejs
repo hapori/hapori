@@ -6,20 +6,11 @@
     </p>
 
     
-    <h4>Deposit <strike>bitcoin</strike> testnet coins</h4>
-    <div id="deposit-address">
-      <%= user.address %>
-    </div>
-    <p>
-      Warning: The payment system is still under development. Your deposit address is a testnet address, so you cannot send any bitcoins there.
-    </p>
-
-
     <h4>Submit a post</h4>
     <form id="form-submit" action="/submitPost" method="post">
     <p>
       <input type="text" name="title" placeholder="Title" required autofocus><br />
-      <input type="text" name="url" placeholder="Url"><br />
+      <input type="text" name="url" placeholder="Url" required><br />
       <textarea rows="4" name="text" placeholder="Text" class="boxsizingBorder"></textarea><br />
 
       <select size="3" name="parentKey">
@@ -31,12 +22,32 @@
       <button type="submit">Submit post</button>
       </p>
     </form>
+
+
+    <h4>Deposit <strike>bitcoin</strike> testnet coins</h4>
+    <div id="deposit-address">
+      <%= user.address %>
+    </div>
+    <p>
+      Warning: The payment system is still under development. Your deposit address is a testnet address, so you cannot send bitcoins there.
+    </p>
+
+
+    <h4>Withdraw</h4>
+    <form id="form-submit" action="#" method="post">
+    <p>
+      <input type="text" name="address" placeholder="Address" required><br />
+      <input type="text" name="amount" placeholder="Amount" required><br />
+      <button type="submit">Withdraw</button><br /><br />
+      Warning: See above.
+      </p>
+    </form>
   
 
     <h4>Create a community</h4>
   	<form id="form-create" action="/create" method="post">
       <p>
-  		<input type="text" name="name" placeholder="Name" required autofocus><br />
+  		<input type="text" name="name" placeholder="Name" required><br />
   		<textarea rows="4" name="description" placeholder="Description"></textarea><br />
   		<textarea rows="4" name="rules" placeholder="Rules"></textarea><br />
   		<input type="hidden" name="administrator" value="<%= user.username %>">
@@ -52,8 +63,8 @@
   <form id="form-signup" action="/signup" method="post">
     <p>
     <input type="text" name="username" placeholder="Username" required autofocus><br />
-    <input type="text" name="email" placeholder="Email" ><br />
-    <input type="password" name="password" placeholder="Password" ><br />
+    <input type="text" name="email" placeholder="Email" required><br />
+    <input type="password" name="password" placeholder="Password" required><br />
     <button type="submit">Sign up</button>
     </p>
   </form>
@@ -63,8 +74,8 @@
   <h4>Sign in</h4>
   <form id="form-signin" action="/signin" method="post">
     <p>
-    <input type="text" name="username" placeholder="Username" required autofocus><br />
-    <input type="password" name="password" placeholder="Password"><br />
+    <input type="text" name="username" placeholder="Username" required><br />
+    <input type="password" name="password" placeholder="Password" required><br />
     <button type="submit">Sign in</button>
     </p>
   </form>

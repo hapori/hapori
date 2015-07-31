@@ -83,6 +83,21 @@ h4 {
 #how-it-works {
   margin: 60px;
 }
+.html {
+  display: none;
+  margin: 0 0 10px;
+  overflow: auto;
+}
+.html > iframe {
+  float: left;
+}
+.html-close {
+  position: relative;
+  left: 5px;
+  top: -6px;
+  cursor: pointer;
+  color: #999999;
+}
 .post-row {
   height: auto;
   overflow: hidden;
@@ -116,21 +131,6 @@ h4 {
 .post-row img {
   float: left;
   margin: 0 10px 0 0;
-}
-.html {
-  display: none;
-  margin: 0 0 10px;
-  overflow: auto;
-}
-.html > iframe {
-  float: left;
-}
-.html-close {
-  position: relative;
-  left: 5px;
-  top: -6px;
-  cursor: pointer;
-  color: #999999;
 }
 input,
 select,

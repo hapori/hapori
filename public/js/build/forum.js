@@ -21566,53 +21566,23 @@ return jQuery;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],3:[function(require,module,exports){
-require('./imports/default.js');
-
-// http://jsfiddle.net/cGDuV/
-
 var $ = require('jquery');
+require('./imports/default.js');
+var handleThumbs = require('./imports/handleThumbs.js');
 
-
-
-
-$(function() {
-
-	// prevent iframes form loading on page load
-	$('iframe').each(function() {
-		var src = $(this).attr('src');
-		$(this).data('src', src).attr('src', '');
-	});
-
-	// load iframes when thumb is clicked
-	$('.thumb-link').click(function(event) {
-		event.preventDefault()
-		var postId = $(this).attr('id').slice(0,-6)
-		postId = postId.replace(/\./g, "\\.")
-		$('#'+postId+'-thumb').hide()
-		$('#'+postId+'-html').show()
-		$('#'+postId+'-html>iframe').attr('src', function() {
-			return $(this).data('src');
-		});
-	})
-
-	// close iframes close is clicked
-	// also unload the iframe
-	$('.html-close').click(function(event) {
-		event.preventDefault()
-		var postId = $(this).attr('id').slice(0,-6)
-		postId = postId.replace(/\./g, "\\.")
-		$('#'+postId+'-thumb').show()
-		$('#'+postId+'-html').hide()
-		// unload iframe (todo fix this)
-		$('#'+postId+'-html>iframe').html('')
-	})
-
+/*
+$(function(){
+	handleThumbs()
 })
+*/
 
-},{"./imports/default.js":4,"jquery":1}],4:[function(require,module,exports){
+
+
+},{"./imports/default.js":4,"./imports/handleThumbs.js":6,"jquery":1}],4:[function(require,module,exports){
 var $ = require('jquery');
 var handleForm = require('./handleForm.js');
 var handleVote = require('./handleVote.js');
+var handleThumbs = require('./handleThumbs.js');
 
 
 $(function(){
@@ -21622,8 +21592,10 @@ $(function(){
 	handleForm($('#form-create'))
 
 	handleVote()
+	handleThumbs()
+
 });
-},{"./handleForm.js":5,"./handleVote.js":6,"jquery":1}],5:[function(require,module,exports){
+},{"./handleForm.js":5,"./handleThumbs.js":6,"./handleVote.js":7,"jquery":1}],5:[function(require,module,exports){
 var $ = require('jquery');
 
 module.exports = function(form, success, failure) {
@@ -21653,6 +21625,49 @@ module.exports = function(form, success, failure) {
 	});
 }
 },{"jquery":1}],6:[function(require,module,exports){
+// http://jsfiddle.net/cGDuV/
+
+var $ = require('jquery');
+
+module.exports = function() {
+
+		// prevent iframes form loading on page load
+		$('.html>iframe').each(function() {
+			var src = $(this).attr('src');
+			$(this).data('src', src).attr('src', '');
+		});
+
+		// load iframes when thumb is clicked
+		$('.thumb-link').click(function(event) {
+			event.preventDefault()
+			var postId = getPostId(this)
+			$('#'+postId+'-thumb').hide()
+			$('#'+postId+'-html').show()
+			$('#'+postId+'-html>iframe').attr('src', function() {
+				return $(this).data('src');
+			});
+		})
+
+		// close iframes close is clicked
+		// also unload the iframe
+		$('.html-close').click(function(event) {
+			event.preventDefault()
+			var postId = getPostId(this)
+			$('#'+postId+'-thumb').show()
+			$('#'+postId+'-html').hide()
+			// unload iframe (todo fix this)
+			$('#'+postId+'-html>iframe').html('')
+		})
+
+		function getPostId(t) {
+			var postId = $(t).attr('id').split('-')[0]
+			return postId.replace(/\./g, "\\.")		
+		}
+
+}
+
+
+},{"jquery":1}],7:[function(require,module,exports){
 var $ = require('jquery');
 var _ = require('lodash');
 

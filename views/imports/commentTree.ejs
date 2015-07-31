@@ -5,36 +5,54 @@ _(tree).forEach(function(node, commentIdEnd) {
 %>
 
 	<div class="comment-row">
-		<a id="<%= post.id %>" class="vote-box">
-			<div class="vote-arrow">&utrif;</div> 
-			<div class="vote-number"><%= post.investment %></div> 
-			<div class="vote-satoshi">satoshi</div> 
-		</a>
+		<div class="cf">
+			<a id="<%= post.id %>" class="vote-box">
+				<div class="vote-arrow">&utrif;</div> 
+				<div class="vote-number"><%= post.investment %></div> 
+				<div class="vote-satoshi">satoshi</div> 
+			</a>
 
-		<div class="post-box">
-			<div class="post-info">
-				<a><%= post.username %></a>
+
+			<!-- thumbnail -->
+			<% if(post.thumbnail){ %>
+				<a href="#" id="<%= post.postKey %>-thumb" class="thumb-link">
+					<img src="<%= post.thumbnail %>" width=60>
+				</a>
+
+				<!-- embed -->
+				<div id="<%= post.postKey %>-html" class="html">
+					<%- post.html %>
+					<div id="<%= post.postKey %>-close" class="html-close">x</div>
+				</div>
+			<% } %>	
+
+
+			<div class="post-box">
+				<div class="post-info">
+					<a><%= post.username %></a>
+				</div>
+				<div class="post-text"><%= post.text %></div>
+				<div class="post-info">
+					<span id="<%= post.id %>-investors">
+						Investors <%= formatInvestorList(post.investors) %> 
+					</span>
+					<a class="reply-button" id="<%= post.postKey %>-button">reply</a>
+					- <a href="/<%= post.postKey.replace(/\./g, '/') %>">permalink</a>
+				</div>
 			</div>
-			<div class="post-text"><%= post.text %></div>
-			<div class="post-info">
-				<span id="<%= post.id %>-investors">
-					Investors <%= formatInvestorList(post.investors) %> 
-				</span>
-				<a class="reply-button" id="<%= post.postKey %>-button">reply</a>
-				- <a href="/<%= post.postKey.replace(/\./g, '/') %>">permalink</a>
-			</div>
+
+			<form class="comment-form" action="/submitPost" method="post" id="<%= post.postKey %>">
+				<textarea rows="2" name="text" placeholder=""></textarea><br />
+				<input type="hidden" name="parentKey" value="<%= post.postKey %>">
+				<input type="hidden" name="postKey" value="<%= post.postKey %>">
+				<input type="hidden" name="title" value="">
+				<input style="display:none" name="url" id="<%= post.postKey %>-url" value="">
+				
+				<button class="add-button" id="<%= post.postKey %>-add">add url</button>			
+				<button class="cancel-button" id="<%= post.postKey %>-cancel">cancel</button>
+				<button type="submit" name="a">reply</button>
+			</form>
 		</div>
-
-		<form class="comment-form" action="/submitPost" method="post" id="<%= post.postKey %>">
-			<textarea rows="2" name="text" placeholder=""></textarea><br />
-			<input type="hidden" name="parentKey" value="<%= post.postKey %>">
-			<input type="hidden" name="postKey" value="<%= post.postKey %>">
-			<input type="hidden" name="title" value="">
-			<input type="hidden" name="url" value="">
-			<button type="submit" name="a">reply</button>
-			<button class="cancel-button" id="<%= post.postKey %>-cancel">cancel</button>
-		</form>
-
 		<%- include('./commentTree.ejs', {tree: tree }) %>
 	</div>
 
