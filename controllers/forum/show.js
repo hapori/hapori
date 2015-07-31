@@ -46,7 +46,10 @@ module.exports = function show(req, res, next) {
     try {
       if (req.user) {
         var user = yield User.where({ id: req.user.id }).fetch();
-        user = user.toJSON();
+        if(user)
+          user = user.toJSON();
+        else
+          user = null
       }
     } catch (e) {
       return console.log(e, 'could not fetch current user');
