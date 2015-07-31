@@ -79,6 +79,7 @@ console.log('embedly.text', embedly.text)
 			html: html,
 			thumbnail: thumbnail,
 			commentCount: 0,
+			sticky: false,
 		};
 		var post = yield Post.forge(post).save()
    

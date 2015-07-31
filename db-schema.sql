@@ -15,6 +15,7 @@ CREATE TABLE Posts (
   "html" text,
   "thumbnail" varchar(120),
   "timestamp" bigint NOT NULL,
+  "sticky" boolean NOT NULL,
   PRIMARY KEY ("id")
 );
 
@@ -41,7 +42,7 @@ CREATE TABLE Forums (
 );
 
 
-CREATE TYPE mood AS ENUM ('newbie', 'hero');
+CREATE TYPE rank AS ENUM ('newbie', 'hero');
 CREATE TYPE status AS ENUM ('user', 'mod', 'admin');
 DROP TABLE IF EXISTS Users;
 CREATE TABLE Users (
