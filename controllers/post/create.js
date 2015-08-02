@@ -72,10 +72,12 @@ console.log('embedly.text', embedly.text)
 			var html = ''
 			var thumbnail = '' // todo add link to default img here
 			console.log('embedly error on post submission', e.response.res.text)
+/*
 			return res.status(200).send({
 				success: false,
 				message: 'There was an error with your post submission. We are working on a fix.'
 			});
+*/
 		}
 
     	// create post
