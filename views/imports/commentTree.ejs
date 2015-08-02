@@ -42,11 +42,11 @@ _(tree).forEach(function(node, commentIdEnd) {
 			</div>
 
 			<form class="comment-form" action="/submitPost" method="post" id="<%= post.postKey %>">
-				<textarea rows="2" name="text" placeholder=""></textarea><br />
+				<textarea rows="3" name="text" placeholder="your comment"></textarea><br />
 				<input type="hidden" name="parentKey" value="<%= post.postKey %>">
 				<input type="hidden" name="postKey" value="<%= post.postKey %>">
 				<input type="hidden" name="title" value="">
-				<input style="display:none" name="url" id="<%= post.postKey %>-url" value="">
+				<input style="display:none" name="url" id="<%= post.postKey %>-url" value="" placeholder="url (optional)">
 				
 				<button class="add-button" id="<%= post.postKey %>-add">add url</button>			
 				<button class="cancel-button" id="<%= post.postKey %>-cancel">cancel</button>

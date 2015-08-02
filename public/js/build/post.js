@@ -21580,7 +21580,6 @@ $(function(){
 
 	handleVote()
 	handleThumbs()
-
 });
 },{"./handleForm.js":4,"./handleThumbs.js":5,"./handleVote.js":6,"jquery":1}],4:[function(require,module,exports){
 var $ = require('jquery');

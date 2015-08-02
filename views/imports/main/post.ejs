@@ -6,17 +6,21 @@
 	var tree = commentTree[postId].tree;
 %>
 
-<%- post.html %>
+<div id="html-wrapper">
+	<%- post.html %>
+</div>
 
 <%- include('../postRow.ejs', {post: post}) %>
 
 <h3>Comments</h3>
 <form class="default-comment-form" action="/submitPost" method="post" id="<%= post.postKey %>">
-	<textarea rows="2" name="text" placeholder=""></textarea><br />
+	<textarea rows="5" name="text" placeholder="be the first to comment"></textarea><br />
 	<input type="hidden" name="parentKey" value="<%= post.postKey %>">
 	<input type="hidden" name="postKey" value="<%= post.postKey %>">
 	<input type="hidden" name="title" value="">
-	<input type="hidden" name="url" value="">
+	<input style="display:none" name="url" id="<%= post.postKey %>-url" value="" placeholder="url (optional)">
+	
+	<button class="add-button" id="<%= post.postKey %>-add">add url</button>
 	<button type="submit" name="a">reply</button>
 </form>
 

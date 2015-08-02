@@ -13,7 +13,7 @@ CREATE TABLE Posts (
   "username" varchar(24) NOT NULL,
   "commentCount" int NOT NULL,
   "html" text,
-  "thumbnail" varchar(120),
+  "thumbnail" varchar(255),
   "timestamp" bigint NOT NULL,
   "sticky" boolean NOT NULL,
   PRIMARY KEY ("id")

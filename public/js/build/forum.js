@@ -21566,19 +21566,9 @@ return jQuery;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],3:[function(require,module,exports){
-var $ = require('jquery');
 require('./imports/default.js');
-var handleThumbs = require('./imports/handleThumbs.js');
 
-/*
-$(function(){
-	handleThumbs()
-})
-*/
-
-
-
-},{"./imports/default.js":4,"./imports/handleThumbs.js":6,"jquery":1}],4:[function(require,module,exports){
+},{"./imports/default.js":4}],4:[function(require,module,exports){
 var $ = require('jquery');
 var handleForm = require('./handleForm.js');
 var handleVote = require('./handleVote.js');
@@ -21593,7 +21583,6 @@ $(function(){
 
 	handleVote()
 	handleThumbs()
-
 });
 },{"./handleForm.js":5,"./handleThumbs.js":6,"./handleVote.js":7,"jquery":1}],5:[function(require,module,exports){
 var $ = require('jquery');

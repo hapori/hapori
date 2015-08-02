@@ -46,8 +46,16 @@ module.exports = function(req, res, next) {
 
 		try {
 			var embedly = yield agent('GET', 'http://api.embed.ly/1/oembed?key='+process.env.EMBEDLY_KEY+'&url='+req.body.url);
-			var html = embedly.body.html
-			var thumbnail = embedly.body.thumbnail_url
+			
+			if(embedly.body && embedly.body.html)
+				var html = embedly.body.html
+			else 
+				var html = ''
+
+			if(embedly.body && embedly.body.thumbnail_url)
+				var thumbnail = embedly.body.thumbnail_url
+			else 
+				var thumbnail = ''
 
 console.log()
 console.log()
@@ -64,6 +72,10 @@ console.log('embedly.text', embedly.text)
 			var html = ''
 			var thumbnail = '' // todo add link to default img here
 			console.log('embedly error on post submission', e.response.res.text)
+			return res.status(200).send({
+				success: false,
+				message: 'There was an error with your post submission. We are working on a fix.'
+			});
 		}
 
     	// create post
