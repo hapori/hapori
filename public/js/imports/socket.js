@@ -23,9 +23,17 @@ socket.on('connect', function () {
 	console.log('token', cookies.getItem('token'))
 	socket.on('authenticated', function () {
 		console.log('authenticated')
+		
 		socket.on('hi', function(data){
 			console.log('hey', data)
 		})
+
+		socket.on('foo', function(data){
+			console.log('foo fighters', data)
+		})
+
+
+
 	})
     .emit('authenticate', { token: cookies.getItem('token') }); //send the jwt
 });
