@@ -19,17 +19,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(require('./middleware/authenticate'));
+app.use(require('./middleware/authenticate'))
 
-
-
-
-
-
-
-
-
-app.use('/', require('./routes/index'));
+//app.use('/', require('./routes/index'));
 /*
 app.use('/u', require('./routes/user'));
 app.use('/p', require('./routes/post'));

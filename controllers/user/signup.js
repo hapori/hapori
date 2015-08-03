@@ -86,6 +86,21 @@ module.exports = function(req, res, next) {
     var salt = (crypto.randomBytes(12)).toString('hex');
     var passwordHash = crypto.createHash('sha256').update(salt + ':' + password).digest('base64');
 
+
+    // make sure we get a post request to /deposit when there is a transaction to that address
+    chain.createNotification({
+        type: "address",
+        block_chain: "testnet",
+        address: address.toString(),
+        url: "https://hapori.io/"+process.env.depositCallback},
+        function(err, resp) {
+            if(err) console.log(err)
+            else callback(err, resp)
+        }
+    )
+
+
+
     // create user
     var user = {
       username: username,
@@ -106,7 +121,7 @@ module.exports = function(req, res, next) {
 
     // create a token and store it in a cookie
     var token = jwt.sign(user.toJSON(), process.env.JWT_SECRET, { expiresInMinutes: 60*48 });
-    res.cookie('token', token, { httpOnly: true });
+    res.cookie('token', token, { httpOnly: false });
     res.status(201)
     res.json({
       success: true,
@@ -115,16 +130,3 @@ module.exports = function(req, res, next) {
   })
 };
 
-/*
-    // make sure we get a post request to /deposit when there is a transaction to that address
-    chain.createNotification({
-        type: "address",
-        block_chain: "bitcoin",
-        address: address.toString(),
-        url: "https://bitcoinreddit.com/deposit"},
-        function(err, resp) {
-            if(err) fsLogger.logError(err)
-            else callback(err, resp)
-        }
-    )
-*/

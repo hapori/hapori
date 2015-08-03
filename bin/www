@@ -8,7 +8,6 @@ var app = require('../app');
 var debug = require('debug')('hapori:server');
 var http = require('http');
 
-socketioJwt =  require('socketio-jwt')
 
 /**
  * Get port from environment and store in Express.
@@ -23,6 +22,50 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
+
+
+
+/* ---- SOCKET.IO ---- */
+
+
+
+// without jwt
+/*
+var io = require('socket.io')(server);
+io.on('connection', function(){
+  console.log(server)
+  io.emit('hi')
+});
+*/
+
+
+// with jwt (not working yet)
+var io = require('socket.io')(server);
+var socketioJwt =  require('socketio-jwt');
+var users = [];
+io.sockets
+  .on('connection', socketioJwt.authorize({
+    secret: process.env.JWT_SECRET,
+    timeout: 15000 // 15 seconds to send the authentication message
+  })).on('authenticated', function(socket) {
+    //this socket is authenticated, we are good to handle more events from it.
+    //console.log('hello! ' + JSON.stringify(socket.decoded_token), socket.id);
+
+    app.use('/'+process.env.DEPOSIT_CALLBACK, function(req, res, next) {
+        io.sockets.emit("foo", req.body);
+        res.send({});
+    });
+
+
+    socket.emit('hi', {data:'lsls'})
+  });
+
+var router = require('../routes/index')
+//router.setSocket(socket)
+
+app.use('/', router);
+
+
 /**
  * Listen on provided port, on all network interfaces.
  */
@@ -32,31 +75,22 @@ server.on('listening', onListening);
 
 
 
-
-/* ---- SOCKET.IO ---- */
-
-
-
 /*
-// without jwt
-var io = require('socket.io')(server);
-io.on('connection', function(){
-  io.emit('hi')
-});
+var io            = require("socket.io")(server);
+var socketioJwt   = require("socketio-jwt");
+
+
+io.use(socketioJwt.authorize({
+  secret: process.env.JWT_SECRET,
+  handshake: true
+}));
+
+io.on('connection', function (socket) {
+  console.log('hello! ', socket.decoded_token.name);
+})
 */
 
-/*
-// with jwt (not working yet)
-var io = require('socket.io')(server);
-io.sockets
-  .on('connection', socketioJwt.authorize({
-    secret: 'your secret or public key',
-    timeout: 15000 // 15 seconds to send the authentication message
-  })).on('authenticated', function(socket) {
-    //this socket is authenticated, we are good to handle more events from it.
-    console.log('hello! ' + socket.decoded_token.name);
-  });
-*/
+
 
 /* ------------------ */
 

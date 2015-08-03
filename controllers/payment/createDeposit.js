@@ -10,29 +10,6 @@ var cole = require('../../db/co_log_err.js').cole;
 // * verify that transaction exists on the blockchain
 module.exports = function(req, res, next) {
 
-  /*
-  	async.waterfall([
-  		// find the users that owns the address where a tx was registered
-  	    function(callback) {
-      		User.findByAddress(req.body.payload.address, callback)
-  	    },
-  	    // create payment tuple in db
-  	    function(rows, callback) {
-  	      	Payment.createDeposit(req.body.payload, rows[0].username, callback)
-  	    },
-  	    // send confirmations
-  	    function(rows, callback) {
-  			res.setHeader('Content-Type', 'text/plain')
-  			res.status(200)
-  			res.send("OK\n");
-  	    }
-  	], function (err, result) {
-  		res.setHeader('Content-Type', 'text/plain')
-  		res.status(500)
-  		res.send("NOT OK\n");
-  	});
-  */
-
   cole(function*() {
 
     try {
