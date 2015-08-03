@@ -1,7 +1,7 @@
 var io = require('socket.io-client');
-var socket = io.connect('http://localhost:3000');
+//var socket = io.connect('http://localhost:3000');
+var socket = io.connect('http://hapori.io');
 var cookies = require('./cookies.js')
-//var socket = io.connect('http://hapori.io');
 
 
 
