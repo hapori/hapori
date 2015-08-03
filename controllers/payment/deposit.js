@@ -12,6 +12,14 @@ module.exports = function(req, res, next) {
 
   cole(function*() {
 
+    console.log('payment.deposit', req.body)
+
+    res.setHeader('Content-Type', 'text/plain')
+    res.status(200)
+    res.send("OKi\n");
+
+
+/*
     try {
       var user = (yield User.findByAddress(req.body.payload.address))[0]
     } catch (err) {
@@ -28,7 +36,7 @@ module.exports = function(req, res, next) {
     res.setHeader('Content-Type', 'text/plain')
     res.status(200)
     res.send("OK\n");
-
+*/
   });
 
 }
