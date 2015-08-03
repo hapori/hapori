@@ -50,12 +50,14 @@ io.sockets
   })).on('authenticated', function(socket) {
     //this socket is authenticated, we are good to handle more events from it.
     //console.log('hello! ' + JSON.stringify(socket.decoded_token), socket.id);
+/*
+    app.use('/deposit/'+process.env.DEPOSIT_CALLBACK, function(req, res, next) {
 
-    app.use('/'+process.env.DEPOSIT_CALLBACK, function(req, res, next) {
         io.sockets.emit("foo", req.body);
         res.send({});
     });
-
+*/
+    app.use('/deposit', require('../routes/deposit.js'));
 
     socket.emit('hi', {data:'lsls'})
   });

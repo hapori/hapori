@@ -28744,8 +28744,8 @@ module.exports = function() {
 },{"jquery":1,"lodash":2}],58:[function(require,module,exports){
 var io = require('socket.io-client');
 var socket = io.connect('http://localhost:3000');
+//var socket = io.connect('http://www.hapori.io/');
 var cookies = require('./cookies.js')
-//var socket = io.connect('http://hapori.io');
 
 
 
@@ -28767,9 +28767,17 @@ socket.on('connect', function () {
 	console.log('token', cookies.getItem('token'))
 	socket.on('authenticated', function () {
 		console.log('authenticated')
+		
 		socket.on('hi', function(data){
 			console.log('hey', data)
 		})
+
+		socket.on('foo', function(data){
+			console.log('foo fighters', data)
+		})
+
+
+
 	})
     .emit('authenticate', { token: cookies.getItem('token') }); //send the jwt
 });
