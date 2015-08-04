@@ -86,7 +86,7 @@ module.exports = function(req, res, next) {
     var salt = (crypto.randomBytes(12)).toString('hex');
     var passwordHash = crypto.createHash('sha256').update(salt + ':' + password).digest('base64');
 
-
+/*
     // make sure we get a post request to /deposit when there is a transaction to that address
     chain.createNotification({
         type: "address",
@@ -98,7 +98,7 @@ module.exports = function(req, res, next) {
             else callback(err, resp)
         }
     )
-
+*/
 
 
     // create user
