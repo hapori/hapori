@@ -10,6 +10,10 @@ var test = require('tape');
 const before = test;
 const after = test;
 
+/*
+
+DO NOT RUN THIS AS IT EMPTIES THE USER TABLE
+
 before('bedfore', function(t) {
 
   var password = 'testpassword'
@@ -41,6 +45,8 @@ before('bedfore', function(t) {
     });
   });
 });
+
+
 
 test('should signin a user', function(t) {
 
@@ -105,7 +111,7 @@ test('should return user not foundx', function(t) {
       t.end();
     });
 });
-
+*/
 
 //
 // xit('should render a new user in HTML', function(done) {

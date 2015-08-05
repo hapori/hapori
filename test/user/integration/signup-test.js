@@ -6,6 +6,7 @@ var test = require('tape');
 const before = test;
 const after = test;
 
+/*
 before('before', function(t) {
 
   var user = {
@@ -34,6 +35,7 @@ before('before', function(t) {
     });
   });
 });
+
 
 test('should signup a new user', function(t) {
 
@@ -129,6 +131,8 @@ test('should not create a new user bc password exists', function(t) {
       t.end();
     });
 });
+*/
+
 
 //
 // xit('should render a new user in HTML', function(t) {

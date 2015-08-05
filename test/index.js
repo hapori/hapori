@@ -2,6 +2,7 @@
 
 require('./user');
 
+require('./payment');
 
 
 

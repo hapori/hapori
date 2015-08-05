@@ -1,3 +1,60 @@
+var app = require('../../../app.js');
+var request = require('supertest')(app);
+var User = require('../../../models/user');
+var fixtures = require('../../fixtures');
+
+var test = require('tape');
+const before = test;
+const after = test;
+
+var user = fixtures.user.default;
+
+
+
+
+
+test('show existing user', function(t) {
+
+
+  var username = 'existingUser';
+  var password = 'testpassword';
+
+  request.get('/')
+    .send({
+      username: username,
+      password: password
+    })
+    .set('Accept', 'application/json') // another test that accepts html
+    .expect('Content-Type', /html/)
+    .expect(200, function(err, res) {
+
+    	if(err)
+	    	console.log('err', err)
+    	else 
+	    	console.log('res', res.html)
+
+      t.notOk(err, 'should not error');
+      //t.equal(res.body.success, true, 'sussess should equal true');
+
+      t.end();
+    });
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // var app = require('../../../app');
 // var request = require('supertest')(app);
 // var should = require('chai').should();

@@ -28743,8 +28743,8 @@ module.exports = function() {
 
 },{"jquery":1,"lodash":2}],58:[function(require,module,exports){
 var io = require('socket.io-client');
-//var socket = io.connect('http://localhost:3000');
-var socket = io.connect('http://www.hapori.io/');
+var socket = io.connect('http://localhost:3000');
+//var socket = io.connect('http://www.hapori.io/');
 var cookies = require('./cookies.js')
 
 

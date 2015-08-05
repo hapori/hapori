@@ -9,12 +9,14 @@ const after = test;
 
 var user = fixtures.user.default;
 
+/*
 before('setup for `show user test`', function(t) {
   // truncate user table TODO
   User.forge(user).save().then(function(thing) {
     t.end();
   });
 });
+
 
 test('show existing user', function(t) {
   var username = user.username;
@@ -45,3 +47,4 @@ test('should NOT show nonExistantUser', function(t) {
       t.end();
     });
 });
+*/

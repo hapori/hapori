@@ -57,7 +57,7 @@ io.sockets
         res.send({});
     });
 */
-    //app.use('/deposit', require('../routes/deposit.js'));
+    app.use('/deposit', require('../routes/deposit.js'));
 
     socket.emit('hi', {data:'lsls'})
   });
