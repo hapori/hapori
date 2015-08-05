@@ -1,7 +1,8 @@
 var Payment = require('../../models/payment');
 var User = require('../../models/user');
-//var async = require('async')
 var cole = require('../../db/co_log_err.js').cole;
+
+var io = null
 
 
 // todo:
@@ -12,11 +13,16 @@ module.exports = function(req, res, next) {
 
   cole(function*() {
 
-    console.log('payment.deposit', req.body)
+    console.log('asljdn')
+
+
+    if(io)
+      io.emit('hi')
+
 
     res.setHeader('Content-Type', 'text/plain')
     res.status(200)
-    res.send("OKi\n");
+    res.send("OK\n");
 
 
 /*
@@ -39,4 +45,9 @@ module.exports = function(req, res, next) {
 */
   });
 
+}
+
+exports.setIo = function (_io) {
+   console.log('setting io')
+  io = _io
 }

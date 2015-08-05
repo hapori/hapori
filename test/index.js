@@ -1,6 +1,7 @@
 
 
 require('./user');
+require('./forum');
 
 require('./payment');
 

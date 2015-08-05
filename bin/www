@@ -30,15 +30,13 @@ var server = http.createServer(app);
 
 
 // without jwt
-/*
 var io = require('socket.io')(server);
 io.on('connection', function(){
-  console.log(server)
-  io.emit('hi')
+  var paymentController = require('../controllers/payment')
+  paymentController.setIo(io)
 });
-*/
 
-
+/*
 // with jwt (not working yet)
 var io = require('socket.io')(server);
 var socketioJwt =  require('socketio-jwt');
@@ -48,24 +46,12 @@ io.sockets
     secret: process.env.JWT_SECRET,
     timeout: 15000 // 15 seconds to send the authentication message
   })).on('authenticated', function(socket) {
-    //this socket is authenticated, we are good to handle more events from it.
-    //console.log('hello! ' + JSON.stringify(socket.decoded_token), socket.id);
-/*
-    app.use('/deposit/'+process.env.DEPOSIT_CALLBACK, function(req, res, next) {
 
-        io.sockets.emit("foo", req.body);
-        res.send({});
-    });
-*/
     app.use('/deposit', require('../routes/deposit.js'));
 
-    socket.emit('hi', {data:'lsls'})
   });
+*/
 
-var router = require('../routes/index')
-//router.setSocket(socket)
-
-app.use('/', router);
 
 
 /**
@@ -159,3 +145,7 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+
+
+

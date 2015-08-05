@@ -15,6 +15,10 @@ a {
 h4 {
   margin: 0;
 }
+a:hover {
+  background: #00b7ff;
+  color: #ffffff;
+}
 #menu {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -40,13 +44,6 @@ h4 {
 }
 #menu a {
   padding: 3px 4px 3px;
-}
-a:hover {
-  background: #00b7ff;
-  color: #fff;
-}
-a {
-  padding: 1px;
 }
 #footer {
   font-size: 10px;

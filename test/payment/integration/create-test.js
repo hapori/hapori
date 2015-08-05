@@ -1,9 +1,31 @@
+var test = require('tape');
+var request = require('supertest');
+var app = require('../../../app.js');
+
+
+
+test('post to deposit callback', function(t) {
+request(app)
+  .post('/deposit/'+process.env.DEPOSIT_CALLBACK)
+//  .expect('Content-Type', 'text/html; charset=utf-8')
+  .expect(200)
+  .end(function(err, res){
+
+    t.error(err);
+    t.end();    
+
+  });
+});
+
+
+
+/*
 var app = require('../../../app.js');
 var request = require('supertest')(app);
 var User = require('../../../models/user');
 var fixtures = require('../../fixtures');
 
-var test = require('tape');
+var test = require('tape').test;
 const before = test;
 const after = test;
 
@@ -13,37 +35,30 @@ var user = fixtures.user.default;
 
 
 
-test('show existing user', function(t) {
 
 
-  var username = 'existingUser';
-  var password = 'testpassword';
+
+test('test', function(t) {
 
   request.get('/')
-    .send({
-      username: username,
-      password: password
-    })
-    .set('Accept', 'application/json') // another test that accepts html
-    .expect('Content-Type', /html/)
+    .set('Accept', 'application/json')
+    .expect('Content-Type', 'text/html; charset=utf-8')
     .expect(200, function(err, res) {
 
-    	if(err)
-	    	console.log('err', err)
-    	else 
-	    	console.log('res', res.html)
 
-      t.notOk(err, 'should not error');
-      //t.equal(res.body.success, true, 'sussess should equal true');
+      t.notOk(err, 'should not err');
+      //t.equal(res.body.username, username, 'username should match');
 
       t.end();
     });
-
 });
 
 
-
-
+test('equivalence', function(t) {
+    t.equal(1, 1, 'these two numbers are equal');
+    t.end();
+});
+*/
 
 
 

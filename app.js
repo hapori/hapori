@@ -21,6 +21,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(require('./middleware/authenticate'))
 
+
+
+
+app.use('/', require('./routes/index'));
+//app.use('/deposit', require('./routes/deposit.js'));
+
 //app.use('/', require('./routes/index'));
 /*
 app.use('/u', require('./routes/user'));

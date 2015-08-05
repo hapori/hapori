@@ -13,7 +13,6 @@ var _ = require('lodash');
 module.exports = function show(req, res, next) {
   cole(function*() {
 
-    // fetch all posts
     try {
 
       // if no forum name is provided, then we are on the homepage 
