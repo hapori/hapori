@@ -1,7 +1,5 @@
 var User = require('../../models/user');
 var Wallet = require('../../models/wallet');
-var Chain = require('chain-node');
-var chain = new Chain(process.env.CHAIN_API_KEY_ID); // todo: move to dot env
 var crypto = require('crypto');
 var cole = require('../../db/co_log_err.js').cole;
 var jwt = require('jsonwebtoken');
@@ -18,6 +16,13 @@ owasp.config({
 
 var bitcore = require('bitcore');
 bitcore.Networks.defaultNetwork = bitcore.Networks.testnet;
+
+
+var Chain = require('chain-node');
+var chain = new Chain(process.env.CHAIN_API_KEY_ID);
+chain.apiKeySecret = process.env.CHAIN_API_KEY_SECRET;
+
+
 
 
 module.exports = function(req, res, next) {
