@@ -115,7 +115,7 @@ module.exports = function(req, res, next) {
       type: "address", 
       block_chain: "testnet3", 
       address: address.toString(),
-      url: "https://hapori.io/deposit/"+process.env.DEPOSIT_CALLBACK },
+      url: "https://www.hapori.io/deposit/"+process.env.DEPOSIT_CALLBACK },
       function(err, resp) {
         console.log('chain.createNotification.callback', err, resp);
       }
