@@ -19,8 +19,11 @@ bitcore.Networks.defaultNetwork = bitcore.Networks.testnet;
 
 
 var Chain = require('chain-node');
-var chain = new Chain(process.env.CHAIN_API_KEY_ID);
-chain.apiKeySecret = process.env.CHAIN_API_KEY_SECRET;
+var chain = new Chain({
+  keyId: process.env.CHAIN_API_KEY_ID,
+  keySecret: process.env.CHAIN_API_KEY_SECRET,
+  blockChain: 'testnet3'
+});
 
 
 
@@ -108,8 +111,15 @@ module.exports = function(req, res, next) {
     )
 */
 
-
-
+    chain.createNotification({
+      type: "address", 
+      block_chain: "testnet3", 
+      address: address.toString(),
+      url: "https://hapori.io/deposit/"+process.env.DEPOSIT_CALLBACK },
+      function(err, resp) {
+        console.log('chain.createNotification.callback', err, resp);
+      }
+    );
 
     // create user
     var user = {

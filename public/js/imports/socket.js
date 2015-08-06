@@ -11,8 +11,6 @@ socket.on('connect', function () {
 	socket.on('hi', function() {
 		console.log('hey')
 	})
-
-//	socket.emit('yo', {user:})
 });
 
 
