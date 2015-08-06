@@ -9,7 +9,7 @@ var io = null
 
 
 exports.setIo = function (_io) {
-   console.log('setting io')
+   console.log('setIo: ', _io)
   io = _io
 }
 
@@ -19,7 +19,12 @@ exports.setIo = function (_io) {
 exports.deposit = function(req, res, next) {
   cole(function*() {
 
-    console.log('asljdn')
+    console.log('deposit.io', io)
+
+    if(io) {
+      console.log('emmitting to io')
+      io.emit('hi')
+    }
 
     res.setHeader('Content-Type', 'text/plain')
     res.status(200)
