@@ -48,7 +48,7 @@ module.exports = function(req, res, next) {
   });
 
 }
-
+ 
 exports.setIo = function (_io) {
    console.log('setting io to', _io)
   io = _io
