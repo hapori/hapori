@@ -13,7 +13,7 @@ module.exports = function(req, res, next) {
 
   cole(function*() {
 
-    console.log('io"', io)
+    console.log('io:', io)
 
 
     if(io) {
@@ -50,6 +50,6 @@ module.exports = function(req, res, next) {
 }
 
 exports.setIo = function (_io) {
-   console.log('setting io')
+   console.log('setting io to', _io)
   io = _io
 }
