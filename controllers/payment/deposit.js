@@ -16,8 +16,10 @@ module.exports = function(req, res, next) {
     console.log('asljdn')
 
 
-    if(io)
+    if(io) {
+      console.log('emmitting to io')
       io.emit('hi')
+    }
 
 
     res.setHeader('Content-Type', 'text/plain')

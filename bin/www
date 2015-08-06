@@ -32,6 +32,8 @@ var server = http.createServer(app);
 // without jwt
 var io = require('socket.io')(server);
 io.on('connection', function(){
+
+  // 
   var paymentController = require('../controllers/payment')
   paymentController.setIo(io)
 });
