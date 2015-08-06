@@ -102,8 +102,8 @@ module.exports = function(req, res, next) {
         address: address.toString(),
         url: "https://hapori.io/deposit/"+process.env.DEPOSIT_CALLBACK},
         function(err, resp) {
-            if(err) console.log(err)
-            else console.log(resp)
+            if(err) console.log('chain.createNotification.err',err)
+            else console.log('chain.createNotification.resp',resp)
         }
     )
 
