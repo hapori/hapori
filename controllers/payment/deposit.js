@@ -13,7 +13,7 @@ module.exports = function(req, res, next) {
 
   cole(function*() {
 
-    console.log('asljdn')
+    console.log('io"', io)
 
 
     if(io) {
