@@ -1,7 +1,7 @@
 var User = require('../../models/user');
 var Wallet = require('../../models/wallet');
 var Chain = require('chain-node');
-var chain = new Chain('c217818c8c0b31e012775aa8b5ebb318'); // todo: move to dot env
+var chain = new Chain(process.env.CHAIN_API_KEY_ID); // todo: move to dot env
 var crypto = require('crypto');
 var cole = require('../../db/co_log_err.js').cole;
 var jwt = require('jsonwebtoken');
@@ -28,6 +28,8 @@ module.exports = function(req, res, next) {
     var password = req.body.password;
     var email = req.body.email;
 
+
+    /* perform the ususal checks */
     if (!username || !email || !password) {
       return res.status(401).send({
         success: false,
@@ -42,8 +44,7 @@ module.exports = function(req, res, next) {
         message: 'Sorry my friend, that username is taken.'
       });
     }
-    // A lot of people like how reddit doesn't require a email
-    // are we requiring email to recover bitcoin wallets? ~ Roland
+
     var emailExists = yield User.where({ email: email }).fetch();
     if (emailExists) {
       return res.status(200).json({
@@ -76,6 +77,7 @@ module.exports = function(req, res, next) {
       });      
     }
 
+
     // generate new key address pair for that user
     var key = new bitcore.PrivateKey();
     var address = key.toAddress();
@@ -86,19 +88,19 @@ module.exports = function(req, res, next) {
     var salt = (crypto.randomBytes(12)).toString('hex');
     var passwordHash = crypto.createHash('sha256').update(salt + ':' + password).digest('base64');
 
-/*
+
     // make sure we get a post request to /deposit when there is a transaction to that address
     chain.createNotification({
         type: "address",
         block_chain: "testnet",
         address: address.toString(),
-        url: "https://hapori.io/"+process.env.depositCallback},
+        url: "https://hapori.io/deposit/"+process.env.DEPOSIT_CALLBACK},
         function(err, resp) {
             if(err) console.log(err)
             else callback(err, resp)
         }
     )
-*/
+
 
 
     // create user

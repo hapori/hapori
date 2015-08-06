@@ -16,11 +16,8 @@ module.exports = function(req, res, next) {
 
     var io = io_.get()
 
-    console.log('io:', io)
-
 
     if(io) {
-      console.log('emmitting to io')
       io.emit('hi')
     }
 

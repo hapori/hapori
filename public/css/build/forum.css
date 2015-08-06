@@ -27,7 +27,7 @@ a:hover {
   -webkit-flex-flow: row wrap;
   flex-flow: row wrap;
   font-size: 10px;
-  margin: 0 2px 0;
+  margin: 5px;
 }
 #menu-left {
   -webkit-flex: 1 auto;
@@ -43,7 +43,7 @@ a:hover {
   align-self: flex-end;
 }
 #menu a {
-  padding: 3px 4px 3px;
+  padding: 5px;
 }
 #footer {
   font-size: 10px;
