@@ -97,14 +97,16 @@ module.exports = function(req, res, next) {
     // make sure we get a post request to /deposit when there is a transaction to that address
     chain.createNotification({
         type: "address",
-        block_chain: "testnet",
+        block_chain: "testnet3",
         address: address.toString(),
         url: "https://hapori.io/deposit/"+process.env.DEPOSIT_CALLBACK},
         function(err, resp) {
             if(err) console.log(err)
-            else callback(err, resp)
+            else console.log(resp)
         }
     )
+
+
 
 
 
