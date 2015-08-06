@@ -1,8 +1,8 @@
 var Payment = require('../../models/payment');
 var User = require('../../models/user');
 var cole = require('../../db/co_log_err.js').cole;
+var io_ = require('./io.js')
 
-var io = null
 
 
 // todo:
@@ -12,6 +12,9 @@ var io = null
 module.exports = function(req, res, next) {
 
   cole(function*() {
+
+
+    var io = io_.get()
 
     console.log('io:', io)
 
@@ -49,7 +52,3 @@ module.exports = function(req, res, next) {
 
 }
  
-exports.setIo = function (_io) {
-   console.log('setting io to', _io)
-  io = _io
-}
