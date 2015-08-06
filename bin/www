@@ -34,8 +34,8 @@ var io = require('socket.io')(server);
 io.on('connection', function(){
 
   // 
-  var paymentController = require('../controllers/payment')
-  paymentController.setIo(io)
+  var paymentControllerIo = require('../controllers/payment/io')
+  paymentControllerIo.set(io)
 });
 
 /*
