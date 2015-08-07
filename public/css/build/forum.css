@@ -27,7 +27,7 @@ a:hover {
   -webkit-flex-flow: row wrap;
   flex-flow: row wrap;
   font-size: 10px;
-  margin: 5px;
+  margin: 10px 5px 5px;
 }
 #menu-left {
   -webkit-flex: 1 auto;
@@ -60,7 +60,7 @@ a:hover {
   flex-direction: column;
 }
 #layout-container #header {
-  height: 50px;
+  height: 80px;
 }
 #layout-container #footer {
   height: 50px;
@@ -157,6 +157,14 @@ select {
 }
 form button {
   margin: 5px 0 0;
+  padding: 5px 25px 5px;
+  background-color: #eee;
+  border: none;
+}
+form button:hover {
+  cursor: pointer;
+  background-color: #00b7ff;
+  color: #fff;
 }
 /* ---- FONT SIZES ---- */
 /* ---- COLORS ---- */
