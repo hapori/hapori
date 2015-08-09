@@ -15,7 +15,8 @@ module.exports = function() {
 			event.preventDefault()
 			var postId = getPostId(this)
 			$('#'+postId+'-thumb').hide()
-			$('#'+postId+'-html').show()
+			//$('#'+postId+'-html').show()
+			$('#'+postId+'-html').attr('style', 'display: -webkit-flex; display: flex');
 			$('#'+postId+'-html>iframe').attr('src', function() {
 				return $(this).data('src');
 			});

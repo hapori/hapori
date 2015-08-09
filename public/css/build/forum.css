@@ -1,3 +1,4 @@
+@import url(http://fonts.googleapis.com/css?family=Vollkorn);
 body {
   padding: 0;
   margin: 0;
@@ -122,6 +123,9 @@ a:hover {
 .vote-satoshi {
   font-size: 10px;
 }
+.post-title {
+  width: 600px;
+}
 .post-box {
   width: auto;
   overflow: hidden;
@@ -134,10 +138,23 @@ a:hover {
 }
 .post-text {
   color: #333333;
+  font-size: 12.5px;
+  line-height: 16px;
+  width: 600px;
 }
 .post-row img {
   float: left;
   margin: 0 10px 0 0;
+}
+.html {
+  display: node;
+}
+.html .html-wrapper {
+  -webkit-flex: 1;
+  flex: 1;
+}
+.html .html-close {
+  width: 50px;
 }
 input,
 select,
