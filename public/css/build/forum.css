@@ -124,7 +124,7 @@ a:hover {
   font-size: 10px;
 }
 .post-title {
-  width: 600px;
+  width: 655px;
 }
 .post-box {
   width: auto;
@@ -140,7 +140,7 @@ a:hover {
   color: #333333;
   font-size: 12.5px;
   line-height: 16px;
-  width: 600px;
+  width: 655px;
 }
 .post-row img {
   float: left;
@@ -154,7 +154,7 @@ a:hover {
   flex: 1;
 }
 .html .html-close {
-  width: 50px;
+  width: 15px;
 }
 input,
 select,

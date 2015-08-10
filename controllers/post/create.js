@@ -45,7 +45,7 @@ module.exports = function(req, res, next) {
 		}		
 
 		try {
-			var embedly = yield agent('GET', 'http://api.embed.ly/1/oembed?key='+process.env.EMBEDLY_KEY+'&url='+req.body.url);
+			var embedly = yield agent('GET', 'http://api.embed.ly/1/oembed?key='+process.env.EMBEDLY_KEY+'&url='+req.body.url+'&maxwidth=640');
 			
 			if(embedly.body && embedly.body.html)
 				var html = embedly.body.html
