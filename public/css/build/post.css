@@ -95,16 +95,22 @@ a:hover {
   display: none;
   margin: 0 0 10px;
   overflow: auto;
-}
-.html > iframe {
-  float: left;
+  align-items: flex-start;
 }
 .html-close {
   position: relative;
   left: 5px;
   top: -6px;
   cursor: pointer;
-  color: #999999;
+  color: #00b7ff;
+  width: 15px;
+}
+.html .html-wrapper {
+  -webkit-flex: 1;
+  flex: 1;
+}
+.html > iframe {
+  margin: 0 !important;
 }
 /**
  * For modern browsers
