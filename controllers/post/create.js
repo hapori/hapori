@@ -45,33 +45,30 @@ module.exports = function(req, res, next) {
 		}		
 
 		try {
-			var embedly = yield agent('GET', 'http://api.embed.ly/1/oembed?key='+process.env.EMBEDLY_KEY+'&url='+req.body.url+'&maxwidth=640');
-			
-			if(embedly.body && embedly.body.html)
-				var html = embedly.body.html
-			else 
+
+			// fetch embeds from some apis
+			var framely = yield agent('GET', 'http://iframe.ly/api/oembed?api_key='+process.env.FRAMELY_API_KEY+'&url='+req.body.url+'&maxwidth=640')
+			var embedly = yield agent('GET', 'https://api.embed.ly/1/oembed?key='+process.env.EMBEDLY_KEY+'&url='+req.body.url+'&maxwidth=640')
+			var noembed = yield agent('GET', 'https://noembed.com/embed?url='+req.body.url+'&maxwidth=640')
+
+			// parse if results is not null
+			var framely = framely ? JSON.parse(framely.text) : null
+			var embedly = embedly ? JSON.parse(embedly.text) : null
+			var noembed = noembed ? JSON.parse(noembed.text) : null
+
+			if(framely || embedly || noembed) {
+				var html = framely.html || embedly.html || noembed.html
+				var thumbnail = framely.thumbnail_url || embedly.thumbnail_url || noembed.thumbnail_url
+			} else {
 				var html = ''
-
-			if(embedly.body && embedly.body.thumbnail_url)
-				var thumbnail = embedly.body.thumbnail_url
-			else 
-				var thumbnail = ''
-
-console.log()
-console.log()
-console.log()
-console.log('embedly.body', embedly.body)
-
-console.log()
-console.log()
-console.log()
-console.log('embedly.text', embedly.text)
+				var thumbnail = ''			
+			}
 
 
 		} catch (e) {
 			var html = ''
 			var thumbnail = '' // todo add link to default img here
-			console.log('embedly error on post submission', e.response.res.text)
+			console.log('embedly error on post submission', e)
 /*
 			return res.status(200).send({
 				success: false,
