@@ -13,9 +13,6 @@ module.exports = function(req, res, next) {
 
   cole(function*() {
 
-
-    console.log('req.body', req.body)
-
     // check that request is well formed
     if( typeof req.body === 'undefined' || 
         typeof req.body.payload === 'undefined' || 
@@ -33,8 +30,6 @@ module.exports = function(req, res, next) {
     
     }
 
-console.log(1)
-
     var address = req.body.payload.address
     var received = req.body.payload.received
     var sent = req.body.payload.sent
@@ -42,14 +37,16 @@ console.log(1)
     var confirmations = req.body.payload.confirmations
     var inputAddress = req.body.payload.input_addresses[0]
 
-console.log(2)
-
 
     //    payment = (yield fbdb.getObj('payments', 'txid', txid, false, conn))[0]
     //    session = (yield fbdb.getObj('fs_sessions', 'userAddress', address, false, conn))[0]
 
+
+console.log(1)
     var payment = yield Payment.where({ transactionHash: transactionHash }).fetch();
+console.log(2)
     var user = yield User.where({ address: address }).fetch();
+console.log(3)
 
 
 
