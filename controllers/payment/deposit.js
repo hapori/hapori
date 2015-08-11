@@ -24,7 +24,7 @@ module.exports = function(req, res, next) {
         !req.body.payload.transaction_hash ||
         !req.body.payload.confirmations ||
         !req.body.payload.input_addresses ||
-        !req.body.params.depositCallback ||
+        !req.params.depositCallback ||
         typeof req.body.payload === 'undefined' || 
         typeof req.body.payload.address === 'undefined' || 
         typeof req.body.payload.received === 'undefined' ||
