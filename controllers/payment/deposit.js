@@ -33,12 +33,12 @@ module.exports = function(req, res, next) {
     
     }
 
-    var address = req.body.payload.address,
-        received = req.body.payload.received,
-        sent = req.body.payload.sent,
-        transactionHash = req.body.payload.transaction_hash,
-        confirmations = req.body.payload.confirmations,
-        inputAddress = req.body.payload.input_addresses[0],
+    var address = req.body.payload.address
+    var received = req.body.payload.received
+    var sent = req.body.payload.sent
+    var transactionHash = req.body.payload.transaction_hash
+    var confirmations = req.body.payload.confirmations
+    var inputAddress = req.body.payload.input_addresses[0]
 
     //    payment = (yield fbdb.getObj('payments', 'txid', txid, false, conn))[0]
     //    session = (yield fbdb.getObj('fs_sessions', 'userAddress', address, false, conn))[0]
