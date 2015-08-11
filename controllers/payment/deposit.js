@@ -14,12 +14,20 @@ module.exports = function(req, res, next) {
   cole(function*() {
 
 
+
+
+
+
+
+
     var io = io_.get()
 
 
     if(io) {
       io.emit('hi', { data: req.body })
     }
+
+    console.log(req)
 
 
     res.setHeader('Content-Type', 'text/plain')
