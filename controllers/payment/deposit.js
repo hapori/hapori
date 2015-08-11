@@ -17,21 +17,18 @@ module.exports = function(req, res, next) {
     console.log('req.body', req.body)
 
     // check that request is well formed
-    if( !req.body.payload || 
-        !req.body.payload.address ||
-        !req.body.payload.received ||
-        !req.body.payload.sent ||
-        !req.body.payload.transaction_hash ||
-        !req.body.payload.confirmations ||
-        !req.body.payload.input_addresses ||
-        !req.params.depositCallback ||
+    if( typeof req.body === 'undefined' || 
         typeof req.body.payload === 'undefined' || 
         typeof req.body.payload.address === 'undefined' || 
         typeof req.body.payload.received === 'undefined' ||
         typeof req.body.payload.transaction_hash === 'undefined' ||
+
+        typeof req.params === 'undefined' ||
+        typeof req.params.depositCallback === 'undefined' ||
+
         req.params.depositCallback != process.env.DEPOSIT_CALLBACK) {
 
-      console.log('malformed POST request', req.body)
+      console.log('malformed POST request', req.body, req.params.depositCallback)
       return false
     
     }
