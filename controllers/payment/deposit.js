@@ -13,6 +13,9 @@ module.exports = function(req, res, next) {
 
   cole(function*() {
 
+
+    console.log('req.body', req.body)
+
     // check that request is well formed
     if( !req.body.payload || 
         !req.body.payload.address ||
