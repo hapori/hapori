@@ -8,8 +8,8 @@ var cookies = require('./cookies.js')
 
 // without jwt
 socket.on('connect', function () {
-	socket.on('hi', function() {
-		console.log('hey')
+	socket.on('hi', function(data) {
+		console.log('payment', data)
 	})
 });
 

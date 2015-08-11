@@ -18,7 +18,7 @@ module.exports = function(req, res, next) {
 
 
     if(io) {
-      io.emit('hi')
+      io.emit('hi', { data: req.body })
     }
 
 
