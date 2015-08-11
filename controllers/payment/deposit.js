@@ -25,16 +25,18 @@ module.exports = function(req, res, next) {
         !req.body.payload.confirmations ||
         !req.body.payload.input_addresses ||
         !req.body.params.depositCallback ||
-        req.params.depositCallback != process.env.DEPOSIT_CALLBACK ||
         typeof req.body.payload === 'undefined' || 
         typeof req.body.payload.address === 'undefined' || 
         typeof req.body.payload.received === 'undefined' ||
-        typeof req.body.payload.transaction_hash === 'undefined') {
+        typeof req.body.payload.transaction_hash === 'undefined' ||
+        req.params.depositCallback != process.env.DEPOSIT_CALLBACK) {
 
-      console.log('malformed POST request', body)
+      console.log('malformed POST request', req.body)
       return false
     
     }
+
+console.log(1)
 
     var address = req.body.payload.address
     var received = req.body.payload.received
@@ -43,11 +45,15 @@ module.exports = function(req, res, next) {
     var confirmations = req.body.payload.confirmations
     var inputAddress = req.body.payload.input_addresses[0]
 
+console.log(2)
+
+
     //    payment = (yield fbdb.getObj('payments', 'txid', txid, false, conn))[0]
     //    session = (yield fbdb.getObj('fs_sessions', 'userAddress', address, false, conn))[0]
 
     var payment = yield Payment.where({ transactionHash: transactionHash }).fetch();
     var user = yield User.where({ address: address }).fetch();
+
 
 
 console.log('payment', payment)
