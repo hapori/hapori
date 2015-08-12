@@ -11,7 +11,6 @@ router.post('/signin', controller.user.signin);
 router.get('/logout', controller.user.logout);     // this should be a post (todo)
 
 /* payments */
-//router.post('/deposit/'+process.env.DEPOSIT_CALLBACK, controller.payment.deposit);
 router.post('/deposit/:depositCallback', controller.payment.deposit);
 
 /* submit stuff */

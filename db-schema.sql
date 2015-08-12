@@ -48,7 +48,7 @@ DROP TABLE IF EXISTS Users;
 CREATE TABLE Users (
   "id" SERIAL,
   "username" varchar(24) NOT NULL,
-  "email" varchar(24) NOT NULL,
+  "email" varchar(64) NOT NULL,
   "passwordHash" varchar(44) NOT NULL,
   "salt" varchar(24) NOT NULL,
   "key" varchar(64) NOT NULL,

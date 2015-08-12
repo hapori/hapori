@@ -7,7 +7,7 @@ var test = require('tape');
 const before = test;
 const after = test;
 
-var user = fixtures.user.default;
+var user = fixtures.users.default;
 
 /*
 before('setup for `show user test`', function(t) {
