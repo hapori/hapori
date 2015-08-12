@@ -86,6 +86,21 @@ module.exports = function(req, res, next) {
     }
 
 
+    if(username.length > 24) {
+      return res.status(200).json({
+        success: false,
+        message: 'Please select a username with at most 24 charachters.'
+      });      
+    }
+
+    if(email.length > 64) {
+      return res.status(200).json({
+        success: false,
+        message: 'Please use an email with at most 64 charachters.'
+      });      
+    }
+
+
     // generate new key address pair for that user
     var key = new bitcore.PrivateKey();
     var address = key.toAddress();

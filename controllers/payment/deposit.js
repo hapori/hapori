@@ -42,7 +42,7 @@ module.exports = function(req, res, next) {
     //    session = (yield fbdb.getObj('fs_sessions', 'userAddress', address, false, conn))[0]
 
 
-console.log(1)
+console.log(1, Payment)
     var payment = yield Payment.where({ transactionHash: transactionHash }).fetch();
 console.log(2)
     var user = yield User.where({ address: address }).fetch();

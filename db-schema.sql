@@ -63,7 +63,7 @@ CREATE TABLE Users (
 
 
 
-DROP TABLE IF EXISTS Payment;
+DROP TABLE IF EXISTS Payments;
 CREATE TABLE Payment (
   "id" SERIAL,
   "amount" int NOT NULL,
