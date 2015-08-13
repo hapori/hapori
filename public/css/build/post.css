@@ -55,6 +55,7 @@ a:hover {
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
+  display: box;
   -moz-box-direction: column;
   -webkit-box-direction: column;
   -ms-flexbox-direction: column;

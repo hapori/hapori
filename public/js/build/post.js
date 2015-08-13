@@ -28753,9 +28753,14 @@ var cookies = require('./cookies.js')
 
 // without jwt
 socket.on('connect', function () {
-	socket.on('hi', function(data) {
-		console.log('payment', data)
+	socket.on('deposit0Conf', function(data) {
+		console.log('deposit0Conf', data)
 	})
+
+	socket.on('deposit1Conf', function(data) {
+		console.log('deposit1Conf', data)
+	})
+
 });
 
 
