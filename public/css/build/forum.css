@@ -72,6 +72,7 @@ a:hover {
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
+  display: box;
   x-justify-content: space-around;
   x-align-items: stretch;
   max-width: 1200px;
