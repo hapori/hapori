@@ -3,6 +3,7 @@ body {
   padding: 0;
   margin: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  line-height: 20px;
   color: #333333;
 }
 a {
@@ -15,6 +16,8 @@ a {
 }
 h4 {
   margin: 0;
+  font-weight: normal;
+  font-size: 14px;
 }
 a:hover {
   background: #00b7ff;
@@ -28,7 +31,7 @@ a:hover {
   -webkit-flex-flow: row wrap;
   flex-flow: row wrap;
   font-size: 10px;
-  margin: 10px 5px 5px;
+  margin: 5px;
 }
 #menu-left {
   -webkit-flex: 1 auto;
@@ -44,11 +47,15 @@ a:hover {
   align-self: flex-end;
 }
 #menu a {
-  padding: 5px;
+  line-height: 20px;
+  padding: 4px;
 }
 #footer {
   font-size: 10px;
   text-align: center;
+}
+#footer-content {
+  margin: 50px;
 }
 #layout-container {
   display: -webkit-box;
@@ -57,7 +64,7 @@ a:hover {
   display: flex;
   display: box;
   -moz-box-direction: column;
-  -webkit-box-direction: column;
+  -webkit-flex-direction: column;
   -ms-flexbox-direction: column;
   flex-direction: column;
 }
@@ -91,7 +98,8 @@ a:hover {
   padding: 10px;
 }
 #how-it-works {
-  margin: 60px;
+  padding: 100px 0 0;
+  width: 640px;
 }
 .html {
   display: none;
@@ -255,7 +263,7 @@ form button:hover {
 /* ---- SIZES ---- */
 #deposit-address {
   font-size: 10px;
-  color: #999999;
+  color: #bbbbbb;
   text-align: center;
   margin: 10px 0 10px;
 }
@@ -264,6 +272,6 @@ form button:hover {
 }
 #sidebar p {
   font-size: 10px;
-  color: #999999;
+  color: #bbbbbb;
   margin: 2px 0 25px;
 }

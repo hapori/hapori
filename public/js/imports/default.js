@@ -2,7 +2,7 @@ var $ = require('jquery');
 var handleForm = require('./handleForm.js');
 var handleVote = require('./handleVote.js');
 var handleThumbs = require('./handleThumbs.js');
-var socket = require('./socket.js');
+var handleSocket = require('./handleSocket.js');
 
 
 $(function(){
@@ -13,4 +13,5 @@ $(function(){
 
 	handleVote()
 	handleThumbs()
+	handleSocket()
 });

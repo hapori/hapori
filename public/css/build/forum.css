@@ -3,6 +3,7 @@ body {
   padding: 0;
   margin: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  line-height: 20px;
   color: #333333;
 }
 a {
@@ -15,6 +16,8 @@ a {
 }
 h4 {
   margin: 0;
+  font-weight: normal;
+  font-size: 14px;
 }
 a:hover {
   background: #00b7ff;
@@ -28,7 +31,7 @@ a:hover {
   -webkit-flex-flow: row wrap;
   flex-flow: row wrap;
   font-size: 10px;
-  margin: 10px 5px 5px;
+  margin: 5px;
 }
 #menu-left {
   -webkit-flex: 1 auto;
@@ -44,11 +47,15 @@ a:hover {
   align-self: flex-end;
 }
 #menu a {
-  padding: 5px;
+  line-height: 20px;
+  padding: 4px;
 }
 #footer {
   font-size: 10px;
   text-align: center;
+}
+#footer-content {
+  margin: 50px;
 }
 #layout-container {
   display: -webkit-box;
@@ -57,7 +64,7 @@ a:hover {
   display: flex;
   display: box;
   -moz-box-direction: column;
-  -webkit-box-direction: column;
+  -webkit-flex-direction: column;
   -ms-flexbox-direction: column;
   flex-direction: column;
 }
@@ -91,7 +98,8 @@ a:hover {
   padding: 10px;
 }
 #how-it-works {
-  margin: 60px;
+  padding: 100px 0 0;
+  width: 640px;
 }
 .html {
   display: none;
@@ -117,7 +125,7 @@ a:hover {
 .post-row {
   height: auto;
   overflow: hidden;
-  margin: 0px 0px 25px;
+  margin: 0px 0px 20px;
 }
 .vote-box {
   width: 40px;
@@ -125,14 +133,24 @@ a:hover {
   text-align: center;
 }
 .vote-arrow {
-  font-size: 25px;
-  line-height: 14px;
+  font-size: 20px;
+  line-height: 10px;
+}
+.vote-number {
+  font-size: 14px;
+  line-height: 12px;
+  padding: 5px 0 3px;
 }
 .vote-satoshi {
   font-size: 10px;
+  line-height: 10px;
 }
 .post-title {
   width: 655px;
+}
+.post-title > h4 > a {
+  padding: 0 2px 0;
+  margin: 0 -2px 0;
 }
 .post-box {
   width: auto;
@@ -140,15 +158,15 @@ a:hover {
   padding-left: 10px;
 }
 .post-info {
-  color: #999999;
+  color: #bbbbbb;
   font-size: 10px;
-  line-height: 20px;
+  line-height: 22px;
 }
 .post-text {
   color: #333333;
-  font-size: 12.5px;
-  line-height: 16px;
-  width: 655px;
+  font-size: 12px;
+  line-height: 20px;
+  width: 500px;
 }
 .post-row img {
   float: left;
@@ -186,7 +204,7 @@ form button:hover {
 /* ---- SIZES ---- */
 #deposit-address {
   font-size: 10px;
-  color: #999999;
+  color: #bbbbbb;
   text-align: center;
   margin: 10px 0 10px;
 }
@@ -195,6 +213,6 @@ form button:hover {
 }
 #sidebar p {
   font-size: 10px;
-  color: #999999;
+  color: #bbbbbb;
   margin: 2px 0 25px;
 }

@@ -10,7 +10,7 @@
 		<!-- thumbnail -->
 		<% if(name == 'home' && post.thumbnail){ %>
 			<a href="#" id="<%= post.postKey %>-thumb" class="thumb-link">
-				<img src="<%= post.thumbnail %>" width=150>
+				<img src="<%= post.thumbnail %>" width=160>
 			</a>
 
 			<!-- embed -->
@@ -22,7 +22,7 @@
 
 
 		<!-- text -->
-		<div class="post-title"><a href="<%= post.url %>" target="_blank"><%= post.title %></a></div>
+		<div class="post-title"><h4><a href="<%= post.url %>" target="_blank"><%= post.title %></a></h4></div>
 		<div class="post-info">
 			<span id="<%= post.id %>-investors">
 				Investors <%= formatInvestorList(post.investors) %> 

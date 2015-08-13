@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('hapori:server');
 var http = require('http');
+var io_ = require('../controllers/payment/io.js')
 
 
 /**
@@ -31,10 +32,10 @@ var server = http.createServer(app);
 
 // without jwt
 var io = require('socket.io')(server);
-io.on('connection', function(){
-
+io.on('connection', function(socket){
   var paymentControllerIo = require('../controllers/payment/io')
   paymentControllerIo.set(io)
+
 });
 
 /*

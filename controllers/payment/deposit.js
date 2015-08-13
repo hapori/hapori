@@ -68,7 +68,11 @@ module.exports = function(req, res, next) {
       console.log('confirmations == 0')
 
       if(io) 
-        io.emit('deposit0Conf', { depositSize: received, confirmations: confirmations })
+        io.emit('deposit', { 
+          received: received, 
+          address: address,
+          confirmations: confirmations 
+        })
 
     // if the tx has reached 1 confirmation, we update user balance, bankroll, store a payment, notify the user and log
     } else if(confirmations >= 1 && !payment) {
@@ -87,8 +91,9 @@ module.exports = function(req, res, next) {
       }
       payment = yield Payment.forge(payment).save()
 
-      if(io) io.emit('deposit1Conf', { received: received, 
-              newBalance: user.balance,
+      if(io) io.emit('deposit', { 
+              received: received, 
+              address: address,
               confirmations: confirmations, 
             })
     }

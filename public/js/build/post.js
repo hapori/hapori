@@ -28631,7 +28631,7 @@ var $ = require('jquery');
 var handleForm = require('./handleForm.js');
 var handleVote = require('./handleVote.js');
 var handleThumbs = require('./handleThumbs.js');
-var socket = require('./socket.js');
+var handleSocket = require('./handleSocket.js');
 
 
 $(function(){
@@ -28642,8 +28642,9 @@ $(function(){
 
 	handleVote()
 	handleThumbs()
+	handleSocket()
 });
-},{"./handleForm.js":55,"./handleThumbs.js":56,"./handleVote.js":57,"./socket.js":58,"jquery":1}],55:[function(require,module,exports){
+},{"./handleForm.js":55,"./handleSocket.js":56,"./handleThumbs.js":57,"./handleVote.js":58,"jquery":1}],55:[function(require,module,exports){
 var $ = require('jquery');
 
 module.exports = function(form, success, failure) {
@@ -28671,6 +28672,61 @@ module.exports = function(form, success, failure) {
 	});
 }
 },{"jquery":1}],56:[function(require,module,exports){
+var io = require('socket.io-client');
+var socket = io.connect('http://localhost:3000');
+//var socket = io.connect('http://www.hapori.io/');
+var cookies = require('./cookies.js')
+var $ = require('jquery');
+
+
+// without jwt
+module.exports = function() {
+	socket.on('connect', function () {
+
+		socket.on('deposit', function(data) {
+			console.log('deposit', data)
+		})
+
+//		var username = $('#username').html()
+		var address = $('#deposit-address').html()
+
+	});
+}
+
+
+
+/*
+// with jwt
+socket.on('connect', function () {
+	console.log('token', cookies.getItem('token'))
+	socket.on('authenticated', function () {
+		
+		socket.on('hi', function(data){
+			console.log('hey', data)
+		})
+	})
+    .emit('authenticate', { token: cookies.getItem('token') }); //send the jwt
+});
+*/
+
+
+
+
+/*
+// direct connection with chain api
+var conn = new WebSocket("wss://ws.chain.com/v2/notifications");
+conn.onopen = function (ev) {
+  var req = {type: "new-transaction", block_chain: "testnet3"};
+  conn.send(JSON.stringify(req));
+};
+
+conn.onmessage = function (ev) {
+  var x = JSON.parse(ev.data);
+  console.log(x);
+};
+*/
+
+},{"./cookies.js":53,"jquery":1,"socket.io-client":3}],57:[function(require,module,exports){
 // http://jsfiddle.net/cGDuV/
 
 var $ = require('jquery');
@@ -28714,7 +28770,7 @@ module.exports = function() {
 }
 
 
-},{"jquery":1}],57:[function(require,module,exports){
+},{"jquery":1}],58:[function(require,module,exports){
 var $ = require('jquery');
 var _ = require('lodash');
 
@@ -28742,61 +28798,7 @@ module.exports = function() {
 
 
 
-},{"jquery":1,"lodash":2}],58:[function(require,module,exports){
-var io = require('socket.io-client');
-//var socket = io.connect('http://localhost:3000');
-var socket = io.connect('http://www.hapori.io/');
-var cookies = require('./cookies.js')
-
-
-
-
-// without jwt
-socket.on('connect', function () {
-	socket.on('deposit0Conf', function(data) {
-		console.log('deposit0Conf', data)
-	})
-
-	socket.on('deposit1Conf', function(data) {
-		console.log('deposit1Conf', data)
-	})
-
-});
-
-
-
-/*
-// with jwt
-socket.on('connect', function () {
-	console.log('token', cookies.getItem('token'))
-	socket.on('authenticated', function () {
-		
-		socket.on('hi', function(data){
-			console.log('hey', data)
-		})
-	})
-    .emit('authenticate', { token: cookies.getItem('token') }); //send the jwt
-});
-*/
-
-
-
-
-/*
-// direct connection with chain api
-var conn = new WebSocket("wss://ws.chain.com/v2/notifications");
-conn.onopen = function (ev) {
-  var req = {type: "new-transaction", block_chain: "testnet3"};
-  conn.send(JSON.stringify(req));
-};
-
-conn.onmessage = function (ev) {
-  var x = JSON.parse(ev.data);
-  console.log(x);
-};
-*/
-
-},{"./cookies.js":53,"socket.io-client":3}],59:[function(require,module,exports){
+},{"jquery":1,"lodash":2}],59:[function(require,module,exports){
 require('./imports/default.js');
 
 var $ = require('jquery');

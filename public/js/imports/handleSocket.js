@@ -1,22 +1,23 @@
 var io = require('socket.io-client');
-//var socket = io.connect('http://localhost:3000');
-var socket = io.connect('http://www.hapori.io/');
+var socket = io.connect('http://localhost:3000');
+//var socket = io.connect('http://www.hapori.io/');
 var cookies = require('./cookies.js')
-
-
+var $ = require('jquery');
 
 
 // without jwt
-socket.on('connect', function () {
-	socket.on('deposit0Conf', function(data) {
-		console.log('deposit0Conf', data)
-	})
+module.exports = function() {
+	socket.on('connect', function () {
 
-	socket.on('deposit1Conf', function(data) {
-		console.log('deposit1Conf', data)
-	})
+		socket.on('deposit', function(data) {
+			console.log('deposit', data)
+		})
 
-});
+//		var username = $('#username').html()
+		var address = $('#deposit-address').html()
+
+	});
+}
 
 
 

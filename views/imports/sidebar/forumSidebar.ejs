@@ -1,6 +1,6 @@
 <% if (user) { %>
 
-    <h4>Hi <%= user.username %></h4>
+    <h4>Hi <span id="username"><%= user.username %></span></h4>
     <p>
  		Your balance is <span id="balance"><%= user.balance %></span> satoshi
     </p>
@@ -25,9 +25,7 @@
 
 
     <h4>Deposit <strike>bitcoin</strike> testnet coins</h4>
-    <div id="deposit-address">
-      <%= user.address %>
-    </div>
+    <div id="deposit-address"><%= user.address %></div>
     <p>
       Warning: The payment system is still under development. Your deposit address is a testnet address, so you cannot send bitcoins there.
     </p>
