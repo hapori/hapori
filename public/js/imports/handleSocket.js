@@ -15,18 +15,13 @@ module.exports = function() {
 
 function despositNotification(data) {
 
-console.log('despositNotification', data)
+	console.log('despositNotification', data)
 
-	var address = $('#deposit-address').html()
-	if(data.address == address && data.confirmations == 0) {
-		var text = 'We just received your deposit of '+data.received+' satoshi. '
-				 + 'Your deposoit will be credited when it has one confirmation.'
-		alert(text)
-	} else {
-		var text = 'Your deposit of '+data.received+' has just been credited (please reload the page to activate).'
-				 + 'Invest it wisely :-).'
-		alert(text)		
-	}
+	if(data.address == $('#deposit-address').html())
+		if(data.confirmations == 0)
+			alert('We just received your deposit of '+data.received+' satoshi. Your deposoit will be credited when it has one confirmation.')
+		else if(data.confirmations == 1) 
+			alert('Your deposit of '+data.received+' has just been credited (please reload the page to activate). Invest it wisely :-).')
 }
 
 
