@@ -8,15 +8,22 @@ var $ = require('jquery');
 // without jwt
 module.exports = function() {
 	socket.on('connect', function () {
-
-		socket.on('deposit', function(data) {
-			console.log('deposit', data)
-		})
-
-//		var username = $('#username').html()
-		var address = $('#deposit-address').html()
-
+		socket.on('deposit', despositNotification)
 	});
+}
+
+
+function despositNotification(data) {
+	var address = $('#deposit-address').html()
+	if(data.address == address && data.confirmations == 0) {
+		var text = 'We just received your deposit of '+data.received+' satoshi. '
+				 + 'Your deposoit will be credited when it has one confirmations.'
+		alert(text)
+	} else {
+		var text = 'Your deposit of '+data.received+' has just been credited (please reload the page to activate).'
+				 + 'Invest it wisely :-).'
+		alert(text)		
+	}
 }
 
 
