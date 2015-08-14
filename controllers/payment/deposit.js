@@ -43,6 +43,8 @@ module.exports = function(req, res, next) {
 
     var io = io_.get()
 
+    io.emit('deposit', req.body.payload)
+
     // if the transaction is already in the db
     // we do nothing because we have already updated the bal
     if(payment) {
