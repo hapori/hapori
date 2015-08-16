@@ -28641,6 +28641,8 @@ $(function(){
 	handleForm($('#form-signup'))
 	handleForm($('#form-submit'))
 	handleForm($('#form-create'))
+	handleForm($('#form-withdraw'))
+
 
 	handleVote()
 	handleThumbs()
@@ -28653,6 +28655,10 @@ module.exports = function(form, success, failure) {
 	$(form).submit(function(event) {
 		// Stop the browser from submitting the form.
 		event.preventDefault();
+		$(form).find(':submit').prop("disabled",true)
+
+		console.log('submitting to ', $(this).attr('action'), $(this).serializeArray())
+
 
 		// Submit the form using AJAX.
 		// note that we need $(this) below 
@@ -28662,6 +28668,9 @@ module.exports = function(form, success, failure) {
 		    url: $(this).attr('action'),
 		    data: $(this).serializeArray()
 		}).done(function(data) {
+
+		console.log('done')
+
 
 			if(data.success)
 				location.reload();
@@ -28675,8 +28684,8 @@ module.exports = function(form, success, failure) {
 }
 },{"jquery":1}],57:[function(require,module,exports){
 var io = require('socket.io-client');
-var socket = io.connect('http://localhost:3000');
-//var socket = io.connect('http://www.hapori.io/');
+//var socket = io.connect('http://localhost:3000');
+var socket = io.connect('http://www.hapori.io/');
 var cookies = require('./cookies.js')
 var $ = require('jquery');
 
@@ -28684,15 +28693,20 @@ var $ = require('jquery');
 // without jwt
 module.exports = function() {
 	socket.on('connect', function () {
-
-		socket.on('deposit', function(data) {
-			console.log('deposit', data)
-		})
-
-//		var username = $('#username').html()
-		var address = $('#deposit-address').html()
-
+		socket.on('deposit', despositNotification)
 	});
+}
+
+
+function despositNotification(data) {
+
+	console.log('despositNotification', data)
+
+	if(data.address == $('#deposit-address').html())
+		if(data.confirmations == 0)
+			alert('We just received your deposit of '+data.received+' satoshi. Your deposoit will be credited when it has one confirmation.')
+		else
+			alert('Your deposit of '+data.received+' has just been credited (please reload the page to activate). Invest it wisely :-).')
 }
 
 

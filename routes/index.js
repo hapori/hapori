@@ -12,6 +12,7 @@ router.get('/logout', controller.user.logout);     // this should be a post (tod
 
 /* payments */
 router.post('/deposit/:depositCallback', controller.payment.deposit);
+router.post('/withdraw', controller.payment.withdraw);
 
 /* submit stuff */
 router.post('/submitPost', controller.post.create);

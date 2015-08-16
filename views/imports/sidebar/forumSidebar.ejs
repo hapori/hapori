@@ -32,13 +32,14 @@
 
 
     <h4>Withdraw</h4>
-    <form id="form-submit" action="#" method="post">
+    <form id="form-withdraw" action="/withdraw" method="post">
     <p>
       <input type="text" name="address" placeholder="Address" required><br />
       <input type="text" name="amount" placeholder="Amount" required><br />
+      <input type="hidden" name="username" value="<%= user.username %>">
       <button type="submit">Withdraw</button><br /><br />
       Warning: See above.
-      </p>
+    </p>
     </form>
   
 

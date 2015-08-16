@@ -10,6 +10,8 @@ $(function(){
 	handleForm($('#form-signup'))
 	handleForm($('#form-submit'))
 	handleForm($('#form-create'))
+	handleForm($('#form-withdraw'))
+
 
 	handleVote()
 	handleThumbs()

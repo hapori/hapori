@@ -20,7 +20,7 @@ function despositNotification(data) {
 	if(data.address == $('#deposit-address').html())
 		if(data.confirmations == 0)
 			alert('We just received your deposit of '+data.received+' satoshi. Your deposoit will be credited when it has one confirmation.')
-		else if(data.confirmations == 1) 
+		else
 			alert('Your deposit of '+data.received+' has just been credited (please reload the page to activate). Invest it wisely :-).')
 }
 
