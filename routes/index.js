@@ -14,17 +14,18 @@ router.get('/logout', controller.user.logout);     // this should be a post (tod
 router.post('/deposit/:depositCallback', controller.payment.deposit);
 router.post('/withdraw', controller.payment.withdraw);
 
-/* submit stuff */
+/* submit posts & votes */
 router.post('/submitPost', controller.post.create);
-//router.post('/submitComment', controller.comment.create);
 router.post('/create', controller.forum.create);
 router.post('/vote', controller.vote.submit);
 
 /* home page */
 router.get('/', controller.forum.show);
+
+/* forums */
 router.get('/:forumName', controller.forum.show)
 
-
+/* posts */
 router.get('*?', controller.post.show);
 
 module.exports = router;

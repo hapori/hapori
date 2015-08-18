@@ -22,7 +22,7 @@ var Chain = require('chain-node');
 var chain = new Chain({
   keyId: process.env.CHAIN_API_KEY_ID,
   keySecret: process.env.CHAIN_API_KEY_SECRET,
-  blockChain: 'testnet3'
+  blockChain: process.env.NETWORK == 'mainnet' ? 'mainnet' : 'testnet3'
 });
 
 
@@ -36,70 +36,29 @@ module.exports = function(req, res, next) {
     var password = req.body.password;
     var email = req.body.email;
 
-
     /* perform the ususal checks */
-    if (!username || !email || !password) {
-      return res.status(401).send({
-        success: false,
-        message: 'Please fill in all fields'
-      });
-    }
+    if (!username || !email || !password)
+      return errorMsg('Please fill in all fields', res)
 
     var usernameExists = yield User.where({ username: username }).fetch();
-    if (usernameExists){
-      return res.status(200).json({
-        success: false,
-        message: 'Sorry my friend, that username is taken.'
-      });
-    }
+    if (usernameExists)
+      return errorMsg('Sorry my friend, that username is taken.', res)
 
     var emailExists = yield User.where({ email: email }).fetch();
-    if (emailExists) {
-      return res.status(200).json({
-        success: false,
-        message: 'That email exists in our db. Try logging in perhaps?'
-      });
-    }
+    if (emailExists)
+      return errorMsg('That email exists in our db. Try logging in perhaps?', res)
 
-    if(!validator.validate(email)) {
-      return res.status(200).json({
-        success: false,
-        message: 'Please provide a valid email address.'
-      });      
-    }
+    if(!validator.validate(email))
+      return errorMsg('Please provide a valid email address.', res)
 
-/*
-    var passwordStrength = owasp.test(password)
-    if(passwordStrength.errors) {
-      return res.status(200).json({
-        success: false,
-        message: passwordStrength.errors.join(' ')
-      });      
-    }
-*/
+    if(password.length < 8)
+      return errorMsg('Please use a password with at least 8 charachters.', res)      
 
-    if(password.length < 8) {
-      return res.status(200).json({
-        success: false,
-        message: 'Please use a password with at least 8 charachters.'
-      });      
-    }
+    if(username.length > 24)
+      return errorMsg('Please select a username with at most 24 charachters.', res)
 
-
-    if(username.length > 24) {
-      return res.status(200).json({
-        success: false,
-        message: 'Please select a username with at most 24 charachters.'
-      });      
-    }
-
-    if(email.length > 64) {
-      return res.status(200).json({
-        success: false,
-        message: 'Please use an email with at most 64 charachters.'
-      });      
-    }
-
+    if(email.length > 64)
+      return errorMsg('Please use an email with at most 64 charachters.', res)
 
     // generate new key address pair for that user
     var key = new bitcore.PrivateKey();
@@ -164,4 +123,14 @@ module.exports = function(req, res, next) {
 
   })
 };
+
+
+
+
+
+function errorMsg(message, res) {
+  return res.status(200).json({ success: false, message: message }); 
+}
+
+
 

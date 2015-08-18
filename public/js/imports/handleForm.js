@@ -4,10 +4,7 @@ module.exports = function(form, success, failure) {
 	$(form).submit(function(event) {
 		// Stop the browser from submitting the form.
 		event.preventDefault();
-		$(form).find(':submit').prop("disabled",true)
-
-		console.log('submitting to ', $(this).attr('action'), $(this).serializeArray())
-
+		$(form).find(':submit').prop("disabled", true)
 
 		// Submit the form using AJAX.
 		// note that we need $(this) below 
@@ -18,14 +15,15 @@ module.exports = function(form, success, failure) {
 		    data: $(this).serializeArray()
 		}).done(function(data) {
 
-		console.log('done')
-
-
-			if(data.success)
+			if(data.success) {
+				if(data.message)
+					alert(data.message)
 				location.reload();
-			else
+			} else {
+				$(form).find(':submit').prop("disabled", false)
 				if(failure) failure(data)
-				else alert(data.message)
+				else alert(data.message)				
+			}
 
 		});
 		return false;

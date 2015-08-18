@@ -4,80 +4,118 @@ var cole = require('../../db/co_log_err.js').cole;
 var io_ = require('./io.js')
 var config = require('../../config')
 var bitcoinAddress = require('bitcoin-address')
+var bitcoinMath = require('bitcoin-math')
+
+var Chain = require('chain-node');
+var chain = new Chain({
+  keyId: process.env.CHAIN_API_KEY_ID,
+  keySecret: process.env.CHAIN_API_KEY_SECRET,
+  blockChain: process.env.NETWORK == 'mainnet' ? 'mainnet' : 'testnet3'
+});
 
 
 
-// todo:
-// * check nr of confirmations and store payment tuple only once
-// * notify user at confirmation = 1
-// * verify that transaction exists on the blockchain
+
+
+
 module.exports = function(req, res, next) {
-
-
-	var amount = parseFloat(req.body.amount).toSatoshi(),
-		address = req.body.address,
-		username = req.body.username
-
-console.log(amount, address, username)
 
 	cole(function*() {
 
-	    var user = yield User.where({ username: username }).fetch();
+		if(isNaN(req.body.amount) || !isFinite(req.body.amount))
+			return errorMsg('Please insert a valid amount', res)
 
-console.log(user)
+		var amount = parseFloat(req.body.amount).toSatoshi()
+		var address = req.body.address
+		var username = req.user.username
+	    var user = yield User.where({ username: username }).fetch()
 
+		// compute sum of all deposits and withdraws, needed for wallet protection		
+		var sumDepositTuples = yield Payment.forge().query().sum('amount').where({'username': username, 'kind': 'deposit'})
+		sumDeposits = sumDepositTuples[0].sum || 0
+		var sumWithdrawTuples = yield Payment.forge().query().sum('amount').where({'username': username, 'kind': 'withdraw'})
+		sumWithdraws = sumWithdrawTuples[0].sum + amount || amount
 
-		var sumDeposits = yield Post.forge().query(function(knex){
-//			knex.whereRaw('SELECT sum(amount) FROM payments WHERE username=? AND kind=?', [username, 'deposit'])               // postKeys of length 2
-			knex('payments').sum('amount').where({'username': username, 'kind': 'deposit'})               // postKeys of length 2
-		}).fetchAll();
-		sumDeposits = sumDeposits.toJSON()
-
-		console.log(sumDeposits)
-
-
-		var sumWithdraws = yield Post.forge().query(function(qb){
-			qb.whereRaw('SELECT sum(amount) FROM payments WHERE username=? AND kind=?', [username, 'withdraw'])               // postKeys of length 2
-		}).fetchAll();
-		sumWithdraws = sumWithdraws.toJSON() + amount
-
-	    if(isNaN(amount) || !isFinite(amount)) {
-	    	return errorMsg('Please insert a valid amount')
-	    } else if(amount < config.payment.minWithdraw) {
-	    	return errorMsg('Sorry mate, you have to withdraw at least '+config.payment.minWithdraw)
-	    } else if(amount > user.balance) {
-	    	return errorMsg('You cannot withdraw more than your balance (we\'re not in the lending business).')
-	    } else if(!bitcoinAddress.validate(address)) {
-	    	return errorMsg('Please insert a valid bitcoin address')
+		// check that withdraw is neither to big nor too small, and that the address is valid
+	    if(amount < config.payment.minWithdraw) {
+	    	return errorMsg('Sorry mate, you have to withdraw at least '+config.payment.minWithdraw, res)
+	    } else if(amount > user.get('balance')) {
+	    	return errorMsg('You cannot withdraw more than your balance (would not be an awesome business model for us of you could).', res)
+	    } else if(!bitcoinAddress.validate(address,  process.env.NETWORK == 'mainnet' ? 'prod' : 'testnet')) {
+	    	return errorMsg('Please insert a valid bitcoin address', res)
 	    } else if(withdrawTooHigh(sumDeposits, sumWithdraws, amount)) {
-	    	return errorMsg('Please insert a valid amount')
+	    	return errorMsg('To guaranty a high standard of security we will have to review your withdraw manually. Please contact support and we will get you sorted asap.', res)
 	    } else {
 
-/*
-	      // send bitcoin
-	      fsBtc.send(amount, address, function(error, response) {
-	          paymentCallback(error, response, socket, amount, session, conn)            
-	      })
-*/
+			var callback = function(err, resp) {
+				cole(function*() {
+
+					if(err) {
+
+						// log error and inform user in case of error
+						console.log('withdraw error', err.resp.toJSON().body)
+				    	return errorMsg('Sorry mate, something went wrong. Please contact support and we will send you your bitcoins as quick as possible', res)
+
+					} else {
+
+						// store payment info in db and update user balance
+						var payment = {
+							amount: amount,
+							transactionHash: resp.transaction_hash,
+							username: username,
+							kind: 'withdraw',
+							timestamp: new Date().getTime()
+						}
+						yield Payment.forge(payment).save()
+
+						user.set('balance', user.get('balance')-amount)
+						yield user.save()
+
+						return res.status(201).json({ success: true, message: 'Your withdraw has been processed and should be visible in your wallet right now, see https://blockexplorer.com/tx/'+resp.transaction_hash})
+
+					}
+				});
+			}
+
+			var mainAddress = process.env.NETWORK == 'mainnet' ? process.env.MAINNET_ADDRESS : process.env.TESTNET_ADDRESS
+			var privateKey = process.env.NETWORK == 'mainnet' ? process.env.MAINNET_KEY : process.env.TESTNET_KEY
+
+			// send out transaction
+			chain.transact({
+				inputs: [{ address: mainAddress, private_key: privateKey }],
+				outputs: [{ address: address, amount: amount }]
+				}, callback
+			)
+
 	    } 
-
-
 
 	});
 
 }
 
-function errorMsg(message) {
-	return res.status(200).json({
-		success: false,
-		message: message
-	}); 
+
+
+
+function errorMsg(message, res) {
+	return res.status(200).json({ success: false, message: message }); 
 }
+
  
 function withdrawTooHigh(sumDeposits, sumWithdraws, amount) {
-  // we do not pay out if either
-  //  * the withdraw is either bigger than 0.5 btc
-  //  * or the user has never made a desposit (in this case sumDeposits will be null)
-  //  * or the user has won more than 2.5x the amount he deposited
-  return amount > 50000000 || sumDeposits == 0 || sumWithdraws/sumDeposits > 1.2
+	
+	// we always pay out amounts < 100000
+	// we do not pay out if either
+	//  * the withdraw is either bigger than 0.5 btc
+	//  * or the user has never made a desposit (in this case sumDeposits will be null)
+	//  * or the user has won more than 2.5x the amount he deposited
+
+	if(amount < 100000) return false
+	else return amount > 50000000 || sumDeposits == 0 || sumWithdraws/sumDeposits > 1.2
 }
+
+
+
+
+
+
+

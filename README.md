@@ -12,4 +12,3 @@ To create the db do the follownig:
 4. `\connect BitcoinReddit`
 5. `\i db-schema.sql`
 
-Good luck
