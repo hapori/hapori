@@ -1,12 +1,11 @@
 var jwt = require('jsonwebtoken');
 
 module.exports = function authenticate(req, res, next) {
+ 
   // find token in a cookie
   var token = req.cookies.token
-
-  if (!token) {
-    return next();
-  }
+  if (!token)
+    return next()
 
   // else if we find a token we try and verify it
   // verifies secret and checks exp

@@ -64,7 +64,7 @@ CREATE TABLE Users (
 
 
 DROP TABLE IF EXISTS Payments;
-CREATE TABLE Payment (
+CREATE TABLE Payments (
   "id" SERIAL,
   "amount" int NOT NULL,
   "transactionHash" varchar(64) NOT NULL,
@@ -73,6 +73,8 @@ CREATE TABLE Payment (
   "timestamp" bigint NOT NULL,
   PRIMARY KEY ("id")
 );
+
+
 
 DROP TABLE IF EXISTS Wallet;
 CREATE TABLE Wallet (

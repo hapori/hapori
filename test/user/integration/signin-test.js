@@ -1,138 +1,104 @@
-var app = require('../../../app');
-var request = require('supertest')(app);
-var should = require('chai').should();
-var co = require('co');
-var crypto = require('crypto');
-var User = require('../../../models/user');
-var async = require('async');
-
 var test = require('tape');
-const before = test;
-const after = test;
+var request = require('supertest');
+var app = require('../../../app.js');
+var fixtures = require('../../fixtures');
+var cole = require('../../../db/co_log_err.js').cole;
 
-/*
+var User = require('../../../models/user');
+var user = null
 
-DO NOT RUN THIS AS IT EMPTIES THE USER TABLE
+var Payment = require('../../../models/payment');
+var payment = null
 
-before('bedfore', function(t) {
+// testpassword
 
-  var password = 'testpassword'
-  var salt = 'salt'
-  var user = {
-    username: 'existingUser',
-    email: 'existingUser@test.com',
-    passwordHash: crypto.createHash('sha256').update(salt + ':' + password).digest('base64'),
-    salt: salt,
-    balance: 1000,
-    key: 'some bitcoin key',
-    address: '15U4eEyfEET9GqTSF4JpFRHAD8YGpYLbCE',
-    joined: '1827369128'
-  };
-
-  User.fetchAll().then(function(users) {
-
-    async.each(users.models, function iterator(_user, next) {
-      // a stupid hack to empty the users table before test
-      _user.destroy().then(function() {
-        next(null);
-      });
-
-    }, function(err) {
-      // create test user
-      User.forge(user).save().then(function(__user) {
-        t.end();
-      });
-    });
+// store user in db
+test('setup signin tests', function (t) {
+  cole(function*() {
+    user = yield User.forge(fixtures.users.testUser).save();
+    t.end()
   });
 });
 
 
 
-test('should signin a user', function(t) {
 
-  var username = 'existingUser';
-  var password = 'testpassword';
 
-  request.post('/signin')
-    .send({
-      username: username,
-      password: password
-    })
-    .set('Accept', 'application/json') // another test that accepts html
-    .expect('Content-Type', /json/)
-    .expect(200, function(err, res) {
+test('signin with the right credentials', function(t) {
 
-      t.notOk(err, 'should not error');
-      t.equal(res.body.success, true, 'sussess should equal true');
+  var req = JSON.parse(JSON.stringify(fixtures.req.signinRequest))
 
-      t.end();
+  request(app)
+    .post('/signin')
+    .send(req)
+    .expect(201)
+    .end(function(err, res){
+
+      t.error(err, 'no Error');
+      var cookie = 'token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTMsInVzZXJuYW1lIjoidGVzdFVzZXIxMjMiLCJlbWFpbCI6InRlc3R1c2VyMTIzQHRlc3QuY29tIiwicGFzc3dvcmRIYXNoIjoiWUw2UFJrcU9VbTl3ZmhkcTZBMk9LSVNUeHNDc25jTk5zRkd5NGNCcWM3cz0iLCJzYWx0IjoiYWFkNjk5MWM1YjFjZDRjYjllYjFlNDJiIiwia2V5IjoiOWE5ZjA5NjllOTJlZGRjZTZjODIwYWMyZTFkN2RkMDJjODMwMjBkMTE4M2Y2MzEwYTAxZmI5ZTY3ZDg0NGQ1MCIsImFkZHJlc3MiOiJuMXF1MkprUUY2THJNN2RBWHpmMllaOGRXblBiYWFhYWFhIiwiYmFsYW5jZSI6MTAwMCwiam9pbmVkIjoiMTIzNDU2NyIsInJhbmsiOm51bGwsInN0YXR1cyI6bnVsbCwiaWF0IjoxNDM5OTE4MTU5LCJleHAiOjE0NDAwOTA5NTl9.Ya7dujPSxbGG1MYsZXypGIY4CSAqCfgRlMlq_LIXqMg; Path=/'
+      t.equal(res.headers['set-cookie'][0].substring(0, 50), cookie.substring(0, 50), 'cookie set correctly')
+      t.equal(res.body.success, true, 'success = true')
+      t.end()
+
     });
 });
 
-test('should return user not found', function(t) {
 
-  var username = 'nonExistantUser';
-  var password = 'testpassword';
 
-  request.post('/signin')
-    .send({
-      username: username,
-      password: password
-    })
-    .set('Accept', 'application/json') // another test that accepts html
-    .expect(200, function(err, res) { // perhaps we should be returning 404 notFound http status
+test('signin with the wrong email', function(t) {
 
-      t.notOk(err, 'should not error');
-      t.equal(res.body.success, false, 'sussess should equal false');
-      t.equal(res.body.message, 'Authentication failed. User password combination not found. (user not found)', 'should return correct error message');
+  var req = JSON.parse(JSON.stringify(fixtures.req.signinRequest))
+  req.email = 'wrong@email.com'
 
-      t.end();
+
+  request(app)
+    .post('/signin')
+    .send(req)
+    .expect(200)
+    .end(function(err, res){
+
+      t.error(err, 'no Error');
+      t.equal(res.body.success, false, 'success = false')
+      t.ok(typeof res.headers['set-cookie'] === "undefined", 'no cookie set')
+      t.end()
+
     });
 });
 
-test('should return user not foundx', function(t) {
 
-  var username = 'existingUser';
-  var password = 'nonExistantPassword';
 
-  request.post('/signin')
-    .send({
-      username: username,
-      password: password
-    })
-    .set('Accept', 'application/json') // another test that accepts html
-    .expect('Content-Type', /json/)
-    .expect(200, function(err, res) {
-      should.not.exist(err);
-      // console.log(res.body);
-      res.body.should.have.property('success', false);
-      res.body.should.have.property('message', 'Authentication failed. User password combination not found. (pwd not found)');
 
-      t.end();
+test('signin with the wrong password', function(t) {
+
+  var req = JSON.parse(JSON.stringify(fixtures.req.signinRequest))
+  req.password = 'wrongPassword'
+
+
+  request(app)
+    .post('/signin')
+    .send(req)
+    .expect(200)
+    .end(function(err, res){
+
+      t.error(err, 'no Error');
+      t.equal(res.body.success, false, 'success = false')
+      t.ok(typeof res.headers['set-cookie'] === "undefined", 'no cookie set')
+      t.end()
+
     });
 });
-*/
 
-//
-// xit('should render a new user in HTML', function(done) {
-//
-//   var username = 'testusername';
-//   var email = 'testemail@test.com';
-//   var password = 'testpassword';
-//
-//   request.post('/users')
-//     .send({
-//       username: username,
-//       email: email,
-//       password: password
-//     })
-//     .set('Accept', 'text/html')
-//     .expect('Content-Type', /html/)
-//     .expect(200, function(err, res) {
-//       // should.not.exist(err);
-//
-//       console.log(res, 'created');
-//
-//       done();
-//     });
-// });
+
+
+
+
+// delete the paymentUser
+test('teardown signin tests', function (t) {
+  cole(function*() {
+    yield user.destroy()
+    t.end()
+  });
+});
+
+
+

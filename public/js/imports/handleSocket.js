@@ -14,14 +14,13 @@ module.exports = function() {
 
 
 function despositNotification(data) {
-
-	console.log('despositNotification', data)
-
 	if(data.address == $('#deposit-address').html())
-		if(data.confirmations == 0)
-			alert('We just received your deposit of '+data.received+' satoshi. Your deposoit will be credited when it has one confirmation.')
-		else
-			alert('Your deposit of '+data.received+' has just been credited (please reload the page to activate). Invest it wisely :-).')
+		if(data.confirmations == 0) {
+			alert('We just received your deposit of '+data.received+' satoshi. Your deposoit will be credited as soon it has one confirmation.')
+		} else {
+			alert('Your deposit of '+data.received+' has just been credited. Invest wisely :-).')
+			location.reload()
+		}
 }
 
 

@@ -38,13 +38,13 @@ module.exports = function(req, res, next) {
 
 		// check that withdraw is neither to big nor too small, and that the address is valid
 	    if(amount < config.payment.minWithdraw) {
-	    	return errorMsg('Sorry mate, you have to withdraw at least '+config.payment.minWithdraw, res)
+	    	return errorMsg('Sorry mate, you have to withdraw at least '+config.payment.minWithdraw, 'W001', res)
 	    } else if(amount > user.get('balance')) {
-	    	return errorMsg('You cannot withdraw more than your balance (would not be an awesome business model for us of you could).', res)
+	    	return errorMsg('You cannot withdraw more than your balance (would not be an awesome business model for us of you could).', 'W002', res)
 	    } else if(!bitcoinAddress.validate(address,  process.env.NETWORK == 'mainnet' ? 'prod' : 'testnet')) {
-	    	return errorMsg('Please insert a valid bitcoin address', res)
+	    	return errorMsg('Please insert a valid bitcoin address', 'W003', res)
 	    } else if(withdrawTooHigh(sumDeposits, sumWithdraws, amount)) {
-	    	return errorMsg('To guaranty a high standard of security we will have to review your withdraw manually. Please contact support and we will get you sorted asap.', res)
+	    	return errorMsg('To guaranty a high standard of security we will have to review your withdraw manually. Please contact support and we will get you sorted asap.', 'W004', res)
 	    } else {
 
 			var callback = function(err, resp) {
@@ -54,7 +54,7 @@ module.exports = function(req, res, next) {
 
 						// log error and inform user in case of error
 						console.log('withdraw error', err.resp.toJSON().body)
-				    	return errorMsg('Sorry mate, something went wrong. Please contact support and we will send you your bitcoins as quick as possible', res)
+				    	return errorMsg('Sorry mate, something went wrong. Please contact support and we will send you your bitcoins as quick as possible', 'W005', res)
 
 					} else {
 
@@ -96,8 +96,8 @@ module.exports = function(req, res, next) {
 
 
 
-function errorMsg(message, res) {
-	return res.status(200).json({ success: false, message: message }); 
+function errorMsg(message, code, res) {
+	return res.status(200).json({ success: false, errorCode: code, message: message }); 
 }
 
  

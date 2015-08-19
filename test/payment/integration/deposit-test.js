@@ -12,7 +12,7 @@ var payment = null
 
 
 // store paymentUser in db
-test('setup', function (t) {
+test('setup deposit test', function (t) {
   cole(function*() {
     paymentUser = yield User.forge(fixtures.users.paymentUser).save();
     t.end()
@@ -23,7 +23,7 @@ test('setup', function (t) {
 
 test('post to deposit callback with 0 confirmation', function(t) {
 
-  var req = fixtures.req.chainCallback
+  var req = JSON.parse(JSON.stringify(fixtures.req.chainCallback))
 
   request(app)
     .post('/deposit/'+process.env.DEPOSIT_CALLBACK)
@@ -45,7 +45,7 @@ test('post to deposit callback with 0 confirmation', function(t) {
 
 test('post to deposit callback with 1 confirmation', function(t) {
 
-  var req = fixtures.req.chainCallback
+  var req = JSON.parse(JSON.stringify(fixtures.req.chainCallback))
   req.payload.confirmations = 1
 
   request(app)
@@ -80,7 +80,7 @@ test('post to deposit callback with 1 confirmation', function(t) {
 
 test('post to deposit callback with 2 confirmations', function(t) {
 
-  var req = fixtures.req.chainCallback
+  var req = JSON.parse(JSON.stringify(fixtures.req.chainCallback))
   req.payload.confirmations = 1
 
   request(app)
@@ -110,10 +110,12 @@ test('post to deposit callback with 2 confirmations', function(t) {
 
 
 // delete the paymentUser
-test('teardown', function (t) {
+test('teardown deposit tests', function (t) {
   cole(function*() {
-    yield User.forge(paymentUser).destroy()
-    yield Payment.forge(payment).destroy()
+
+    yield paymentUser.destroy()
+    yield payment.destroy()
+
     t.end()
   });
 });
