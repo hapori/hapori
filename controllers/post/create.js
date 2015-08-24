@@ -2,6 +2,7 @@ var Post = require('../../models/post');
 var Vote = require('../../models/vote');
 var random = require('../../helpers/random');
 var cole = require('../../db/co_log_err.js').cole;
+var _ = require('lodash')
 
 var request = require('superagent');
 var Promise = this.Promise || require('promise');
@@ -46,22 +47,24 @@ module.exports = function(req, res, next) {
 
 		try {
 
-			// fetch embeds from some apis
-			var framely = yield agent('GET', 'http://iframe.ly/api/oembed?api_key='+process.env.FRAMELY_API_KEY+'&url='+req.body.url+'&maxwidth=640')
-			var embedly = yield agent('GET', 'https://api.embed.ly/1/oembed?key='+process.env.EMBEDLY_KEY+'&url='+req.body.url+'&maxwidth=640')
-			var noembed = yield agent('GET', 'https://noembed.com/embed?url='+req.body.url+'&maxwidth=640')
 
-			// parse if results is not null
-			var framely = framely ? JSON.parse(framely.text) : null
-			var embedly = embedly ? JSON.parse(embedly.text) : null
-			var noembed = noembed ? JSON.parse(noembed.text) : null
+			if(req.body.url) {
 
-			if(framely || embedly || noembed) {
-				var html = framely.html || embedly.html || noembed.html
-				var thumbnail = framely.thumbnail_url || embedly.thumbnail_url || noembed.thumbnail_url
-			} else {
-				var html = ''
-				var thumbnail = ''			
+				// fetch embeds from some apis
+				var framely = yield agent('GET', 'http://iframe.ly/api/oembed?api_key='+process.env.FRAMELY_API_KEY+'&url='+req.body.url+'&maxwidth=640')
+				var embedly = yield agent('GET', 'https://api.embed.ly/1/oembed?key='+process.env.EMBEDLY_KEY+'&url='+req.body.url+'&maxwidth=640')
+				var noembed = yield agent('GET', 'https://noembed.com/embed?url='+req.body.url+'&maxwidth=640')
+
+				// parse if results is not null
+				var framely = framely ? JSON.parse(framely.text) : null
+				var embedly = embedly ? JSON.parse(embedly.text) : null
+				var noembed = noembed ? JSON.parse(noembed.text) : null
+
+				if(framely || embedly || noembed) {
+					var html = framely.html || embedly.html || noembed.html
+					var thumbnail = framely.thumbnail_url || embedly.thumbnail_url || noembed.thumbnail_url
+				}
+
 			}
 
 
@@ -69,13 +72,18 @@ module.exports = function(req, res, next) {
 			var html = ''
 			var thumbnail = '' // todo add link to default img here
 			console.log('embedly error on post submission', e)
-/*
-			return res.status(200).send({
-				success: false,
-				message: 'There was an error with your post submission. We are working on a fix.'
-			});
-*/
 		}
+
+
+		// if the comment has a parent
+		if(req.body.parentKey.split('.').length > 1) {
+			
+			console.log('increasng comment count')
+			parentPost = yield Post.where({postKey: req.body.parentKey}).fetch()
+			parentPost.set('commentCount', parentPost.get('commentCount')+1)
+ 			parentPost.save();
+		}
+
 
     	// create post
 		var post = {
