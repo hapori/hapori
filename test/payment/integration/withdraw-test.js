@@ -10,18 +10,21 @@ var app = require('../../../app.js');
 var fixtures = require('../../fixtures');
 var cole = require('../../../db/co_log_err.js').cole;
 
+var bookshelf = require('../../../lib/bookshelf')
 var User = require('../../../models/user');
-var paymentUser = null
-
+var Post = require('../../../models/post');
+var Forum = require('../../../models/forum');
+var Vote = require('../../../models/vote');
 var Payment = require('../../../models/payment');
-var payment = null
+
+var user = null
 
 // testpassword
 
-// store paymentUser in db
-test('setup signin tests', function (t) {
+// store user in db
+test('setup withdraw tests', function (t) {
   cole(function*() {
-    user = yield User.forge(fixtures.users.testUser).save();
+    user = yield User.forge(fixtures.users.testUser1).save();
     t.end()
   });
 });
@@ -37,7 +40,7 @@ test('withdraw < min withdraw', function(t) {
 
 	request(app)
 		.post('/withdraw')
-		.set('Cookie', [fixtures.tokens.testUserToken])
+		.set('Cookie', [fixtures.tokens.testUser1Token])
 		.send(req)
 		.expect(200)
 		.end(function(err, res){
@@ -46,8 +49,8 @@ test('withdraw < min withdraw', function(t) {
 
 				t.error(err, 'no Error')
 				t.equal(res.body.errorCode, 'W001', 'error code ok')
-				modifiedUser = yield User.where({id: user.get('id')}).fetch()
-				t.equal(modifiedUser.get('balance'), user.get('balance'), 'balance unchanged')
+				var modifiedUser = yield User.where({id: user.get('id')}).fetch()
+				t.ok(modifiedUser.get('balance') == user.get('balance'), 'balance unchanged')
 				t.end()
 
 			});
@@ -61,11 +64,11 @@ test('balance < withdraw', function(t) {
 
 	var satoshiAmount = user.get('balance') + 1
 	var req = JSON.parse(JSON.stringify(fixtures.req.withdrawRequest))
-	req.amount = satoshiAmount.toBitcoin()
+	req.amount = parseInt(satoshiAmount).toBitcoin()
 
 	request(app)
 		.post('/withdraw')
-		.set('Cookie', [fixtures.tokens.testUserToken])
+		.set('Cookie', [fixtures.tokens.testUser1Token])
 		.send(req)
 		.expect(200)
 		.end(function(err, res){
@@ -94,7 +97,7 @@ test('invalid address', function(t) {
 
 	request(app)
 		.post('/withdraw')
-		.set('Cookie', [fixtures.tokens.testUserToken])
+		.set('Cookie', [fixtures.tokens.testUser1Token])
 		.send(req)
 		.expect(200)
 		.end(function(err, res){
@@ -122,7 +125,7 @@ test('min withdraw < withdraw < balance', function(t) {
 
 	request(app)
 		.post('/withdraw')
-		.set('Cookie', [fixtures.tokens.testUserToken])
+		.set('Cookie', [fixtures.tokens.testUser1Token])
 		.send(req)
 		.expect(201)
 		.end(function(err, res){
@@ -147,13 +150,15 @@ test('min withdraw < withdraw < balance', function(t) {
 
 
 
-// delete the paymentUser
-test('teardown signin tests', function (t) {
+test('teardown withdraw tests', function (t) {
   cole(function*() {
-//    yield User.forge(paymentUser).destroy()
-//    yield Payment.forge(payment).destroy()
 
-    yield user.destroy()
+    yield bookshelf.knex('users').truncate()
+    yield bookshelf.knex('posts').truncate()
+    yield bookshelf.knex('forums').truncate()
+    yield bookshelf.knex('votes').truncate()
+    yield bookshelf.knex('payments').truncate()
+
     t.end()
   });
 });

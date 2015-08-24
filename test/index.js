@@ -1,21 +1,13 @@
-
-
-require('./user');
 require('./forum');
-
 require('./payment');
+require('./user');
+require('./vote');
+require('./post');
 
-
-
-// require('./comment');
-// require('./payment');
-// require('./post');
-// require('./vote');
-// require('./wallet');
 
 var test = require('tape');
 
-test('fin.', function(t){
+test('done', function(t){
   t.end();
   process.exit();
 });

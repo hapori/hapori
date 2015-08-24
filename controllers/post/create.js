@@ -92,6 +92,7 @@ module.exports = function(req, res, next) {
 			commentCount: 0,
 			sticky: false,
 		};
+
 		var post = yield Post.forge(post).save()
    
    		// create vote

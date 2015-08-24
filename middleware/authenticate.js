@@ -20,6 +20,10 @@ module.exports = function authenticate(req, res, next) {
       });
     }
 */
+
+    if(err)
+      console.log(err)
+
     // else if everything is good, save to request for use in other routes
     // perhaps req.session or req.authUser is more explicit?
     if(user)

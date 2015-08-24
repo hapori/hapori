@@ -36,6 +36,7 @@ module.exports = function(req, res, next) {
 		var sumWithdrawTuples = yield Payment.forge().query().sum('amount').where({'username': username, 'kind': 'withdraw'})
 		sumWithdraws = sumWithdrawTuples[0].sum + amount || amount
 
+
 		// check that withdraw is neither to big nor too small, and that the address is valid
 	    if(amount < config.payment.minWithdraw) {
 	    	return errorMsg('Sorry mate, you have to withdraw at least '+config.payment.minWithdraw, 'W001', res)

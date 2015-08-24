@@ -101,7 +101,7 @@ module.exports = function(req, res, next) {
       passwordHash: passwordHash,
       salt: salt,
       email: email,
-      balance: process.env.DEFAULT_BALANCE,
+      balance: parseInt(process.env.DEFAULT_BALANCE),
       key: key.toString(),
       address: address.toString(),
       joined: new Date().getTime(),
@@ -114,7 +114,7 @@ module.exports = function(req, res, next) {
 
 
     // create a token and store it in a cookie
-    var token = jwt.sign(user.toJSON(), process.env.JWT_SECRET, { expiresInMinutes: 60*48 });
+    var token = jwt.sign(user.toJSON(), process.env.JWT_SECRET, { expiresInMinutes: 60*24*7 });
     res.cookie('token', token, { httpOnly: false });
     res.status(201)
     res.json({

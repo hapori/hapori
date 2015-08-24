@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS Votes;
 CREATE TABLE Votes (
   "id" SERIAL,
   "userId" int NOT NULL,
-  "postId" ltree NOT NULL,
+  "postId" int NOT NULL,
   "timestamp" bigint NOT NULL,
   PRIMARY KEY ("id")
 );

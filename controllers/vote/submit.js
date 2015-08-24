@@ -16,8 +16,8 @@ module.exports = function(req, res, next) {
 		var post = yield Post.where({id: postId}).fetch()
 
 		// the user that upvoted
-		var userId = req.user.id
-		var user = yield User.where({id: userId}).fetch()
+		var username = req.user.username
+	    var user = yield User.where({ username: username }).fetch()
 
 		// if the user is broke respond with an error
 		if(user.get('balance') < process.env.VOTE_COST) {
@@ -34,6 +34,7 @@ module.exports = function(req, res, next) {
 
 		// the users that have previously upvoted
 		var previousVotes = yield Vote.where({postId: postId}).fetchAll()
+		// users that upvoted previously and the submitter
 		var previousInvestorIds = previousVotes.toJSON().map(vote => vote.userId)
 		var investors = yield User.query('where', 'id', 'in', previousInvestorIds).fetchAll()
 		var investorGain = Math.floor(process.env.VOTE_COST / previousVotes.length)
@@ -63,14 +64,6 @@ module.exports = function(req, res, next) {
 			timestamp: new Date().getTime()
 		}
 		Vote.forge(vote).save()
-
-		// the user that upvoted
-		var userId = req.user.id
-		var user = yield User.where({id: userId}).fetch()
-
-		// create a new token with updated balance and store it in the cookie
-		var token = jwt.sign(user, process.env.JWT_SECRET, { expiresInMinutes: 1440 });
-	    res.cookie('token', token, { httpOnly: true });
 
 		res.json({
 			success: true,

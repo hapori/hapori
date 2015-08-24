@@ -4,11 +4,15 @@ var app = require('../../../app.js');
 var fixtures = require('../../fixtures');
 var cole = require('../../../db/co_log_err.js').cole;
 
+var bookshelf = require('../../../lib/bookshelf')
 var User = require('../../../models/user');
-var user = null
-
+var Post = require('../../../models/post');
+var Forum = require('../../../models/forum');
+var Vote = require('../../../models/vote');
 var Payment = require('../../../models/payment');
-var payment = null
+
+
+var user = null
 
 // testpassword
 
@@ -96,6 +100,13 @@ test('signin with the wrong password', function(t) {
 test('teardown signin tests', function (t) {
   cole(function*() {
     yield user.destroy()
+
+    yield bookshelf.knex('users').truncate()
+    yield bookshelf.knex('posts').truncate()
+    yield bookshelf.knex('forums').truncate()
+    yield bookshelf.knex('votes').truncate()
+    yield bookshelf.knex('payments').truncate()
+
     t.end()
   });
 });

@@ -4,10 +4,15 @@ var app = require('../../../app.js');
 var fixtures = require('../../fixtures');
 var cole = require('../../../db/co_log_err.js').cole;
 
-var User = require('../../../models/user');
-var paymentUser = null
 
+var bookshelf = require('../../../lib/bookshelf')
+var User = require('../../../models/user');
+var Post = require('../../../models/post');
+var Forum = require('../../../models/forum');
+var Vote = require('../../../models/vote');
 var Payment = require('../../../models/payment');
+
+var paymentUser = null
 var payment = null
 
 
@@ -113,8 +118,11 @@ test('post to deposit callback with 2 confirmations', function(t) {
 test('teardown deposit tests', function (t) {
   cole(function*() {
 
-    yield paymentUser.destroy()
-    yield payment.destroy()
+    yield bookshelf.knex('users').truncate()
+    yield bookshelf.knex('posts').truncate()
+    yield bookshelf.knex('forums').truncate()
+    yield bookshelf.knex('votes').truncate()
+    yield bookshelf.knex('payments').truncate()
 
     t.end()
   });
