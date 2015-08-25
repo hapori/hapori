@@ -48,9 +48,7 @@ module.exports = function(req, res, next) {
 			})
 		})
 		// save all investors
-		investors.mapThen(function(investor) {
-			return investor.save()
-		})
+		investors.mapThen(investor => investor.save())
 
 		// increase investment in the post, add new investor, and save
 		post.set('investment', post.get('investment') + parseInt(process.env.VOTE_COST))
@@ -63,7 +61,7 @@ module.exports = function(req, res, next) {
 			postId: post.get('id'),
 			timestamp: new Date().getTime()
 		}
-		Vote.forge(vote).save()
+		yield Vote.forge(vote).save()
 
 		res.json({
 			success: true,

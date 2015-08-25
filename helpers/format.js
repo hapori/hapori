@@ -5,42 +5,30 @@ exports.investorList = function(list) {
 	
   // compute profit for each individual node
   const VOTE_COST = parseInt(process.env.VOTE_COST)
-  var investors = list.map(function(name) {
-    return {
-      name: name,
-      profit: -VOTE_COST,
-      investment: VOTE_COST,
-    }
-  })
+  var investors = list.map(name => ({ name: name, profit: -VOTE_COST, investment: VOTE_COST }))
 
+  investors[0].profit += VOTE_COST
   for (var i = 1; i <= list.length; i++)
-    for (var j = 0; j < i; j++)
-      investors[j].profit += Math.floor(VOTE_COST / i)
+    for (var j = 0; j < i-1; j++)
+      investors[j].profit += Math.floor(VOTE_COST / (i-1))
 
   return _.chain(investors)
 
   // group together by investor name
-  .groupBy(function(element) {
-    return element.name;
-  })
+  .groupBy(element => element.name)
 
   // sum up the profit for each investor
-  .map(function(investor, investorName) {
-    return {
+  .map((investor, investorName) => ({
       name: investorName,
-      profit: _.reduce(investor, function(acc, curr) {
-        return acc + curr.profit
-      }, 0),
-      investment: _.reduce(investor, function(acc, curr) {
-        return acc + curr.investment
-      }, 0),
-    }
-  })
+      profit: _.reduce(investor, (acc, curr) => (acc + curr.profit), 0),
+      investment: _.reduce(investor, (acc, curr) => (acc + curr.investment), 0),
+    })
+  )
 
   // format
   .reduce(function(acc, pair) {
-    var formattedProfit = pair.profit>0 ? "+"+pair.profit : pair.profit
-    return acc + " " + pair.name + " "+ pair.investment+"(" + formattedProfit + ") ";
+    var formattedProfit = (pair.profit>0 ? "+" : "")+exports.satoshi(pair.profit)
+    return acc + pair.name + " "+ exports.satoshi(pair.investment)+"(" + formattedProfit + ") ";
   }, '');
 }
 
@@ -78,5 +66,18 @@ exports.comments = function(array, i) {
       // but everything goes to s**t if we don't have it
       .value()
 }
+
+
+exports.satoshi = satoshi => satoshi/100000000
+
+
+
+
+
+
+
+
+
+
 
 
