@@ -10,9 +10,9 @@ module.exports = function() {
 		    data: { postId: $(this).attr('id') }
 		}).done(function(data) {
 			if(data.success) {
-				$('#'+data.postId+'>.vote-number').html(data.investment)
+				$('#'+data.postId+'>.vote-number').html(data.investment/100000000)
 				$('#'+data.postId+'-investors').text('Investors '+data.investors)
-				$('#balance').text(data.balance)
+				$('#balance').text(data.balance/100000000)
 			} else {
 				alert(data.message) // todo
 			}
