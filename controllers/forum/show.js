@@ -52,6 +52,9 @@ module.exports = function show(req, res, next) {
       return console.log(e, 'could not fetch current user');
     }
 
+    var forum = _.find(forums, e => e.name == forumName)
+    var description = forum ? forum.description : 'where you get bitcoin if you provide value'
+
     res.render('layout', {
       title: 'hapori',
       main: 'imports/main/forum',
@@ -62,7 +65,7 @@ module.exports = function show(req, res, next) {
       posts: posts || null,
       forums: forums || null,
       forumName: req.params.forumName,
-      description: _.find(forums, e => e.name == req.params.forumName).description || 'where you get bitcoin if you provide value',
+      description: description,
       formatInvestorList: format.investorList,
       _: _,
     });
