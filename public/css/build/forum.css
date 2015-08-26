@@ -84,10 +84,8 @@ a:hover {
   flex-direction: column;
 }
 #layout-container #header {
-  height: 80px;
-}
-#layout-container #header {
   text-align: center;
+  padding: 25px;
 }
 #layout-container #footer {
   height: 50px;
