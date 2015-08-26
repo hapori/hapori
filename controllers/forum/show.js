@@ -42,13 +42,11 @@ module.exports = function show(req, res, next) {
       return console.log(e, 'could not fetch all forums');
     }
 
+
     try {
       if (req.user) {
         var user = yield User.where({ id: req.user.id }).fetch();
-        if(user)
-          user = user.toJSON();
-        else
-          user = null
+        user = user ? user.toJSON() : null
       }
     } catch (e) {
       return console.log(e, 'could not fetch current user');
@@ -63,7 +61,8 @@ module.exports = function show(req, res, next) {
       user: user || null,
       posts: posts || null,
       forums: forums || null,
-      forumName: forumName,
+      forumName: req.params.forumName,
+      description: _.find(forums, e => e.name == req.params.forumName).description || 'where you get bitcoin if you provide value',
       formatInvestorList: format.investorList,
       _: _,
     });

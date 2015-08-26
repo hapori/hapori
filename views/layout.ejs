@@ -8,9 +8,15 @@
   <body>
 
     <div id="layout-container">
-      <div id="header">
       <%- include('./imports/navbar', {user: user}) %>
+
+
+      <div id="header">
+        <h1>hapori/<%= forumName %></h1>
+        <h2><%= description %></h2>
       </div>
+
+
 
       <div id="body">
         <div id="main">

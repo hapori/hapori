@@ -14,9 +14,24 @@ a {
 .container {
   margin: 50px;
 }
+h1 {
+  font-size: calc(28px);
+  line-height: calc(30px);
+  color: #333333;
+  padding: 0;
+  margin: 0;
+}
+h2 {
+  font-size: 10px;
+  line-height: 20px;
+  color: #bbbbbb;
+  font-weight: 400;
+  padding: 0;
+  margin: 0;
+}
 h4 {
   margin: 0;
-  font-weight: normal;
+  font-weight: bold;
   font-size: 14px;
 }
 a:hover {
@@ -70,6 +85,9 @@ a:hover {
 }
 #layout-container #header {
   height: 80px;
+}
+#layout-container #header {
+  text-align: center;
 }
 #layout-container #footer {
   height: 50px;
