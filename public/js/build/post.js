@@ -28745,11 +28745,13 @@ var $ = require('jquery');
 module.exports = function() {
 
 
+
 		// prevent iframes form loading on page load
 		$('.html iframe').each(function() {
 			var src = $(this).attr('src');
 			$(this).data('src', src).attr('src', '');
 		});
+
 
 		// load iframes when thumb is clicked
 		$('.thumb-link').click(function(event) {
@@ -28769,13 +28771,34 @@ module.exports = function() {
 			$('#'+postId+'-thumb').show()
 			$('#'+postId+'-html').hide()
 			// unload iframe (todo fix this)
-			$('#'+postId+'-html>iframe').html('')
+//			$('#'+postId+'-html iframe').parent().find(':first-child').detach();
+$('iframe').each(function(){
+    $(this).stopVideo();
+  });
+
 		})
 
 		function getPostId(t) {
 			var postId = $(t).attr('id').split('-')[0]
 			return postId.replace(/\./g, "\\.")		
 		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
 

@@ -104,8 +104,8 @@ a:hover {
 .html {
   display: none;
   margin: 0 0 10px;
-  overflow: auto;
   align-items: flex-start;
+  overflow: hidden;
 }
 .html-close {
   position: relative;
