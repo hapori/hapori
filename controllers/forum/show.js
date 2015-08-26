@@ -26,7 +26,7 @@ module.exports = function show(req, res, next) {
           .whereRaw('"postKey" ~ \'*{2}\'')               // postKeys of length 2
           .whereRaw('"postKey" ~ \''+forumName+'.*\'')    // that start with forumName
           .orderByRaw('log(GREATEST(1,investment/'+process.env.VOTE_COST+')) + timestamp/45000000 DESC')
-          .limit(25); 
+          .limit(5); 
       }).fetchAll();
 
       posts = posts.toJSON();

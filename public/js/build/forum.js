@@ -28746,8 +28746,9 @@ var $ = require('jquery');
 
 module.exports = function() {
 
+
 		// prevent iframes form loading on page load
-		$('.html>iframe').each(function() {
+		$('.html iframe').each(function() {
 			var src = $(this).attr('src');
 			$(this).data('src', src).attr('src', '');
 		});
@@ -28759,9 +28760,7 @@ module.exports = function() {
 			$('#'+postId+'-thumb').hide()
 			//$('#'+postId+'-html').show()
 			$('#'+postId+'-html').attr('style', 'display: -webkit-flex; display: flex');
-			$('#'+postId+'-html>iframe').attr('src', function() {
-				return $(this).data('src');
-			});
+			$('#'+postId+'-html iframe').attr('src', function() { return $(this).data('src'); });
 		})
 
 		// close iframes close is clicked
