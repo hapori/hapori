@@ -40,15 +40,29 @@ module.exports = function(req, res, next) {
 		var investorGain = Math.floor(process.env.VOTE_COST / previousVotes.length)
 
 		// increase balance of previous investors
-		_.each(previousVotes.models, function(vote) {
-			_.each(investors.models, function(investor) {
+		_.each(previousVotes.models, vote => {
+			_.each(investors.models, investor => {
+				
 				// update the balance of all previous investors
-				if(vote.get('userId') == investor.get('id'))
+				if(vote.get('userId') == investor.get('id')) 
 					investor.set('balance', investor.get('balance') + investorGain)
+
+				// update the balance of the user
+				// note that the user might be one of the investors
+				// we do not store the user object back to the db after this point
+				// we use the users balance only to report back to the client
+				if(vote.get('userId') == user.get('id')) 
+					user.set('balance', user.get('balance') + investorGain)
+
 			})
 		})
+		
 		// save all investors
-		investors.mapThen(investor => investor.save())
+		investors.mapThen(investor => {
+			cole(function* () {
+				yield investor.save()
+			});
+		})
 
 		// increase investment in the post, add new investor, and save
 		post.set('investment', post.get('investment') + parseInt(process.env.VOTE_COST))

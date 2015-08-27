@@ -45,7 +45,7 @@ module.exports = function signin(req, res, next) {
 
     // create a token and store it in a cookie
     var token = jwt.sign(user.toJSON(), process.env.JWT_SECRET, { expiresInMinutes: 60*24*7 });
-    res.cookie('token', token, { httpOnly: false });
+    res.cookie('token', token, { httpOnly: true });
     res.status(201)
     res.json({
       success: true,
