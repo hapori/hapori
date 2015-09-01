@@ -11,10 +11,6 @@ module.exports = function authenticate(req, res, next) {
   // verifies secret and checks exp
   jwt.verify(token, process.env.JWT_SECRET, function(err, auth) {
 
-
-    console.log('auth.sectetw', auth)
-
-
     if(err) {
       // if token has been messed with we show a failiure message
       console.log(err)

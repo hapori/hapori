@@ -77,7 +77,7 @@ module.exports = function(req, res, next) {
 
 		res.json({
 			success: true,
-			postId: postId,
+			postId: post.get('id'),
 			balance: user.get('balance'),
 			investment: post.get('investment'),
 			investors: format.investorList(post.get('investors')),
