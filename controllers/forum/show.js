@@ -28,8 +28,6 @@ module.exports = function show(req, res, next) {
           .orderByRaw('log(GREATEST(1,investment/'+process.env.VOTE_COST+')) + timestamp/45000000 DESC')
           .limit(25); 
       }).fetchAll();
-
-      posts = posts.toJSON();
     } catch (e) {
       return console.log(e, 'could not fetch all Posts');
     }
@@ -37,22 +35,20 @@ module.exports = function show(req, res, next) {
     // fetch all foums
     try {
       var forums = yield Forum.forge().fetchAll();
-      forums = forums.toJSON();
     } catch (e) {
       return console.log(e, 'could not fetch all forums');
     }
 
 
     try {
-      if (req.auth) {
-        var user = yield User.where({ secret: req.auth.secret }).fetch();
-        user = user ? user.toJSON() : null
-      }
+        var user =  (req.auth && req.auth.secret) ?
+                    (yield User.where({ secret: req.auth.secret }).fetch()).toJSON() :
+                    null
     } catch (e) {
       return console.log(e, 'could not fetch current user');
     }
 
-    var forum = _.find(forums, e => e.name == forumName)
+    var forum = _.find(forums.toJSON(), e => e.name == forumName)
     var description = forum ? forum.description : 'where you get bitcoin if you provide value'
 
     res.render('layout', {
@@ -62,8 +58,8 @@ module.exports = function show(req, res, next) {
       page: 'forum',
       name: 'home', // deprecated
       user: user || null,
-      posts: posts || null,
-      forums: forums || null,
+      posts: posts.toJSON() || null,
+      forums: forums.toJSON() || null,
       forumName: req.params.forumName,
       description: description,
       formatInvestorList: format.investorList,

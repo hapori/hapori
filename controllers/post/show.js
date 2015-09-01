@@ -13,7 +13,6 @@ var _ = require('lodash');
 module.exports = function show(req, res, next) {
   cole(function*() {
 
-
     try {
       // we translate req.params[0] of the form /a/b/c into a postKey of the form be a.b.c
       var postKey = req.params[0].replace(/\//g, '.').substr(1)
@@ -30,7 +29,9 @@ module.exports = function show(req, res, next) {
     }
 
     try {
-      var user = req.auth.secret ? yield User.where({ secret: req.auth.secret }).fetch() : {}
+        var user =  (req.auth && req.auth.secret) ?
+                    (yield User.where({ secret: req.auth.secret }).fetch()).toJSON() :
+                    null
     } catch (e) {
       return console.log(e, 'could not fetch current user');
     }
