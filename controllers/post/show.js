@@ -45,7 +45,7 @@ module.exports = function show(req, res, next) {
       sidebar: 'imports/sidebar/forumSidebar',
       name: 'post', // deprecated
       page: 'post',
-      user: user.toJSON() || null,
+      user: user || null,
       posts: posts.toJSON() || null,
       forums: forums.toJSON() || null,
       postKey: postKey || null,
