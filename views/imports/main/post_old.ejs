@@ -1,24 +1,33 @@
+<% 
+	var postKeySplit = postKey.split('.');
+	var commentTree = formatComments(posts, postKeySplit.length-1);
+	var postId = _.last(postKeySplit)
+	var post = commentTree[postId].post;
+	var tree = commentTree[postId].tree;
+%>
 
+<div class="html-wrapper">
+	<%- post.html %>
+</div>
 
 <%- include('../postRow.ejs', {post: post}) %>
 
-
 <h3>Comments</h3>
 <form class="default-comment-form" action="/submitPost" method="post" id="<%= post.postKey %>">
-	<textarea rows="2" name="text" placeholder=""></textarea><br />
+	<textarea rows="5" name="text" placeholder="be the first to comment"></textarea><br />
 	<input type="hidden" name="parentKey" value="<%= post.postKey %>">
 	<input type="hidden" name="postKey" value="<%= post.postKey %>">
 	<input type="hidden" name="title" value="">
-	<input type="hidden" name="url" value="">
-	<button type="submit" name="a">Reply</button>
+	<input style="display:none" name="url" id="<%= post.postKey %>-url" value="" placeholder="url (optional)">
+	
+	<button class="add-button" id="<%= post.postKey %>-add">add url</button>
+	<button type="submit" name="a">reply</button>
 </form>
 
 
-
-
-
 <div id="comment-container">
-	<%- include('../commentTree.ejs', {tree: formatComments(comments), _:_}) %>
+	<%- include('../commentTree.ejs', {tree: tree, _:_}) %>
 </div>
 
+<%- include('./howItWorks.ejs', {}) %>
 

@@ -4,6 +4,7 @@ var crypto = require('crypto');
 var cole = require('../../db/co_log_err.js').cole;
 var jwt = require('jsonwebtoken');
 var validator = require("email-validator");
+var random = require('../../helpers/random.js');
 
 var owasp = require('owasp-password-strength-test');
 owasp.config({
@@ -107,14 +108,14 @@ module.exports = function(req, res, next) {
       joined: new Date().getTime(),
       rank: "newbie",
       status: "user",
+      secret: random.generate(24)
     };
 
     // store user tuple in the db
-    var user = yield User.forge(user).save();
-
+    yield User.forge(user).save();
 
     // create a token and store it in a cookie
-    var token = jwt.sign(user.toJSON(), process.env.JWT_SECRET, { expiresInMinutes: 60*24*7 });
+    var token = jwt.sign({ secret: user.secret }, process.env.JWT_SECRET, { expiresInMinutes: 60*24*7 });
     res.cookie('token', token, { httpOnly: true });
     res.status(201)
     res.json({

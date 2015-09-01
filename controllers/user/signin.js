@@ -33,7 +33,6 @@ module.exports = function signin(req, res, next) {
 
     if(!validator.validate(email)) return failiure(res, 'Please sign in with your Email address.');
 
-
     // find the user by email to recover the salt
     var emailUser = yield User.where({ email: email }).fetch();
     if(!emailUser) return failiure(res, 'Authentication failed. User/password combination not found.');
@@ -44,7 +43,7 @@ module.exports = function signin(req, res, next) {
     if (!user) return failiure(res, 'Authentication failed. User/password combination not found.');
 
     // create a token and store it in a cookie
-    var token = jwt.sign(user.toJSON(), process.env.JWT_SECRET, { expiresInMinutes: 60*24*7 });
+    var token = jwt.sign({ secret: user.secret }, process.env.JWT_SECRET, { expiresInMinutes: 60*24*7 });
     res.cookie('token', token, { httpOnly: true });
     res.status(201)
     res.json({

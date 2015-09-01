@@ -12,12 +12,10 @@ module.exports = function(req, res, next) {
     cole(function* () {
 
     	// the post that is being upvoted
-    	var postId = req.body.postId
-		var post = yield Post.where({id: postId}).fetch()
+		var post = yield Post.where({id: req.body.postId}).fetch()
 
 		// the user that upvoted
-		var username = req.user.username
-	    var user = yield User.where({ username: username }).fetch()
+	    var user = yield User.where({ secret: req.auth.secret }).fetch()
 
 		// if the user is broke respond with an error
 		if(user.get('balance') < process.env.VOTE_COST) {
@@ -33,7 +31,7 @@ module.exports = function(req, res, next) {
 		yield user.save()
 
 		// the users that have previously upvoted
-		var previousVotes = yield Vote.where({postId: postId}).fetchAll()
+		var previousVotes = yield Vote.where({postId: post.get('id)')}).fetchAll()
 		// users that upvoted previously and the submitter
 		var previousInvestorIds = previousVotes.toJSON().map(vote => vote.userId)
 		var investors = yield User.query('where', 'id', 'in', previousInvestorIds).fetchAll()

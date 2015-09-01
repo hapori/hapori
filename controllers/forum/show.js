@@ -44,8 +44,8 @@ module.exports = function show(req, res, next) {
 
 
     try {
-      if (req.user) {
-        var user = yield User.where({ id: req.user.id }).fetch();
+      if (req.auth) {
+        var user = yield User.where({ secret: req.auth.secret }).fetch();
         user = user ? user.toJSON() : null
       }
     } catch (e) {

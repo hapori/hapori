@@ -27,13 +27,12 @@ module.exports = function(req, res, next) {
 
 		var amount = parseFloat(req.body.amount).toSatoshi()
 		var address = req.body.address
-		var username = req.user.username
-	    var user = yield User.where({ username: username }).fetch()
+	    var user = yield User.where({ secret: req.auth.secret }).fetch()
 
 		// compute sum of all deposits and withdraws, needed for wallet protection		
-		var sumDepositTuples = yield Payment.forge().query().sum('amount').where({'username': username, 'kind': 'deposit'})
+		var sumDepositTuples = yield Payment.forge().query().sum('amount').where({'id': user.get('id'), 'kind': 'deposit'})
 		sumDeposits = sumDepositTuples[0].sum || 0
-		var sumWithdrawTuples = yield Payment.forge().query().sum('amount').where({'username': username, 'kind': 'withdraw'})
+		var sumWithdrawTuples = yield Payment.forge().query().sum('amount').where({'id': user.get('id'), 'kind': 'withdraw'})
 		sumWithdraws = sumWithdrawTuples[0].sum + amount || amount
 
 
@@ -63,7 +62,7 @@ module.exports = function(req, res, next) {
 						var payment = {
 							amount: amount,
 							transactionHash: resp.transaction_hash,
-							username: username,
+							username: user.get('username'),
 							kind: 'withdraw',
 							timestamp: new Date().getTime()
 						}

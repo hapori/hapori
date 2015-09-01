@@ -57,6 +57,7 @@ CREATE TABLE Users (
   "joined" bigint NOT NULL,
   "rank" rank,
   "status" status,
+  "secret" varchar(24) NOT NULL,
   PRIMARY KEY ("id")
 );
 

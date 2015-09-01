@@ -77,13 +77,12 @@ module.exports = function(req, res, next) {
 
 		// if the comment has a parent
 		if(req.body.parentKey.split('.').length > 1) {
-			
-			console.log('increasng comment count')
 			parentPost = yield Post.where({postKey: req.body.parentKey}).fetch()
 			parentPost.set('commentCount', parentPost.get('commentCount')+1)
  			parentPost.save();
 		}
 
+	    var user = yield User.where({ secret: req.auth.secret }).fetch()
 
     	// create post
 		var post = {
@@ -92,9 +91,9 @@ module.exports = function(req, res, next) {
 			text: req.body.text,
 			url: req.body.url,
 			timestamp: now,
-			investors: [req.user.username],
+			investors: [user.get('username')],
 			investment: process.env.VOTE_COST,
-			username: req.user.username,
+			username: user.get('username'),
 			html: html,
 			thumbnail: thumbnail,
 			commentCount: 0,
@@ -105,7 +104,7 @@ module.exports = function(req, res, next) {
    
    		// create vote
 		var vote = {
-			userId: req.user.id,
+			userId: user.get('id'),
 			postId: post.get('id'),
 			timestamp: now
 		}

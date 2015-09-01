@@ -13,35 +13,30 @@ var _ = require('lodash');
 module.exports = function show(req, res, next) {
   cole(function*() {
 
-    // we translate req.params[0] of the form /a/b/c
-    // into a postKey of the form be a.b.c
-    var postKey = req.params[0].replace(/\//g, '.').substr(1)
 
-    // select all descendants of req.params.postKey
     try {
-      var posts = yield Post.forge().query(function(qb){
-          qb.whereRaw('"postKey" ~ \''+postKey+'.*\'')               // postKeys of length 2
-      }).fetchAll();
-      posts = posts.toJSON()
+      // we translate req.params[0] of the form /a/b/c into a postKey of the form be a.b.c
+      var postKey = req.params[0].replace(/\//g, '.').substr(1)
+      // select all descendants of req.params.postKey
+      var posts = yield Post.forge().query(qb => qb.whereRaw('"postKey" ~ \''+postKey+'.*\'')).fetchAll();    // postKeys of length 2
     } catch (e) {
       return console.log(e, 'could not fetch all posts');
     }
 
     try {
       var forums = yield Forum.forge().fetchAll();
-      forums = forums.toJSON();
     } catch (e) {
       return console.log(e, 'could not fetch all forums');
     }
 
     try {
-      if (req.user) {
-        var user = yield User.where({ id: req.user.id }).fetch();
-        user = user.toJSON();
-      }
+      var user = req.auth.secret ? yield User.where({ secret: req.auth.secret }).fetch() : {}
     } catch (e) {
       return console.log(e, 'could not fetch current user');
     }
+
+   //console.log(posts.toJSON(), forums.toJSON(), user.toJSON())
+
 
     res.render('layout', {
       title: 'hapori',
@@ -49,11 +44,12 @@ module.exports = function show(req, res, next) {
       sidebar: 'imports/sidebar/forumSidebar',
       name: 'post', // deprecated
       page: 'post',
-      user: user || null,
-      posts: posts || null,
+      user: user.toJSON() || null,
+      posts: posts.toJSON() || null,
+      forums: forums.toJSON() || null,
       postKey: postKey || null,
-      forums: forums || null,
-      forumName: null,
+      forumName: 'yolo',
+      description: 'swag',
       formatInvestorList: format.investorList,
       formatComments: format.comments,
       _: _,
