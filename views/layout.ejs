@@ -10,11 +10,12 @@
     <div id="layout-container">
       <%- include('./imports/navbar', { user: user }) %>
 
-
-      <div id="header">
-        <h1>hapori/<%= forumName %></h1>
-        <h2><%= description %></h2>
-      </div>
+      <% if(main == 'imports/main/forum'){ %>
+        <div id="header">
+          <h1>hapori/<%= forumName %></h1>
+          <h2><%= description %></h2>
+        </div>
+      <% } %>
 
 
 
